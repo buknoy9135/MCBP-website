@@ -11,6 +11,7 @@ function CarouselArea() {
     objectFit: 'fill',
     backgroundColor: 'white',
     opacity: 0.8,
+    filter: 'brightness(70%)', 
     transition: 'opacity 0.3s ease-in-out',
   };
 
@@ -20,29 +21,58 @@ function CarouselArea() {
     objectFit: 'fill',
     backgroundColor: 'white',
     opacity: 0.8,
+    filter: 'brightness(70%)', 
     transition: 'opacity 0.3s ease-in-out',
   };
 
+  const slideContent = [
+  {
+    heading: "Empowering Communities, Building Futures",
+    text: "MCBP is dedicated to creating lasting impact through education, innovation, and support.",
+  },
+  {
+    heading: "Our Mission, Your Future",
+    text: "We partner with individuals and organizations to drive meaningful change.",
+  },
+  {
+    heading: "Join the Movement",
+    text: "Be a part of a network that believes in progress, purpose, and people.",
+  },
+];
+
+
   return (
-    <Carousel className="pt-3 pt-lg-5 mt-5">
+    <Carousel className="pt-3 pt-lg-5 mt-5" style={{ paddingTop: '80px', scrollMarginTop: '80px' }}>
       {[slide1, slide2, slide3].map((slide, index) => (
-        <Carousel.Item interval={3000} key={index}>
-          {/* Mobile view */}
-          <img
-            src={slide}
-            alt={`Slide ${index + 1}`}
-            className="d-block d-lg-none mx-auto carousel-image"
-            style={imgStyleMobile}
-          />
-          {/* Desktop view */}
-          <img
-            src={slide}
-            alt={`Slide ${index + 1}`}
-            className="d-none d-lg-block mx-auto pt-0 carousel-image"
-            style={imgStyleDesktop}
-          />
-        </Carousel.Item>
-      ))}
+  <Carousel.Item interval={3000} key={index}>
+    <div className="carousel-image-container">
+      {/* Mobile image */}
+      <img
+        src={slide}
+        alt={`Slide ${index + 1}`}
+        className="d-block d-lg-none mx-auto carousel-image"
+        style={imgStyleMobile}
+      />
+      {/* Desktop image */}
+      <img
+        src={slide}
+        alt={`Slide ${index + 1}`}
+        className="d-none d-lg-block mx-auto pt-0 carousel-image"
+        style={imgStyleDesktop}
+      />
+
+      {/* Dark overlay */}
+      <div className="carousel-overlay"></div>
+
+      {/* Text */}
+      <div className="carousel-caption">
+        <h3>{slideContent[index].heading}</h3>
+        <p>{slideContent[index].text}</p>
+      </div>
+    </div>
+  </Carousel.Item>
+))}
+
     </Carousel>
   );
 }

@@ -10,24 +10,18 @@ import LoremIpsum from './components/LoremIpsum';
 function App() {
   return (
     <div id="app-container">
+
+      <NavBar />
       
-      <div id="home">
-        <NavBar />
+      <div id="home">        
         <CarouselArea />
-        {/* <LoremIpsum />
-        <LoremIpsum />
-        <LoremIpsum /> */}
       </div>
       
-      <div id="about" className='pt-4'>
+      <div id="about">
         <AboutUs />
       </div>     
 
-      {/* <LoremIpsum />
-        <LoremIpsum />
-        <LoremIpsum />  */}
-
-      <div>
+      <div id="join"> 
         <PersonalDetailsForm />
       </div>
       

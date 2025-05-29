@@ -22,7 +22,7 @@ function PersonalDetailsForm() {
   };
 
   return (
-    <div className="join-us-wrapper">
+    <div className="join-us-wrapper" style={{ paddingTop: '80px', scrollMarginTop: '80px' }}>
       <div className="thematic-form">
         <h2 className="form-heading">Join Us</h2>
         <p className="form-subtext">

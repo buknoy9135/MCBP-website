@@ -7,18 +7,18 @@ function ContactUs() {
       <div className="container d-flex flex-wrap justify-content-between align-items-center">
         <div>
           <i className="bi bi-geo-alt-fill me-2"></i>
-          123 Business Street, Cebu City, Philippines
+          2688 Sitio Mahayahay, Brgy. Bankal, 6015 Lapulapu City, Cebu, Philippines
         </div>
         <div>
           <i className="bi bi-telephone-fill me-2"></i>
-          +63 912 345 6789
+          +63 917 655 3110
         </div>
         <div>
           <i className="bi bi-envelope-fill me-2"></i>
           contact@mcbp.ph
         </div>
         <div>
-          <a href="https://facebook.com/mcbp" target="_blank" rel="noreferrer" aria-label="Facebook">
+          <a href="https://www.facebook.com/share/g/16D7hSj6Fy/?mibextid=controlMsg" target="_blank" rel="noreferrer" aria-label="Facebook">
             <i className="bi bi-facebook"></i>
           </a>
           <a href="https://twitter.com/mcbp" target="_blank" rel="noreferrer" aria-label="Twitter">

@@ -7,7 +7,7 @@ import '../css/NavBar.css'
 
 function NavBar() {
   return (
-    <Navbar expand="lg" fixed="top" className="bg-body-tertiary">
+    <Navbar expand="lg" fixed="top" className="bg-body-tertiary" >
       <Container >
         {/* Logo aligned left */}
         <Navbar.Brand
@@ -30,6 +30,7 @@ function NavBar() {
           <Nav className="ms-auto pe-4">
             <Nav.Link href="#home" style={{ color: '#0a58ca' }}>Home</Nav.Link>
             <Nav.Link href="#about" style={{ color: '#0a58ca' }}>About Us</Nav.Link>
+            <Nav.Link href="#join" style={{ color: '#0a58ca' }}>Join Us</Nav.Link>
             <Nav.Link href="#contact" style={{ color: '#0a58ca' }}>Contact Us</Nav.Link>
             <NavDropdown title={<span style={{ color: '#0a58ca' }}>Affiliation</span>}         id="basic-nav-dropdown"
             >
@@ -37,8 +38,8 @@ function NavBar() {
               rel="noopener noreferrer" aria-label="ACCERT website">ACCERT</NavDropdown.Item>
               <NavDropdown.Item a href="https://thefraternalorderofeagles.club/" target="_blank"
               rel="noopener noreferrer" aria-label="EAGLES website">EAGLES</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+              {/* <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

@@ -78,3 +78,33 @@
   height: 30px;
 }
 
+.carousel-caption h3 {
+  font-size: 1.2rem; /* smaller for small screens */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-caption p {
+  font-size: 0.7rem; /* smaller for small screens */
+  margin: 0;
+}
+
+@media (min-width: 576px) {
+  /* Slightly bigger on tablets */
+  .carousel-caption h3 {
+    font-size: 1.8rem;
+  }
+  .carousel-caption p {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  /* Larger on desktop */
+  .carousel-caption h3 {
+    font-size: 2.5rem;
+  }
+  .carousel-caption p {
+    font-size: 1.2rem;
+  }
+}
