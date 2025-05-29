@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/buknoy9135/MCBP-website/static/css/main.7aeb64d7.css",
-    "main.js": "/buknoy9135/MCBP-website/static/js/main.34c15df1.js",
-    "static/js/453.b2b263e2.chunk.js": "/buknoy9135/MCBP-website/static/js/453.b2b263e2.chunk.js",
-    "static/media/backgroun2.jpg": "/buknoy9135/MCBP-website/static/media/backgroun2.367c660ca9cf88263a25.jpg",
-    "static/media/slide2.jpg": "/buknoy9135/MCBP-website/static/media/slide2.642b663ee067293f62d7.jpg",
-    "static/media/slide1.jpg": "/buknoy9135/MCBP-website/static/media/slide1.e16ed6f988c108081849.jpg",
-    "static/media/slide3.jpg": "/buknoy9135/MCBP-website/static/media/slide3.80aeaf780e9567e7eb76.jpg",
-    "static/media/mcbp-logo.jpeg": "/buknoy9135/MCBP-website/static/media/mcbp-logo.3a87edc41249a65f21e8.jpeg",
-    "index.html": "/buknoy9135/MCBP-website/index.html",
-    "main.7aeb64d7.css.map": "/buknoy9135/MCBP-website/static/css/main.7aeb64d7.css.map",
-    "main.34c15df1.js.map": "/buknoy9135/MCBP-website/static/js/main.34c15df1.js.map",
-    "453.b2b263e2.chunk.js.map": "/buknoy9135/MCBP-website/static/js/453.b2b263e2.chunk.js.map"
+    "main.css": "/buknoy9135/MCBP-website.git/static/css/main.1360816b.css",
+    "main.js": "/buknoy9135/MCBP-website.git/static/js/main.858e4cc4.js",
+    "static/js/453.b2b263e2.chunk.js": "/buknoy9135/MCBP-website.git/static/js/453.b2b263e2.chunk.js",
+    "static/media/backgroun2.jpg": "/buknoy9135/MCBP-website.git/static/media/backgroun2.367c660ca9cf88263a25.jpg",
+    "static/media/slide2.jpg": "/buknoy9135/MCBP-website.git/static/media/slide2.642b663ee067293f62d7.jpg",
+    "static/media/slide1.jpg": "/buknoy9135/MCBP-website.git/static/media/slide1.e16ed6f988c108081849.jpg",
+    "static/media/slide3.jpg": "/buknoy9135/MCBP-website.git/static/media/slide3.80aeaf780e9567e7eb76.jpg",
+    "static/media/mcbp-logo.jpeg": "/buknoy9135/MCBP-website.git/static/media/mcbp-logo.3a87edc41249a65f21e8.jpeg",
+    "index.html": "/buknoy9135/MCBP-website.git/index.html",
+    "main.1360816b.css.map": "/buknoy9135/MCBP-website.git/static/css/main.1360816b.css.map",
+    "main.858e4cc4.js.map": "/buknoy9135/MCBP-website.git/static/js/main.858e4cc4.js.map",
+    "453.b2b263e2.chunk.js.map": "/buknoy9135/MCBP-website.git/static/js/453.b2b263e2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7aeb64d7.css",
-    "static/js/main.34c15df1.js"
+    "static/css/main.1360816b.css",
+    "static/js/main.858e4cc4.js"
   ]
 }
