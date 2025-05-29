@@ -6,28 +6,14 @@ import CarouselArea from './components/CarouselArea';
 import PersonalDetailsForm from './components/JoinUs';
 import ContactUs from './components/ContactUs';
 import LoremIpsum from './components/LoremIpsum';
+import Dashboard from '../src/pages/Dashboard.jsx';
 
 function App() {
   return (
     <div id="app-container">
 
-      <NavBar />
-      
-      <div id="home">        
-        <CarouselArea />
-      </div>
-      
-      <div id="about">
-        <AboutUs />
-      </div>     
+      <Dashboard />
 
-      <div id="join"> 
-        <PersonalDetailsForm />
-      </div>
-      
-      <div id="contact">
-        <ContactUs />
-      </div>
     </div>
   );
 }
