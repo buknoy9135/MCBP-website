@@ -9,7 +9,7 @@ function AboutUs () {
             <Row>
                 <Col sm={1} lg={1}></Col>
                 <Col sm={10} lg={10}>
-                    <div className="text-start" style={{ paddingTop: '80px', scrollMarginTop: '80px' }}>
+                    <div className="text-start aboutus-container">
                     <h3 className="text-primary aboutus-heading">About Us</h3>
                     <p className="text-justify aboutus-text"><strong>Metro Cebu Businessmen and Professionals (MCBP)</strong> is a dedicated organization committed to enhancing public safety, empowering communities, and supporting rapid response to emergencies. We stand at the intersection of crime prevention and community resilience, working tirelessly to create safer neighborhoods through collaboration, education, and action.</p>
                     <p className="text-justify aboutus-text">Founded on the principles of service, vigilance, and unity, MCBP brings together volunteers, trained responders, and local partners to deter crime, assist in crisis situations, and provide vital support in times of need. Whether it’s assisting during natural disasters, supporting search and rescue efforts, or helping prevent criminal activity through proactive community outreach, we are there—ready to respond.</p>
