@@ -1,0 +1,44 @@
+
+
+/* Default desktop view */
+.brand-responsive {
+  font-size: 1.25rem;
+  color: #0a58ca !important;
+  font-weight: 600;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+  .brand-responsive {
+    font-size: 0.85rem !important;
+  }
+
+  .navbar-logo {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.custom-toggle {
+  padding: 0px !important;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #0a58ca !important;  /* thin colored border */
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-toggle .navbar-toggler-icon {
+  background-size: 20px 18px;
+  margin: 0 auto;       /* center the icon */
+}
+
+

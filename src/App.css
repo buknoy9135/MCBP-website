@@ -1,0 +1,7 @@
+#app-container {
+  background-image: url(../src/assets/background/backgroun2.jpg);
+  background-repeat: no-repeat;     /* Don't repeat the image */
+  background-size: cover;           /* Cover the entire area */
+  background-position: center;      /* Center the image */
+  background-attachment: fixed;
+}

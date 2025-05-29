@@ -1,0 +1,40 @@
+/* Smaller font size on mobile */
+@media (max-width: 991.98px) {
+  .aboutus-text {
+    font-size: 0.8rem; /* smaller font */
+  }
+  
+  .aboutus-heading {
+    font-size: 1.15rem; /* smaller heading */
+  }
+}
+
+/* Larger font size on desktop */
+@media (min-width: 992px) {
+  .aboutus-text {
+    font-size: 1rem; /* normal paragraph font */
+  }
+
+  .aboutus-heading {
+    font-size: 1.75rem; /* normal heading font */
+  }
+}
+
+/* Smaller font size on mobile */
+@media (max-width: 991.98px) {
+  .aboutus-heading-h4 {
+    font-size: 1rem; /* smaller h4 font */
+  }
+}
+
+/* Larger font size on desktop */
+@media (min-width: 992px) {
+  .aboutus-heading-h4 {
+    font-size: 1.5rem; /* normal h4 font */
+  }
+}
+
+
+.text-justify {
+  text-align: justify !important;
+}

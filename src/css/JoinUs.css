@@ -1,0 +1,98 @@
+.join-us-wrapper {
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thematic-form {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  max-width: 750px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-heading {
+  font-size: 1.8rem;
+  color: #0a58ca;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.form-subtext {
+  font-size: 0.95rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.thematic-form .form-label {
+  color: #0a58ca;
+  font-weight: 500;
+}
+
+.thematic-form .form-control {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+  transition: border 0.2s ease-in-out;
+}
+
+.thematic-form .form-control:focus {
+  border-color: #0a58ca;
+  box-shadow: 0 0 0 0.1rem rgba(10, 88, 202, 0.2);
+}
+
+.thematic-form button[type="submit"] {
+  background-color: #0a58ca;
+  border-color: #0a58ca;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+  display: block;
+  margin: 1rem auto 0;
+}
+
+.thematic-form button[type="submit"]:hover {
+  background-color: #084298;
+  border-color: #084298;
+}
+
+
+
+@media (max-width: 576px) {
+  .thematic-form {
+    padding: 1.2rem;
+  }
+
+  .form-heading {
+    font-size: 1.2rem;
+  }
+
+  .form-subtext {
+    font-size: 0.8rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .thematic-form .form-control {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .thematic-form .form-label {
+    font-size: 0.7rem;
+  }
+
+  .thematic-form button[type="submit"] {
+    font-size: 0.8rem;
+    padding: 0.45rem 1rem;
+  }
+}
