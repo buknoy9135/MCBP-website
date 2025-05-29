@@ -6,8 +6,8 @@ import '../css/CarouselArea.css'
 
 function CarouselArea() {
   const imgStyleMobile = {
-    width: '300px',
-    height: '200px',
+    width: '350px',
+    height: '235px',
     objectFit: 'fill',
     backgroundColor: 'white',
     opacity: 0.8,
@@ -31,7 +31,7 @@ function CarouselArea() {
           <img
             src={slide}
             alt={`Slide ${index + 1}`}
-            className="d-block d-lg-none mx-auto pt-3 carousel-image"
+            className="d-block d-lg-none mx-auto carousel-image"
             style={imgStyleMobile}
           />
           {/* Desktop view */}
