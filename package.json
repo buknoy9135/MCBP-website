@@ -2,7 +2,7 @@
   "name": "mcbp-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/buknoy9135/MCBP-website",
+  "homepage": "https://buknoy9135.github.io/MCBP-website",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
