@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/MCBP-website/static/css/main.c5e316b9.css",
-    "main.js": "/MCBP-website/static/js/main.c476e408.js",
+    "main.js": "/MCBP-website/static/js/main.8b0b3398.js",
     "static/js/453.b2b263e2.chunk.js": "/MCBP-website/static/js/453.b2b263e2.chunk.js",
     "static/media/backgroun2.jpg": "/MCBP-website/static/media/backgroun2.367c660ca9cf88263a25.jpg",
     "static/media/slide2.jpg": "/MCBP-website/static/media/slide2.642b663ee067293f62d7.jpg",
@@ -10,11 +10,11 @@
     "static/media/mcbp-logo.jpeg": "/MCBP-website/static/media/mcbp-logo.3a87edc41249a65f21e8.jpeg",
     "index.html": "/MCBP-website/index.html",
     "main.c5e316b9.css.map": "/MCBP-website/static/css/main.c5e316b9.css.map",
-    "main.c476e408.js.map": "/MCBP-website/static/js/main.c476e408.js.map",
+    "main.8b0b3398.js.map": "/MCBP-website/static/js/main.8b0b3398.js.map",
     "453.b2b263e2.chunk.js.map": "/MCBP-website/static/js/453.b2b263e2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c5e316b9.css",
-    "static/js/main.c476e408.js"
+    "static/js/main.8b0b3398.js"
   ]
 }
