@@ -1,0 +1,6 @@
+
+const BlogCard = ({}) => (
+    <div>
+
+    </div>
+)

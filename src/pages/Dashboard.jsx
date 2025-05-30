@@ -5,6 +5,8 @@ import AboutUs from '../components/AboutUs';
 import CarouselArea from '../components/CarouselArea';
 import PersonalDetailsForm from '../components/JoinUs';
 import ContactUs from '../components/ContactUs';
+import BlogThumbnails from '../components/BlogThumbnails.jsx';
+
 
 function Dashboard() {
   return (
@@ -19,6 +21,10 @@ function Dashboard() {
       <div id="about">
         <AboutUs />
       </div>     
+
+      <div id='thumbnails'>
+      <BlogThumbnails />
+      </div>
 
       <div id="join"> 
         <PersonalDetailsForm />
