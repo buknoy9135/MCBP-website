@@ -84,7 +84,7 @@ function BlogDetail() {
                 )}
 
                 {/* Blog Navigation */}
-                <div className="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
+                <div className="d-flex justify-content-between align-items-center mt-5 pt-3 pb-4 border-top">
                     {previousPost ? (
                         <Link
                             to={`/blog/${previousPost.slug}`}
