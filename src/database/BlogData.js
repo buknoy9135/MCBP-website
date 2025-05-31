@@ -23,7 +23,16 @@ const blogPosts = [
         image: [
                 "/blog-images/accert/sos/sos1.jpg",
                 "/blog-images/accert/sos/sos2.jpg",
-                "/blog-images/accert/sos/sos3.jpg"
+                "/blog-images/accert/sos/sos3.jpg",
+                "/blog-images/accert/sos/sos4.jpg",
+                "/blog-images/accert/sos/sos5.jpg",
+                "/blog-images/accert/sos/sos6.jpg",
+                "/blog-images/accert/sos/sos7.jpg",
+                "/blog-images/accert/sos/sos8.jpg",
+                "/blog-images/accert/sos/sos9.jpg",
+                "/blog-images/accert/sos/sos10.jpg",
+                "/blog-images/accert/sos/sos11.jpg",
+                "/blog-images/accert/sos/sos12.jpg",
                 ],
         date: "December 1, 2024",
     },

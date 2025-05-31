@@ -62,13 +62,15 @@ function CarouselArea() {
       />
 
       {/* Dark overlay */}
-      <div className="carousel-overlay"></div>
-
-      {/* Text */}
-      <div className="carousel-caption">
-        <h3>{slideContent[index].heading}</h3>
-        <p>{slideContent[index].text}</p>
+      <div className="carousel-overlay">
+          {/* Text */}
+        <div className="carousel-caption">
+          <h3>{slideContent[index].heading}</h3>
+          <p>{slideContent[index].text}</p>
+        </div>
       </div>
+
+      
     </div>
   </Carousel.Item>
 ))}

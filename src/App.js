@@ -12,8 +12,10 @@ import BlogDetail from './pages/BlogDetail.jsx';
 function App() {
   return (
     <BrowserRouter basename="/MCBP-website">
+      <NavBar />
       <Routes>        
         <Route path="/" element={<Dashboard />} />
+        <Route path='/about' element={<AboutUs />} />
         <Route path='/blog/:slug' element={<BlogDetail />} />
       </Routes>
     </BrowserRouter>   

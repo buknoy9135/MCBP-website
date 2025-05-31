@@ -1,0 +1,24 @@
+#BlogDetail-container {
+  background-image: url(../assets/background/backgroun2.jpg);
+  background-repeat: no-repeat;     /* Don't repeat the image */
+  background-size: cover;           /* Cover the entire area */
+  background-position: center;      /* Center the image */
+  background-attachment: fixed;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+/* Default styles (for larger screens) */
+.BlogDetail-container {
+  font-size: 1rem !important;
+}
+
+/* Smaller font on mobile screens */
+@media (max-width: 767.98px) {
+  .BlogDetail-container {
+    font-size: 0.8rem !important; /* or 0.85rem or smaller if needed */
+  }
+}
+
