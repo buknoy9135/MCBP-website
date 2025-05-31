@@ -1,6 +1,7 @@
 const blogPosts = [
     {
         id: 1,
+        slug: "sos-christmas-party",
         title: "Christmas for a Cause 2024",
         description: "Chrismas Party at SOS Children's Village",
         published: "May 29, 2025",
@@ -28,6 +29,7 @@ const blogPosts = [
     },
     {
         id: 2,
+        slug: "ibo-feeding-program",
         title: "Feeding Program and Gift Distribution",
         description: "Joint feeding program and distribution of gifts",
         published: "May 29, 2025",
@@ -55,6 +57,7 @@ const blogPosts = [
     },
     {
         id: 3,
+        slug: "agus-cleanup-drive",
         title: "Coastal Clean-Up Drive at Agus",
         description: "A day of service to the environment",
         published: "May 30, 2025",
@@ -82,6 +85,7 @@ const blogPosts = [
     },
     {
         id: 4,
+        slug: "cordova-cleanup-drive",
         title: "Coastal Clean-Up Drive at RORO Cordova",
         description: "A day of service to the environment",
         published: "May 30, 2025",
@@ -109,6 +113,7 @@ const blogPosts = [
     },
 //     {
 //         id: 5,
+//         slug: "",
 //         title: "",
 //         description: "",
 //         published: "",
@@ -132,6 +137,7 @@ const blogPosts = [
 //     },
 //     {
 //         id: 6,
+//         slug: "",
 //         title: "",
 //         description: "",
 //         published: "",

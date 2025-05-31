@@ -37,10 +37,10 @@ function NavBar() {
             <Nav.Link href="#contact" style={{ color: '#0a58ca' }} onClick={() => setExpanded(false)}>Contact Us</Nav.Link>
             <NavDropdown title={<span style={{ color: '#0a58ca' }} onClick={() => setExpanded(false)}>Affiliation</span>}         id="basic-nav-dropdown"
             >
-              <NavDropdown.Item a href="https://accert.org.ph/about.html" target="_blank"
-              rel="noopener noreferrer" aria-label="ACCERT website">ACCERT</NavDropdown.Item>
-              <NavDropdown.Item a href="https://thefraternalorderofeagles.club/" target="_blank"
-              rel="noopener noreferrer" aria-label="EAGLES website">EAGLES</NavDropdown.Item>
+              <NavDropdown.Item a href="https://www.facebook.com/accertofficial/" target="_blank"
+              rel="noopener noreferrer" aria-label="ACCERT facebook website">ACCERT</NavDropdown.Item>
+              <NavDropdown.Item a href="https://www.facebook.com/tfoeofficial/" target="_blank"
+              rel="noopener noreferrer" aria-label="EAGLES facebook website">EAGLES</NavDropdown.Item>
               {/* <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
             </NavDropdown>

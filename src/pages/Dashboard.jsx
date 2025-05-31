@@ -1,5 +1,4 @@
 import '../css/Dashboard.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from '../components/NavBar.jsx';
 import AboutUs from '../components/AboutUs';
 import CarouselArea from '../components/CarouselArea';
