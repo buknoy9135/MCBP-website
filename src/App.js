@@ -18,6 +18,7 @@ function App() {
         <Route path='/about' element={<AboutUs />} />
         <Route path='/blog/:slug' element={<BlogDetail />} />
       </Routes>
+      <ContactUs />
     </BrowserRouter>   
     
 

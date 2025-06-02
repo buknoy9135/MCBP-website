@@ -65,14 +65,14 @@ function NavBar() {
             >
               Join Us
             </Nav.Link>
-            <Nav.Link
+            {/* <Nav.Link
               as={Link}
               to="/#contact"
               style={{ color: '#0a58ca' }}
               onClick={() => setExpanded(false)}
             >
               Contact Us
-            </Nav.Link>
+            </Nav.Link> */}
             <NavDropdown
               title={<span style={{ color: '#0a58ca' }}>Affiliation</span>}
               id="basic-nav-dropdown"

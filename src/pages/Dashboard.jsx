@@ -44,9 +44,9 @@ function Dashboard() {
         <PersonalDetailsForm />
       </div>
 
-      <div id="contact">
+      {/* <div id="contact">
         <ContactUs />
-      </div>
+      </div> */}
     </div>
   );
 }

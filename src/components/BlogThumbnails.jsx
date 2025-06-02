@@ -40,11 +40,11 @@ function BlogThumbnails() {
                 <Card.Img
                   variant="top"
                   src={`${process.env.PUBLIC_URL}${post.image[0]}`}
-                  style={{ objectFit: "cover", height: "200px", width: "100%" }}
+                  style={{ objectFit: "cover", height: "250px", width: "100%" }}
                   loading="lazy"
                 />
               </Link>
-              <Card.Body>
+              <Card.Body className="py-2">
                 <Card.Title className="fs-6">{post.title}</Card.Title>
                 <Card.Text className="small text-muted truncate-text">
                   {post.description}

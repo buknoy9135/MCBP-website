@@ -96,3 +96,27 @@
     padding: 0.45rem 1rem;
   }
 }
+
+/* Modal */
+.custom-modal .modal-content {
+  max-width: 320px;
+  margin: auto;
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+.custom-modal .modal-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.modal-hr {
+  border: none;
+  border-top: 1px solid #dee2e6;
+  margin: 0.5rem 0;
+}
+
+.modal-footer .btn {
+  padding: 0.25rem 1rem;
+  font-size: 0.875rem;
+}
