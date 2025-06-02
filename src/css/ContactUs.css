@@ -1,6 +1,6 @@
 footer {
-  background-color: #222;
-  color: #eee;
+  background-color: white;
+  color: #0a58ca;
   padding: 0.5rem 1rem;
   font-size: 0.9rem; /* base font size */
 }
@@ -21,7 +21,7 @@ footer .container > div {
 }
 
 footer a {
-  color: #eee;
+  color: #0a58ca;
   margin-right: 0.75rem;
   font-size: 1.15rem;
   display: flex;
