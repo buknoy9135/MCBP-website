@@ -3,6 +3,7 @@ import blogPosts from "../database/BlogData";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
 import "../css/BlogDetail.css";
+import NavBar from "../components/NavBar";
 
 function BlogDetail() {
   const { slug } = useParams();

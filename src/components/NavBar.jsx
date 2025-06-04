@@ -5,7 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/mcbp-logo.jpeg";
-import '../css/NavBar.css';
+import "../css/NavBar.css";
 
 function NavBar() {
   const [expanded, setExpanded] = useState(false);
@@ -16,10 +16,8 @@ function NavBar() {
       fixed="top"
       className="bg-body-tertiary"
       expanded={expanded}
-      onToggle={() => setExpanded(!expanded)}
-    >
+      onToggle={() => setExpanded(!expanded)}>
       <Container>
-
         {/* Logo aligned left */}
         <Navbar.Brand
           as={Link}
@@ -36,7 +34,10 @@ function NavBar() {
         </Navbar.Brand>
 
         {/* Navbar toggle for collapse on mobile */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" className="custom-toggle" />
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          className="custom-toggle"
+        />
 
         {/* Nav links aligned right */}
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
@@ -44,7 +45,7 @@ function NavBar() {
             <Nav.Link
               as={Link}
               to="/"
-              style={{ color: '#0a58ca' }}
+              style={{ color: "#0a58ca" }}
               onClick={() => setExpanded(false)}
             >
               Home
@@ -52,7 +53,7 @@ function NavBar() {
             <Nav.Link
               as={Link}
               to="/#about"
-              style={{ color: '#0a58ca' }}
+              style={{ color: "#0a58ca" }}
               onClick={() => setExpanded(false)}
             >
               About Us
@@ -60,7 +61,7 @@ function NavBar() {
             <Nav.Link
               as={Link}
               to="/#join"
-              style={{ color: '#0a58ca' }}
+              style={{ color: "#0a58ca" }}
               onClick={() => setExpanded(false)}
             >
               Join Us
@@ -74,7 +75,7 @@ function NavBar() {
               Contact Us
             </Nav.Link> */}
             <NavDropdown
-              title={<span style={{ color: '#0a58ca' }}>Affiliation</span>}
+              title={<span style={{ color: "#0a58ca" }}>Affiliation</span>}
               id="basic-nav-dropdown"
             >
               <NavDropdown.Item

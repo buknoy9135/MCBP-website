@@ -41,4 +41,9 @@
   margin: 0 auto;       /* center the icon */
 }
 
+.navbar {
+  z-index: 1030 !important; /* Or less than 2000 */
+}
+
+
 

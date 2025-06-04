@@ -1,6 +1,11 @@
-import React, { useEffect } from 'react';
-import { useSwipeable } from 'react-swipeable';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect } from "react";
+import { useSwipeable } from "react-swipeable";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { createPortal } from "react-dom";
+
+
+
+// import "../css/ImageModal.css";
 
 const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
   const handlePrev = () => {
@@ -20,30 +25,30 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'ArrowLeft') handlePrev();
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'Escape') onClose();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "Escape") onClose();
     };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
       className="modal-overlay"
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0,0,0,0.85)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0,0,0,0.85)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         zIndex: 1050,
-        padding: '1rem',
-        boxSizing: 'border-box',
+        padding: "1rem",
+        boxSizing: "border-box",
       }}
       onClick={onClose}
     >
@@ -51,23 +56,23 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
       <button
         onClick={onClose}
         style={{
-          position: 'absolute',
-          top: '1rem',
-          right: window.innerWidth > 768 ? '15rem' : '1rem',
-          background: 'rgba(0,0,0,0.6)',
-          border: 'none',
-          color: '#fff',
-          fontSize: '2rem',
-          fontWeight: 'bold',
-          borderRadius: '999px',
-          width: '44px',
-          height: '44px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
+          position: "fixed",
+          top: "1rem",
+          right: window.innerWidth > 768 ? "15rem" : "1rem",
+          background: "rgba(0,0,0,0.6)",
+          border: "none",
+          color: "#fff",
+          fontSize: "2rem",
+          fontWeight: "bold",
+          borderRadius: "999px",
+          width: "44px",
+          height: "44px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
           zIndex: 1100,
-          touchAction: 'manipulation',
+          touchAction: "manipulation",
         }}
         aria-label="Close"
       >
@@ -78,38 +83,38 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
         {...handlers}
         onClick={(e) => e.stopPropagation()}
         style={{
-          position: 'relative',
-          maxWidth: '95vw',
-          maxHeight: '95vh',
-          textAlign: 'center',
-          color: '#fff',
+          position: "relative",
+          maxWidth: "95vw",
+          maxHeight: "95vh",
+          textAlign: "center",
+          color: "#fff",
         }}
       >
         <img
           src={images[currentIndex]}
           alt={`Image ${currentIndex + 1}`}
           style={{
-            maxWidth: '100%',
-            maxHeight: '70vh',
-            borderRadius: '8px',
-            boxShadow: '0 0 30px rgba(0, 0, 0, 0.6)',
-            backgroundColor: '#fff',
+            maxWidth: "100%",
+            maxHeight: "70vh",
+            borderRadius: "8px",
+            boxShadow: "0 0 30px rgba(0, 0, 0, 0.6)",
+            backgroundColor: "#fff",
           }}
         />
 
         <div
           style={{
-            marginTop: '0.75rem',
-            fontSize: '0.95rem',
-            color: '#ccc',
+            marginTop: "0.75rem",
+            fontSize: "0.95rem",
+            color: "#ccc",
           }}
         >
           {currentIndex + 1} / {images.length}
           <span
             className="d-block d-md-none"
             style={{
-              fontSize: '0.85rem',
-              marginTop: '0.25rem',
+              fontSize: "0.85rem",
+              marginTop: "0.25rem",
             }}
           >
             ← Swipe | Tap →
@@ -119,21 +124,21 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
         {/* Navigation Arrows */}
         <div
           style={{
-            marginTop: '1rem',
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '2.5rem',
+            marginTop: "1rem",
+            display: "flex",
+            justifyContent: "center",
+            gap: "2.5rem",
           }}
         >
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
             style={{
-              background: 'none',
-              border: 'none',
-              color: currentIndex === 0 ? '#777' : '#fff',
-              fontSize: '2rem',
-              cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
+              background: "none",
+              border: "none",
+              color: currentIndex === 0 ? "#777" : "#fff",
+              fontSize: "2rem",
+              cursor: currentIndex === 0 ? "not-allowed" : "pointer",
             }}
           >
             <ChevronLeft size={44} />
@@ -143,12 +148,12 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
             onClick={handleNext}
             disabled={currentIndex === images.length - 1}
             style={{
-              background: 'none',
-              border: 'none',
-              color: currentIndex === images.length - 1 ? '#777' : '#fff',
-              fontSize: '2rem',
+              background: "none",
+              border: "none",
+              color: currentIndex === images.length - 1 ? "#777" : "#fff",
+              fontSize: "2rem",
               cursor:
-                currentIndex === images.length - 1 ? 'not-allowed' : 'pointer',
+                currentIndex === images.length - 1 ? "not-allowed" : "pointer",
             }}
           >
             <ChevronRight size={44} />
@@ -158,12 +163,12 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
         {/* Thumbnails */}
         <div
           style={{
-            marginTop: '1.5rem',
-            display: 'flex',
-            justifyContent: 'center',
-            overflowX: 'auto',
-            gap: '0.5rem',
-            paddingBottom: '0.5rem',
+            marginTop: "1.5rem",
+            display: "flex",
+            justifyContent: "center",
+            overflowX: "auto",
+            gap: "0.5rem",
+            paddingBottom: "0.5rem",
           }}
         >
           {images.map((img, idx) => (
@@ -173,21 +178,22 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
               alt={`Thumb ${idx + 1}`}
               onClick={() => setCurrentIndex(idx)}
               style={{
-                height: '50px',
-                borderRadius: '4px',
+                height: "50px",
+                borderRadius: "4px",
                 border:
                   idx === currentIndex
-                    ? '2px solid #fff'
-                    : '2px solid transparent',
-                cursor: 'pointer',
+                    ? "2px solid #fff"
+                    : "2px solid transparent",
+                cursor: "pointer",
                 opacity: idx === currentIndex ? 1 : 0.7,
-                transition: 'transform 0.2s',
+                transition: "transform 0.2s",
               }}
             />
           ))}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
