@@ -16,7 +16,7 @@ function BlogDetail() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    setVisibleImageCount(6);
+    setVisibleImageCount(12);
   }, [slug]);
 
   if (!post) return <div>Post not found.</div>;
@@ -25,7 +25,7 @@ function BlogDetail() {
   const nextPost = blogPosts[currentIndex + 1];
 
   const handleLoadMore = () => {
-    setVisibleImageCount((prev) => Math.min(prev + 6, post.image.length));
+    setVisibleImageCount((prev) => Math.min(prev + 12, post.image.length));
   };
 
   const visibleImages = post.image.slice(0, visibleImageCount);
@@ -47,11 +47,35 @@ function BlogDetail() {
           </button>
         </div>
 
-        <h3>{post.title}</h3>
-        <h5>{post.description}</h5>
-        <p className="text-muted">{post.location}</p>
-        <p className="text-muted">{post.date}</p>
-        <p className="text-justify">{post.story}</p>
+        <div className="mb-4">
+          <h2 className="fw-bold mb-2">{post.title}</h2>
+
+          <p
+            className="text-secondary fst-italic mb-3"
+            style={{ fontSize: "clamp(0.85rem, 1vw + 0.5rem, 1.1rem)" }}
+          >
+            {post.description}
+          </p>
+
+          <div className="d-flex flex-column flex-md-row text-muted mb-3 small">
+            <span className="mb-1 mb-md-0 me-md-4">{post.location}</span>
+            <span>{post.date}</span>
+          </div>
+
+          <hr className="my-4" />
+          <p
+            className="text-justify post-story"
+            style={{
+              marginTop: "1rem",
+              paddingTop: "0.5rem",
+              color: "#333",
+            }}
+          >
+            {post.story}
+          </p>
+
+          <hr className="my-4" />
+        </div>
 
         {post.image && post.image.length > 0 && (
           <>
@@ -59,7 +83,7 @@ function BlogDetail() {
               {visibleImages.map((imgPath, i) => (
                 <div className="col-6 col-md-4" key={i}>
                   <img
-                    src={`${process.env.PUBLIC_URL}${imgPath}`}
+                    src={imgPath}
                     alt={`Blog image ${i + 1}`}
                     className="img-fluid rounded shadow-sm"
                     loading="lazy"
@@ -132,7 +156,7 @@ function BlogDetail() {
         {/* Modal with local image paths */}
         {modalOpen && (
           <ImageModal
-            images={post.image.map((img) => `${process.env.PUBLIC_URL}${img}`)}
+            images={post.image}
             currentIndex={currentImageIndex}
             setCurrentIndex={setCurrentImageIndex}
             onClose={() => setModalOpen(false)}

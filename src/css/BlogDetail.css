@@ -1,10 +1,25 @@
 #BlogDetail-container {
+  position: relative;
   background-image: url(../assets/background/backgroun2.jpg);
-  background-repeat: no-repeat;     /* Don't repeat the image */
-  background-size: cover;           /* Cover the entire area */
-  background-position: center;      /* Center the image */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
+  z-index: 0;
 }
+
+/* Light overlay */
+#BlogDetail-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.4); /* adjust opacity as needed */
+  z-index: -1; /* behind content, but above background */
+}
+
 
 .text-justify {
   text-align: justify !important;
@@ -22,3 +37,14 @@
   }
 }
 
+/* Default for large screens */
+.post-story {
+  font-size: 1rem;
+}
+
+/* Smaller font on mobile screens */
+@media (max-width: 767.98px) {
+  .post-story {
+    font-size: 0.8rem;
+  }
+}

@@ -39,7 +39,7 @@ function BlogThumbnails() {
               <Link to={`/blog/${post.slug}`}>
                 <Card.Img
                   variant="top"
-                  src={`${process.env.PUBLIC_URL}${post.image[0]}`}
+                  src={post.image[0]}
                   style={{ objectFit: "cover", height: "250px", width: "100%" }}
                   loading="lazy"
                 />

@@ -20,7 +20,7 @@ const blogPosts = [
 ),
         location: "SOS Children's Village, Talamban, Cebu City, Philippines",
         category: "ACCERT",
-        image: Array.from({ length: 12 }, (_, i) => `/blog-images/accert/sos/sos${i + 1}.jpg`),
+        image: Array.from({ length: 12 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/sos${String(i + 1).padStart(3, '0')}.jpg`),
         date: "December 1, 2024",
     },
     {
@@ -43,7 +43,7 @@ const blogPosts = [
 ),
         location: "Brgy. Ibo Covered Court, Lapu-Lapu City, Cebu, Philippines",
         category: "TFOE-PE",
-        image: Array.from({ length: 3 }, (_, i) => `/blog-images/eagles/ibo/ibo${i + 1}.jpg`),
+        image: Array.from({ length: 3 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/ibo${String(i + 1).padStart(3, '0')}.jpg`),
         date: "February 23, 2025",
     },
     {
@@ -66,7 +66,7 @@ const blogPosts = [
 ),
         location: "Agus, Lapu-Lapu City",
         category: "TFOE-PE",
-        image: Array.from({ length: 3 }, (_, i) => `/blog-images/eagles/agus/agus${i + 1}.jpg`),
+        image: Array.from({ length: 3 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/agus${String(i + 1).padStart(3, '0')}.jpg`),
         date: "May 10, 2025",
     },
     {
@@ -88,7 +88,7 @@ const blogPosts = [
 ),
         location: "RORO Port, Cordova, Cebu",
         category: "TFOE-PE",
-        image: Array.from({ length: 3 }, (_, i) => `/blog-images/eagles/catarman/catarman${i + 1}.jpg`),
+        image: Array.from({ length: 74 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/catarman${String(i + 1).padStart(3, '0')}.jpg`),
         date: "May 25, 2025",
     },
 //     {
