@@ -3,7 +3,6 @@ import blogPosts from "../database/BlogData";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
 import "../css/BlogDetail.css";
-import NavBar from "../components/NavBar";
 
 function BlogDetail() {
   const { slug } = useParams();
@@ -37,7 +36,10 @@ function BlogDetail() {
   };
 
   return (
-    <div id="BlogDetail-container" className="BlogDetail-container">
+    <div
+      id="BlogDetail-container"
+      className="BlogDetail-container page-background"
+    >
       <div className="container pt-5 pt-md-5 mt-4 mt-md-5">
         <div className="d-block d-md-none">
           <button
@@ -59,8 +61,14 @@ function BlogDetail() {
           </p>
 
           <div className="d-flex flex-column flex-md-row text-muted mb-3 small">
-            <span className="mb-1 mb-md-0 me-md-4">{post.location}</span>
-            <span>{post.date}</span>
+            <span className="mb-1 mb-md-0 me-md-4">
+              <i className="bi bi-geo-alt-fill me-1 text-danger"></i>
+              {post.location}
+            </span>
+            <span>
+              <i className="bi bi-calendar-event-fill me-1 text-primary"></i>
+              {post.date}
+            </span>
           </div>
 
           <hr className="my-4" />

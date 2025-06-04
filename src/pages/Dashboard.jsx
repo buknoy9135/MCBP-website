@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../css/Dashboard.css';
 
 import NavBar from '../components/NavBar.jsx';
 import AboutUs from '../components/AboutUs';
 import CarouselArea from '../components/CarouselArea';
 import PersonalDetailsForm from '../components/JoinUs';
-import ContactUs from '../components/ContactUs';
 import BlogThumbnails from '../components/BlogThumbnails.jsx';
 
 function Dashboard() {
@@ -25,7 +23,7 @@ function Dashboard() {
   }, [location]);
 
   return (
-    <div id="dashboard-container">
+    <div id="dashboard-container" className='page-background'>
       <NavBar />
 
       <div id="home">

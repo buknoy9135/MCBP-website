@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/mcbp-logo.jpeg";
+import logo from "../assets/mcbp-logo.png";
 import "../css/NavBar.css";
 
 function NavBar() {

@@ -1,10 +1,11 @@
 import React from "react";
 import "../css/ContactUs.css";
+import { Link } from "react-router-dom";
 
 function ContactUs() {
   return (
     <footer>
-      <div className="container d-flex flex-wrap justify-content-between align-items-center">
+      <div className="container d-flex flex-wrap align-items-center custom-footer-container">
         <div>
           <i className="bi bi-geo-alt-fill me-2"></i>
           <a
@@ -12,17 +13,16 @@ function ContactUs() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              all: "unset", // reset inherited browser styles
-              cursor: "pointer", // keep pointer for UX
-              display: "inline", // keep it inline
+              all: "unset",
+              cursor: "pointer",
+              display: "inline",
             }}
           >
-            2688 Sitio Mahayahay, Brgy. Bankal, 6015 Lapulapu City, Cebu,
-            Philippines
+            Lapulapu City, Cebu, Philippines
           </a>
         </div>
         <div>
-          <i className="bi bi-telephone-fill me-2"></i>
+          <i className="bi bi-telephone-fill me-"></i>
           <a
             href="tel:+639176553110"
             style={{
@@ -44,10 +44,9 @@ function ContactUs() {
               display: "inline",
             }}
           >
-            contact@mcbp.ph
+            contact@mcbp-org.com
           </a>
         </div>
-
         <div>
           <a
             href="https://www.facebook.com/share/g/16D7hSj6Fy/?mibextid=controlMsg"
@@ -74,6 +73,22 @@ function ContactUs() {
             <i className="bi bi-linkedin"></i>
           </a>
         </div>
+      </div>
+      {/* ✅ Footer bottom text - mobile friendly & consistent */}
+      <div className="footer-bottom">
+        <span className="copyright">
+          © {new Date().getFullYear()} Metro Cebu Businessmen and
+          Professionals.
+          <span className="mobile-break"></span> All rights reserved. |{" "}
+          <Link
+            to="/privacy-policy"
+            className="privacy-link"
+            style={{ marginInline: "7px" }}
+          >
+            Privacy Policy
+          </Link>
+          <span>| created by: Jalil Abulais</span>
+        </span>
       </div>
     </footer>
   );
