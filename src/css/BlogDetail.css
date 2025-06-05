@@ -10,7 +10,7 @@
 /* Smaller font on mobile screens */
 @media (max-width: 767.98px) {
   .BlogDetail-container {
-    font-size: 0.8rem !important; /* or 0.85rem or smaller if needed */
+    font-size: 0.9rem !important; /* or 0.85rem or smaller if needed */
   }
 }
 

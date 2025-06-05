@@ -56,7 +56,7 @@ function BlogDetail() {
 
           <p
             className="text-secondary fst-italic mb-3"
-            style={{ fontSize: "clamp(0.85rem, 1vw + 0.5rem, 1.1rem)" }}
+            style={{ fontSize: "clamp(1rem, 1vw + 0.5rem, 1.1rem)" }}
           >
             {post.description}
           </p>

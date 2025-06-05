@@ -22,7 +22,6 @@ const blogPosts = [
         category: "ACCERT",
         image: Array.from({ length: 12 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/sos${String(i + 1).padStart(3, '0')}.jpg`),
         date: "December 1, 2024",
-        datePublished: "",
         author: {
             name: "Jalil Abulais",
             link: "https://www.facebook.com/jalil.abulais",
@@ -56,10 +55,9 @@ const blogPosts = [
         category: "TFOE-PE",
         image: Array.from({ length: 275 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/ibo${String(i + 1).padStart(3, '0')}.jpg`),
         date: "February 23, 2025",
-        datePublished: "",
         author: {
-            name: "",
-            link: "",
+            name: "Jalil Abulais",
+            link: "https://www.facebook.com/jalil.abulais",
         },
         contributors: [
             {name: "Glenn Camay",
@@ -90,10 +88,9 @@ const blogPosts = [
         category: "TFOE-PE",
         image: Array.from({ length: 86 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749094788/agus${String(i + 1).padStart(3, '0')}.jpg`),
         date: "May 10, 2025",
-        datePublished: "",
         author: {
-            name: "",
-            link: "",
+            name: "Jalil Abulais",
+            link: "https://www.facebook.com/jalil.abulais",
         },
         contributors: [
             {name: "Glenn Camay",
@@ -123,10 +120,9 @@ const blogPosts = [
         category: "TFOE-PE",
         image: Array.from({ length: 75 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/catarman${String(i + 1).padStart(3, '0')}.jpg`),
         date: "May 25, 2025",
-        datePublished: "",
         author: {
-            name: "",
-            link: "",
+            name: "Jalil Abulais",
+            link: "https://www.facebook.com/jalil.abulais",
         },
         contributors: [
             {name: "Glenn Camay",
@@ -158,7 +154,6 @@ const blogPosts = [
 //                 ""
 //                 ],
 //         date: "",
-        // datePublished: "",
         //         author: {
         //             name: "",
         //             link: "",
@@ -193,7 +188,6 @@ const blogPosts = [
 //                 ""
 //                 ],
 //         date: "",
-        // datePublished: "",
         //         author: {
         //             name: "",
         //             link: "",
