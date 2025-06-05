@@ -22,6 +22,17 @@ const blogPosts = [
         category: "ACCERT",
         image: Array.from({ length: 12 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/sos${String(i + 1).padStart(3, '0')}.jpg`),
         date: "December 1, 2024",
+        datePublished: "",
+        author: {
+            name: "Jalil Abulais",
+            link: "https://www.facebook.com/jalil.abulais",
+        },
+        contributors: [
+            {name: "Glenn Camay",
+            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            {name: "",
+            link: "",}
+        ]
     },
     {
         id: 2,
@@ -43,8 +54,19 @@ const blogPosts = [
 ),
         location: "Brgy. Ibo Covered Court, Lapu-Lapu City, Cebu, Philippines",
         category: "TFOE-PE",
-        image: Array.from({ length: 3 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/ibo${String(i + 1).padStart(3, '0')}.jpg`),
+        image: Array.from({ length: 275 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/ibo${String(i + 1).padStart(3, '0')}.jpg`),
         date: "February 23, 2025",
+        datePublished: "",
+        author: {
+            name: "",
+            link: "",
+        },
+        contributors: [
+            {name: "Glenn Camay",
+            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            {name: "",
+            link: "",}
+        ]
     },
     {
         id: 3,
@@ -66,8 +88,19 @@ const blogPosts = [
 ),
         location: "Agus, Lapu-Lapu City",
         category: "TFOE-PE",
-        image: Array.from({ length: 3 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/agus${String(i + 1).padStart(3, '0')}.jpg`),
+        image: Array.from({ length: 86 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749094788/agus${String(i + 1).padStart(3, '0')}.jpg`),
         date: "May 10, 2025",
+        datePublished: "",
+        author: {
+            name: "",
+            link: "",
+        },
+        contributors: [
+            {name: "Glenn Camay",
+            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            {name: "",
+            link: "",}
+        ]
     },
     {
         id: 4,
@@ -88,8 +121,19 @@ const blogPosts = [
 ),
         location: "RORO Port, Cordova, Cebu",
         category: "TFOE-PE",
-        image: Array.from({ length: 74 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/catarman${String(i + 1).padStart(3, '0')}.jpg`),
+        image: Array.from({ length: 75 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/catarman${String(i + 1).padStart(3, '0')}.jpg`),
         date: "May 25, 2025",
+        datePublished: "",
+        author: {
+            name: "",
+            link: "",
+        },
+        contributors: [
+            {name: "Glenn Camay",
+            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            {name: "",
+            link: "",}
+        ]
     },
 //     {
 //         id: 5,
@@ -114,6 +158,17 @@ const blogPosts = [
 //                 ""
 //                 ],
 //         date: "",
+        // datePublished: "",
+        //         author: {
+        //             name: "",
+        //             link: "",
+        //         },
+        //         contributors: [
+        //             {name: "",
+        //             link: "",},
+        //             {name: "",
+        //             link: "",}
+        //         ]
 //     },
 //     {
 //         id: 6,
@@ -138,6 +193,17 @@ const blogPosts = [
 //                 ""
 //                 ],
 //         date: "",
+        // datePublished: "",
+        //         author: {
+        //             name: "",
+        //             link: "",
+        //         },
+        //         contributors: [
+        //             {name: "",
+        //             link: "",},
+        //             {name: "",
+        //             link: "",}
+        //         ]
 //     },
 ]
 

@@ -49,7 +49,7 @@ function ContactUs() {
         </div>
         <div>
           <a
-            href="https://www.facebook.com/share/g/16D7hSj6Fy/?mibextid=controlMsg"
+            href="https://www.facebook.com/people/Metro-Cebu-Businessmen-and-Professionals-MCBP-Accert-Chartered-Chapter/61574580928967/"
             target="_blank"
             rel="noreferrer"
             aria-label="Facebook"
@@ -57,7 +57,7 @@ function ContactUs() {
             <i className="bi bi-facebook"></i>
           </a>
           <a
-            href="https://twitter.com/mcbp"
+            // href="https://twitter.com/mcbp"
             target="_blank"
             rel="noreferrer"
             aria-label="Twitter"
@@ -65,7 +65,7 @@ function ContactUs() {
             <i className="bi bi-twitter"></i>
           </a>
           <a
-            href="https://linkedin.com/company/mcbp"
+            // href="https://linkedin.com/company/mcbp"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
@@ -87,7 +87,20 @@ function ContactUs() {
           >
             Privacy Policy
           </Link>
-          <span>| created by: Jalil Abulais</span>
+          <span>
+            <a
+            href="https://www.facebook.com/jalil.abulais"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              all: "unset",
+              cursor: "pointer",
+              display: "inline",
+            }}
+          >
+            | created by: Jalil Abulais
+          </a>
+            </span>
         </span>
       </div>
     </footer>

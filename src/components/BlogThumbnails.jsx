@@ -12,20 +12,26 @@ function BlogThumbnails() {
 
   // Set initial count and listen to screen resize
   useEffect(() => {
-    const updateImagesPerLoad = () => {
+    // Set initial counts on mount
+    const isMobile = window.innerWidth < 768;
+    const perLoad = isMobile ? 3 : 9;
+    setImagesPerLoad(perLoad);
+    setVisibleCount(perLoad);
+  }, []);
+
+  useEffect(() => {
+    // Update only imagesPerLoad on resize (don't reset visibleCount!)
+    const handleResize = () => {
       const isMobile = window.innerWidth < 768;
-      const perLoad = isMobile ? 3 : 9;
-      setImagesPerLoad(perLoad);
-      setVisibleCount(perLoad);
+      setImagesPerLoad(isMobile ? 3 : 9);
     };
 
-    updateImagesPerLoad();
-    window.addEventListener("resize", updateImagesPerLoad);
-    return () => window.removeEventListener("resize", updateImagesPerLoad);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const loadMore = () => {
-    setVisibleCount(prev => Math.min(prev + imagesPerLoad, blogPosts.length));
+    setVisibleCount((prev) => Math.min(prev + imagesPerLoad, blogPosts.length));
   };
 
   const visiblePosts = blogPosts.slice(0, visibleCount);
@@ -39,7 +45,7 @@ function BlogThumbnails() {
               <Link to={`/blog/${post.slug}`}>
                 <Card.Img
                   variant="top"
-                  src={post.image[0]}
+                  src={post.image[post.image.length - 1]}
                   style={{ objectFit: "cover", height: "250px", width: "100%" }}
                   loading="lazy"
                 />

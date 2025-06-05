@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import blogPosts from "../database/BlogData";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
+import { Camera, Video } from "lucide-react";
 import "../css/BlogDetail.css";
 
 function BlogDetail() {
@@ -82,6 +83,82 @@ function BlogDetail() {
           >
             {post.story}
           </p>
+
+          {post.date && post.author?.name && (
+            <p className="text-muted mb-3 mt-md-5" style={{ fontSize: "0.85rem" }}>
+              <i className="bi bi-calendar-event me-1 text-primary"></i>
+              Published on:{" "}
+              <span className="fw-semibold">{post.published}</span>{" "}
+              <i className="bi bi-person-fill ms-3 me-1 text-secondary"></i>
+              by:{" "}
+              {post.author.link ? (
+                <a
+                  href={post.author.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="fw-semibold text-decoration-none"
+                  style={{ color: "#555" }}
+                >
+                  {post.author.name}
+                </a>
+              ) : (
+                <span className="fw-semibold">{post.author.name}</span>
+              )}
+            </p>
+          )}
+
+          {/* media credits */}
+          {post.contributors &&
+            post.contributors.some((c) => c.name && c.link) && (
+              <div
+                className="d-flex flex-wrap align-items-center gap-2 mt-4"
+                style={{
+                  fontSize: "0.85rem",
+                  lineHeight: "1.4",
+                  color: "#555",
+                }} // change text color here
+              >
+                <span className="d-flex align-items-center">
+                  <Camera size={18} className="me-1 text-primary" />{" "}
+                  {/* change icon color */}
+                  <Video size={18} className="text-danger" />{" "}
+                  {/* change icon color */}
+                </span>
+
+                <span className="d-flex flex-wrap align-items-center gap-1">
+                  <span style={{ color: "#777" }}>
+                    Photos / Videos courtesy of
+                  </span>{" "}
+                  {(() => {
+                    const validContributors = post.contributors.filter(
+                      (c) => c.name && c.link
+                    );
+
+                    return validContributors.map((c, index) => {
+                      const isLast = index === validContributors.length - 1;
+                      const isSecondLast =
+                        index === validContributors.length - 2;
+
+                      return (
+                        <span key={index}>
+                          <a
+                            href={c.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: "#0066cc", fontWeight: 500 }} // contributor link color
+                          >
+                            {c.name}
+                          </a>
+                          {validContributors.length > 1 && !isLast && (
+                            <>{isSecondLast ? " and " : ", "}</>
+                          )}
+                        </span>
+                      );
+                    });
+                  })()}
+                </span>
+              </div>
+            )}
 
           <hr className="my-4" />
         </div>

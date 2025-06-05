@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import { useSwipeable } from "react-swipeable";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { createPortal } from "react-dom";
-
-
 
 // import "../css/ImageModal.css";
 
@@ -23,6 +21,16 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
     trackMouse: true,
   });
 
+  //to fix thumbnail not starting at the first one in the strip
+
+  const thumbContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (thumbContainerRef.current) {
+      thumbContainerRef.current.scrollLeft = 0;
+    }
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft") handlePrev();
@@ -32,6 +40,20 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
+
+  //to fix thumbnail strip not synching with selected image
+  const thumbnailRefs = useRef([]);
+
+  useEffect(() => {
+    const activeThumb = thumbnailRefs.current[currentIndex];
+    if (activeThumb && activeThumb.scrollIntoView) {
+      activeThumb.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [currentIndex]);
 
   return createPortal(
     <div
@@ -162,10 +184,11 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
 
         {/* Thumbnails */}
         <div
+          ref={thumbContainerRef}
           style={{
             marginTop: "1.5rem",
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "flex-start", // this is key
             overflowX: "auto",
             gap: "0.5rem",
             paddingBottom: "0.5rem",
@@ -175,6 +198,7 @@ const ImageModal = ({ images, currentIndex, setCurrentIndex, onClose }) => {
             <img
               key={idx}
               src={img}
+              ref={(el) => (thumbnailRefs.current[idx] = el)}
               alt={`Thumb ${idx + 1}`}
               onClick={() => setCurrentIndex(idx)}
               style={{

@@ -19,20 +19,14 @@ function AboutUs() {
               leadership, and collaboration.
             </p>
             <p className="text-justify aboutus-text">
-              Chartered under{" "}
-              <strong>
-                <em>ACCERT</em>
-              </strong>{" "}
-              (Anti Crime and Community Emergency Response Team) and affiliated
-              with{" "}
-              <strong>
-                <em>TFOE-PE</em>
-              </strong>{" "}
-              (The Fraternal Order of Eagles - Philippine Eagles), MCBP blends
-              business acumen with a deep commitment to civic duty. Our members
-              share a passion for service, leadership, and nation-building,
-              actively engaging in initiatives that enhance public safety,
-              social welfare, and community resilience.
+              Chartered under <strong>ACCERT</strong> (Anti Crime and Community
+              Emergency Response Team) and affiliated with{" "}
+              <strong>TFOE-PE</strong> (The Fraternal Order of Eagles -
+              Philippine Eagles), MCBP blends business acumen with a deep
+              commitment to civic duty. Our members share a passion for service,
+              leadership, and nation-building, actively engaging in initiatives
+              that enhance public safety, social welfare, and community
+              resilience.
             </p>
             <p className="text-justify aboutus-text">
               Grounded in the principles of service through leadership, we
