@@ -20,7 +20,7 @@ const blogPosts = [
 ),
         location: "SOS Children's Village, Talamban, Cebu City, Philippines",
         category: "ACCERT",
-        image: Array.from({ length: 12 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/sos${String(i + 1).padStart(3, '0')}.jpg`),
+        image: Array.from({ length: 88 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749138942/sos${String(i + 1).padStart(3, '0')}.jpg`),
         date: "December 1, 2024",
         author: {
             name: "Jalil Abulais",

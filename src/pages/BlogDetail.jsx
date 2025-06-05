@@ -5,6 +5,26 @@ import ImageModal from "../components/ImageModal";
 import { Camera, Video } from "lucide-react";
 import "../css/BlogDetail.css";
 
+function ImageWrapper({ src, alt, index, onOpen }) {
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  const handleLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    if (naturalHeight > naturalWidth) {
+      setIsPortrait(true);
+    }
+  };
+
+  return (
+    <div
+      className={`image-box ${isPortrait ? "portrait" : ""}`}
+      onClick={() => onOpen(index)}
+    >
+      <img src={src} alt={alt} loading="lazy" onLoad={handleLoad} />
+    </div>
+  );
+}
+
 function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -86,7 +106,7 @@ function BlogDetail() {
 
           {post.date && post.author?.name && (
             <p
-              className="text-muted mb-3 mt-md-5"
+              className="text-muted mb-3 mt-md-5 post-meta"
               style={{ fontSize: "0.85rem" }}
             >
               <i className="bi bi-calendar-event me-1 text-primary"></i>
@@ -114,12 +134,12 @@ function BlogDetail() {
           {post.contributors &&
             post.contributors.some((c) => c.name && c.link) && (
               <div
-                className="d-flex flex-wrap align-items-center gap-2 mt-4"
+                className="d-flex flex-wrap align-items-center gap-2 mt-4 media-credit"
                 style={{
                   fontSize: "0.85rem",
                   lineHeight: "1.4",
                   color: "#555",
-                }} // change text color here
+                }}
               >
                 <span className="d-flex align-items-center">
                   <Camera size={18} className="me-1 text-primary" />{" "}
@@ -171,13 +191,11 @@ function BlogDetail() {
             <div className="row g-3">
               {visibleImages.map((imgPath, i) => (
                 <div className="col-6 col-md-4" key={i}>
-                  <img
+                  <ImageWrapper
                     src={imgPath}
                     alt={`Blog image ${i + 1}`}
-                    className="img-fluid rounded shadow-sm"
-                    loading="lazy"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => openImage(i)}
+                    index={i}
+                    onOpen={openImage}
                   />
                 </div>
               ))}

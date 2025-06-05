@@ -31,7 +31,7 @@ function ContactUs() {
               display: "inline",
             }}
           >
-            +63 917 655 3110
+            +63 917 800 0444
           </a>
         </div>
         <div>
