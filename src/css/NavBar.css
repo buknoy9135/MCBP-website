@@ -45,10 +45,7 @@
   z-index: 1030 !important; /* Or less than 2000 */
 }
 
-/* Navbar container */
-.custom-navbar {
-  /* background-color and shadow moved inline to jsx for easy override */
-}
+
 
 /* Nav.Link base style */
 .navbar-nav .nav-link {
@@ -88,10 +85,6 @@
   border-color: #064a9e !important;
 }
 
-/* Toggle Button when expanded */
-.navbar-collapse.show + .custom-toggle,
-.custom-toggle.collapsed {
-  /* No style needed here since expanded controlled in JSX */
-}
+
 
 
