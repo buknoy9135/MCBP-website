@@ -55,7 +55,7 @@ function BlogDetail() {
           <h2 className="fw-bold mb-2">{post.title}</h2>
 
           <p
-            className="text-secondary fst-italic mb-3"
+            className="text-secondary mb-3"
             style={{ fontSize: "clamp(1rem, 1vw + 0.5rem, 1.1rem)" }}
           >
             {post.description}
@@ -85,7 +85,10 @@ function BlogDetail() {
           </p>
 
           {post.date && post.author?.name && (
-            <p className="text-muted mb-3 mt-md-5" style={{ fontSize: "0.85rem" }}>
+            <p
+              className="text-muted mb-3 mt-md-5"
+              style={{ fontSize: "0.85rem" }}
+            >
               <i className="bi bi-calendar-event me-1 text-primary"></i>
               Published on:{" "}
               <span className="fw-semibold">{post.published}</span>{" "}

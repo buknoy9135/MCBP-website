@@ -28,7 +28,7 @@ const blogPosts = [
         },
         contributors: [
             {name: "Glenn Camay",
-            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            link: "https://www.facebook.com/glenn.camay.35",},
             {name: "",
             link: "",}
         ]
@@ -61,7 +61,7 @@ const blogPosts = [
         },
         contributors: [
             {name: "Glenn Camay",
-            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            link: "https://www.facebook.com/glenn.camay.35",},
             {name: "",
             link: "",}
         ]
@@ -94,7 +94,7 @@ const blogPosts = [
         },
         contributors: [
             {name: "Glenn Camay",
-            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            link: "https://www.facebook.com/glenn.camay.35",},
             {name: "",
             link: "",}
         ]
@@ -126,7 +126,7 @@ const blogPosts = [
         },
         contributors: [
             {name: "Glenn Camay",
-            link: "https://www.facebook.com/media/set/?set=a.1199662008623054&type=3",},
+            link: "https://www.facebook.com/glenn.camay.35",},
             {name: "",
             link: "",}
         ]

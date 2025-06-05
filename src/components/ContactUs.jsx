@@ -87,20 +87,23 @@ function ContactUs() {
           >
             Privacy Policy
           </Link>
+          <span>| created by:</span>
           <span>
             <a
-            href="https://www.facebook.com/jalil.abulais"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              all: "unset",
-              cursor: "pointer",
-              display: "inline",
-            }}
-          >
-            | created by: Jalil Abulais
-          </a>
-            </span>
+              href="https://www.facebook.com/jalil.abulais"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                all: "unset",
+                cursor: "pointer",
+                display: "inline",
+                textDecoration: "underline",
+                paddingLeft: "4px",
+              }}
+            >
+              Jalil Abulais
+            </a>
+          </span>
         </span>
       </div>
     </footer>
