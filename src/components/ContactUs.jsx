@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 
 function ContactUs() {
   return (
-    <footer>
+    <footer
+      style={{
+        backgroundColor: "#fff",
+        borderTop: "3px solid #79b4f7", // ⬅️ top border instead of bottom
+        transition: "border-color 0.3s ease",
+      }}
+    >
       <div className="container d-flex flex-wrap align-items-center custom-footer-container">
         <div>
           <i className="bi bi-geo-alt-fill me-2"></i>
@@ -22,7 +28,7 @@ function ContactUs() {
           </a>
         </div>
         <div>
-          <i className="bi bi-telephone-fill me-"></i>
+          <i className="bi bi-telephone-fill me-2"></i>
           <a
             href="tel:+639176553110"
             style={{
@@ -57,7 +63,6 @@ function ContactUs() {
             <i className="bi bi-facebook"></i>
           </a>
           <a
-            // href="https://twitter.com/mcbp"
             target="_blank"
             rel="noreferrer"
             aria-label="Twitter"
@@ -65,7 +70,6 @@ function ContactUs() {
             <i className="bi bi-twitter"></i>
           </a>
           <a
-            // href="https://linkedin.com/company/mcbp"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
@@ -74,11 +78,10 @@ function ContactUs() {
           </a>
         </div>
       </div>
-      {/* ✅ Footer bottom text - mobile friendly & consistent */}
+
       <div className="footer-bottom">
         <span className="copyright">
-          © {new Date().getFullYear()} Metro Cebu Businessmen and
-          Professionals.
+          © {new Date().getFullYear()} Metro Cebu Businessmen and Professionals.
           <span className="mobile-break"></span> All rights reserved. |{" "}
           <Link
             to="/privacy-policy"

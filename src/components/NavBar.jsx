@@ -14,9 +14,15 @@ function NavBar() {
     <Navbar
       expand="lg"
       fixed="top"
-      className="bg-body-tertiary"
+      className="custom-navbar bg-body-tertiary"
       expanded={expanded}
-      onToggle={() => setExpanded(!expanded)}>
+      onToggle={() => setExpanded(!expanded)}
+      style={{
+        backgroundColor: "#fff",
+        borderBottom: "3px solid #79b4f7", // lighter blue
+        transition: "border-color 0.3s ease",
+      }}
+    >
       <Container>
         {/* Logo aligned left */}
         <Navbar.Brand
