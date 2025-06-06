@@ -5,18 +5,20 @@ import "../css/PrivacyPolicy.css";
 
 function PrivacyPolicy() {
   useEffect(() => {
-    // This ensures the scroll is reset when the page loads
+    // Scroll to top smoothly on page load
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
   return (
-    <div
-      className="container py-5 privacy-policy-container page-background px-3 px-md-5"
-    >
-        <div style={{ height: "40px" }}></div>
+    <div className="container py-5 privacy-policy-container page-background px-3 px-md-5">
+      <div style={{ height: "40px" }}></div>
+
       <h1 className="mb-4 text-primary">Privacy Policy</h1>
+
       <p>
         <strong>Effective Date:</strong> June 4, 2025
       </p>
+
       <p>
         At <strong>Metro Cebu Businessmen and Professionals (MCBP)</strong>,
         your privacy is a priority. We are committed to handling your personal
@@ -35,7 +37,6 @@ function PrivacyPolicy() {
         <li>Mobile Number</li>
         <li>Complete Address</li>
       </ul>
-
       <p>
         We do not use tracking cookies or third-party analytics at this time.
       </p>
@@ -64,17 +65,26 @@ function PrivacyPolicy() {
         <li>Request corrections or deletion of your data</li>
         <li>Withdraw consent or object to processing</li>
       </ul>
-      <p>To exercise your rights, please reach out to us directly.</p>
+      <p>
+        To exercise your rights, please reach out to us directly using the
+        contact information below.
+      </p>
 
       <h5 className="mt-4 text-primary">5. Contact Information</h5>
-      <p>
-        📧 Email: <a href="mailto:mbc.org@gmail.com">contact@mcbp-org.com</a>
+      <address>
+        📧 Email:{" "}
+        <a href="mailto:contact@mcbp-org.com" style={{ color: "#0066cc" }}>
+          contact@mcbp-org.com
+        </a>
         <br />
         📍 Address: 2688 Sitio Mahayahay, Brgy. Bankal, Lapulapu City, Cebu,
         Philippines
         <br />
-        📞 Phone: <a href="tel:+639176553110">+63 917 655 3110</a>
-      </p>
+        📞 Phone:{" "}
+        <a href="tel:+639176553110" style={{ color: "#0066cc" }}>
+          +63 917 655 3110
+        </a>
+      </address>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
 
 function App() {
   return (
-    <BrowserRouter basename="/MCBP-website">
+    <BrowserRouter>
       <NavBar />
       <Routes>        
         <Route path="/" element={<Dashboard />} />

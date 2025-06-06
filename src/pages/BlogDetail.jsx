@@ -3,6 +3,7 @@ import blogPosts from "../database/BlogData";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
 import { Camera, Video } from "lucide-react";
+import { Helmet } from "react-helmet";  // <-- Added import
 import "../css/BlogDetail.css";
 
 function ImageWrapper({ src, alt, index, onOpen }) {
@@ -56,11 +57,40 @@ function BlogDetail() {
     setModalOpen(true);
   };
 
+  // Use first image or fallback image URL for OG image meta
+  const ogImage = post.image && post.image.length > 0 ? post.image[0] : "https://www.mcbp-org.com/default-og-image.jpg";
+
+  // Construct canonical URL for this post (adjust your domain accordingly)
+  const canonicalUrl = `https://www.mcbp-org.com/blog/${post.slug}`;
+
   return (
     <div
       id="BlogDetail-container"
       className="BlogDetail-container page-background"
     >
+      {/* React Helmet SEO tags */}
+      <Helmet>
+        <title>{post.title} | Metro Cebu Businessmen and Professionals (MCBP)</title>
+        <meta name="description" content={post.description} />
+        <meta name="robots" content="index, follow" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={`${post.title} | MCBP`} />
+        <meta property="og:description" content={post.description} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImage} />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.title} | MCBP`} />
+        <meta name="twitter:description" content={post.description} />
+        <meta name="twitter:image" content={ogImage} />
+      </Helmet>
+
       <div className="container pt-5 pt-md-5 mt-4 mt-md-5">
         <div className="d-block d-md-none">
           <button
