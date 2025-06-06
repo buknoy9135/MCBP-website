@@ -58,7 +58,8 @@ function BlogDetail() {
   };
 
   // Use first image or fallback image URL for OG image meta
-  const ogImage = post.image && post.image.length > 0 ? post.image[0] : "https://www.mcbp-org.com/default-og-image.jpg";
+  const ogImage = post.image && post.image.length > 0 ? post.image[post.image.length - 1] : "https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/mcbp-default.jpg";
+
 
   // Construct canonical URL for this post (adjust your domain accordingly)
   const canonicalUrl = `https://www.mcbp-org.com/blog/${post.slug}`;

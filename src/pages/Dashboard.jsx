@@ -47,8 +47,22 @@ function Dashboard() {
         {/* Add your site logo or hero image URL */}
         <meta
           property="og:image"
-          content="https://www.mcbp-org.com/path-to-your-image.jpg"
+          content="https://res.cloudinary.com/doeovg6x9/image/upload/v1749197428/mcbp-logo.jpg"
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Metro Cebu Businessmen and Professionals (MCBP) - Home"
+        />
+        <meta
+          name="twitter:description"
+          content="Welcome to Metro Cebu Businessmen and Professionals (MCBP). Discover our events, community news, and join us to connect with local professionals."
+        />
+        <meta
+          name="twitter:image"
+          content="https://res.cloudinary.com/doeovg6x9/image/upload/v1749197428/mcbp-logo.jpg"
+        />
+        <link rel="canonical" href="https://www.mcbp-org.com/" />
       </Helmet>
 
       <NavBar />
