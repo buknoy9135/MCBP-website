@@ -43,7 +43,7 @@ function ContactUs() {
         <div>
           <i className="bi bi-envelope-fill me-2"></i>
           <a
-            href="mailto:mcbp.org@gmail.com"
+            href="mailto:contact@mcbp-org.com"
             style={{
               all: "unset",
               cursor: "pointer",
@@ -62,18 +62,10 @@ function ContactUs() {
           >
             <i className="bi bi-facebook"></i>
           </a>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Twitter"
-          >
+          <a target="_blank" rel="noreferrer" aria-label="Twitter">
             <i className="bi bi-twitter"></i>
           </a>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-          >
+          <a target="_blank" rel="noreferrer" aria-label="LinkedIn">
             <i className="bi bi-linkedin"></i>
           </a>
         </div>
@@ -81,7 +73,8 @@ function ContactUs() {
 
       <div className="footer-bottom">
         <span className="copyright">
-          © {new Date().getFullYear()} Metro Cebu Businessmen and Professionals.
+          © {new Date().getFullYear()} Metro Cebu Businessmen and
+          Professionals.
           <span className="mobile-break"></span> All rights reserved. |{" "}
           <Link
             to="/privacy-policy"
