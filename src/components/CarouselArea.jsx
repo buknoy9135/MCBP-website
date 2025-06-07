@@ -42,11 +42,11 @@ function CarouselArea() {
 
   return (
     <Carousel
-      className="pt-3 pt-md-5 mt-5"
-      style={{ paddingTop: "80px", scrollMarginTop: "80px" }}
+      className="custom-carousel"
+      // style={{ paddingTop: "80px", scrollMarginTop: "80px", marginTop: "100px" }}
     >
       {[slide1, slide2, slide3].map((slide, index) => (
-        <Carousel.Item interval={3000} key={index}>
+        <Carousel.Item interval={4000} key={index}>
           <div className="carousel-image-container">
             {/* Mobile image */}
             <img

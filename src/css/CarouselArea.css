@@ -1,3 +1,16 @@
+.custom-carousel {
+  padding-top: 3rem; /* mobile padding top */
+  margin-top: 2rem;  /* mobile margin top */
+}
+
+@media (min-width: 768px) {
+  .custom-carousel {
+    padding-top: 5rem; /* desktop padding top */
+    margin-top: 2rem;  /* desktop margin top */
+  }
+}
+
+
 .fade-edge-wrapper {
   position: relative;
   width: 100%;

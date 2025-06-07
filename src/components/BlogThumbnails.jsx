@@ -43,67 +43,77 @@ function BlogThumbnails() {
           <Col key={post.id}>
             <Card style={{ width: "100%" }}>
               <Link to={`/blog/${post.slug}`}>
-                <div style={{ position: "relative" }}>
-                  <Card.Img
-                    variant="top"
-                    src={post.image[post.image.length - 1]}
-                    style={{
-                      objectFit: "cover",
-                      height: "250px",
-                      width: "100%",
-                    }}
-                    loading="lazy"
-                  />
-                  {/* Arrow overlay */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "10px",
-                      right: "10px",
-                      backgroundColor: "rgba(0,0,0,0.5)",
-                      borderRadius: "50%",
-                      width: "36px", // bigger circle
-                      height: "36px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      pointerEvents: "none",
-                      filter: "drop-shadow(0 0 1.5px white)", // subtle white glow for thickness
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20" // bigger size
-                      height="20"
-                      fill="white"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 1 1 .708-.708l5 5a.498.498 0 0 1 .146.35v.006a.498.498 0 0 1-.146.35l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                      />
-                    </svg>
-                  </div>
+  <div style={{ position: "relative" }}>
+    <Card.Img
+      variant="top"
+      src={post.image[post.image.length - 1]}
+      style={{
+        objectFit: "cover",
+        height: "250px",
+        width: "100%",
+      }}
+      loading="lazy"
+    />
 
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "8px",
-                      left: "8px",
-                      backgroundColor: "rgba(0,0,0,0.6)", // semi-transparent black
-                      color: "#fff",
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                      fontSize: "0.75rem",
-                      fontWeight: "600",
-                      userSelect: "none",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    {post.date}
-                  </div>
-                </div>
-              </Link>
+    {/* Date label */}
+    <div
+      style={{
+        position: "absolute",
+        top: "8px",
+        left: "8px",
+        backgroundColor: "rgba(0,0,0,0.6)",
+        color: "#fff",
+        padding: "2px 6px",
+        borderRadius: "4px",
+        fontSize: "0.75rem",
+        fontWeight: "600",
+        userSelect: "none",
+        pointerEvents: "none",
+      }}
+    >
+      {post.date}
+    </div>
+
+    {/* Only the Click to read More overlay */}
+    <div
+      style={{
+        position: "absolute",
+        bottom: "10px",
+        right: "10px",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "6px",
+        padding: "4px 10px",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        borderRadius: "12px",
+        color: "white",
+        fontSize: "0.8rem",
+        fontWeight: "600",
+        cursor: "pointer",
+        userSelect: "none",
+        filter: "drop-shadow(0 0 2px white)",
+      }}
+    >
+      Click to read More
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ transform: "rotate(45deg)" }}
+        viewBox="0 0 24 24"
+      >
+        <line x1="5" y1="12" x2="19" y2="12" />
+        <polyline points="12 5 19 12 12 19" />
+      </svg>
+    </div>
+  </div>
+</Link>
+
 
               <Card.Body
                 className="py-2" // KEEP original padding/margin classes exactly as before
@@ -132,6 +142,9 @@ function BlogThumbnails() {
                 >
                   {post.description}
                 </Card.Text>
+
+                
+
               </Card.Body>
             </Card>
           </Col>

@@ -5,11 +5,11 @@ import "../css/AboutUs.css";
 
 function AboutUs() {
   return (
-    <Container>
+    <Container className="aboutus-container">
       <Row>
         <Col sm={1} lg={1}></Col>
         <Col sm={10} lg={10}>
-          <div className="text-start aboutus-container">
+          <div className="text-start">
             <h3 className="text-primary aboutus-heading">About Us</h3>
             <p className="text-justify aboutus-text">
               The{" "}

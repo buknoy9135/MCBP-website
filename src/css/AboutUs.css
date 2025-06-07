@@ -1,31 +1,17 @@
-/* Default padding for all screens */
 .aboutus-container {
-  margin-top: 80px;
-  scroll-margin-top: 80px;
+  /* Default padding and scroll offset for desktop */
+  padding-top: 70px; /* height of navbar */
+  margin-bottom: 60px;
+  scroll-margin-top: 70px; /* offset for anchor scrolling */
 }
 
-/* Increase padding-top on mobile */
-@media (max-width: 991.98px) {
-  .aboutus-container {
-    margin-top: 60px !important;
-    scroll-margin-top: 80px !important;
-  }
-  
-  .aboutus-text {
-    font-size: 0.8rem; /* smaller font */
-  }
-  
-  .aboutus-heading {
-    font-size: 1.15rem; /* smaller heading */
-  }
-  
-  .aboutus-heading-h4 {
-    font-size: 1rem; /* smaller h4 */
-  }
-}
-
-/* Larger font size on desktop */
 @media (min-width: 992px) {
+  .aboutus-container {
+          /* extra spacing on desktop */
+    margin-bottom: 40px;
+    scroll-margin-top: 80px; /* slightly larger offset for desktop */
+  }
+
   .aboutus-text {
     font-size: 1rem;
   }
@@ -33,12 +19,30 @@
   .aboutus-heading {
     font-size: 1.75rem;
   }
-  
+
   .aboutus-heading-h4 {
     font-size: 1.5rem;
   }
 }
 
-.text-justify {
-  text-align: justify !important;
+@media (max-width: 991.98px) {
+  .aboutus-container {
+    /* Reduce padding and scroll offset on tablets and mobile */
+    padding-top: 60px;      /* typical mobile navbar height */
+    scroll-margin-top: 56px;
+         /* less top margin on smaller screens */
+    margin-bottom: 20px;
+  }
+
+  .aboutus-text {
+    font-size: 0.8rem;
+  }
+
+  .aboutus-heading {
+    font-size: 1.15rem;
+  }
+
+  .aboutus-heading-h4 {
+    font-size: 1rem;
+  }
 }

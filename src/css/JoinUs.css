@@ -66,35 +66,9 @@
   border-color: #084298;
 }
 
-
-
-@media (max-width: 576px) {
-  .thematic-form {
-    padding: 1.2rem;
-  }
-
-  .form-heading {
-    font-size: 1.2rem;
-  }
-
-  .form-subtext {
-    font-size: 0.8rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .thematic-form .form-control {
-    font-size: 0.7rem;
-    padding: 0.4rem 0.6rem;
-  }
-
-  .thematic-form .form-label {
-    font-size: 0.7rem;
-  }
-
-  .thematic-form button[type="submit"] {
-    font-size: 0.8rem;
-    padding: 0.45rem 1rem;
-  }
+/* Space between form sections */
+.thematic-form .form-group {
+  margin-bottom: 1.2rem;
 }
 
 /* Modal */
@@ -120,3 +94,51 @@
   padding: 0.25rem 1rem;
   font-size: 0.875rem;
 }
+
+/* Small file input tweak for mobile */
+@media (max-width: 576px) {
+  .thematic-form {
+    padding: 0.75rem 0.75rem; /* smaller padding */
+  }
+
+  .form-heading {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .form-subtext {
+    font-size: 0.65rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .thematic-form .form-label {
+    font-size: 0.65rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .thematic-form .form-control {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.4rem;
+  }
+
+  .thematic-form button[type="submit"] {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+    margin-top: 0.5rem;
+  }
+
+  .thematic-form input[type="file"] {
+    font-size: 0.55rem;
+  }
+
+  .file-help-text {
+    font-size: 0.6rem;
+    margin-top: 0.1rem;
+    line-height: 1;
+  }
+
+  .thematic-form .form-group {
+    margin-bottom: 0.5rem;
+  }
+}
+
