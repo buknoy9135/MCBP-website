@@ -24,7 +24,7 @@ function PersonalDetailsForm() {
     e.preventDefault();
     setSubmitting(true);
 
-    const serviceId = "service_cef7q6l";
+    const serviceId = "service_xpianxi";
     const templateId = "template_q9vagn8";
     const publicKey = "ivT0ST0Y0nxOXHs14";
 
