@@ -13,6 +13,7 @@ function PersonalDetailsForm() {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [filloutModal, setFilloutModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
@@ -122,7 +123,7 @@ function PersonalDetailsForm() {
             </Col>
           </Row>
 
-          <Form.Group className="mb-3" controlId="address">
+          <Form.Group className="mb-2" controlId="address">
             <Form.Label>Address</Form.Label>
             <Form.Control
               as="textarea"
@@ -165,6 +166,55 @@ function PersonalDetailsForm() {
               Close
             </Button>
           </Modal.Footer>
+        </Modal>
+
+        {/* Fillout Modal Link */}
+<div className="my-4 text-center text-muted">
+  <div className="join-divider">
+  <span className="divider-text">or click below for detailed application</span>
+</div>
+
+<div className="text-center mt-2">
+  <span
+    onClick={() => setFilloutModal(true)}
+    className="apply-here-animated"
+    role="button"
+    tabIndex={0}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" || e.key === " ") setFilloutModal(true);
+    }}
+  >
+    Apply Here
+    <span className="underline-bar"></span>
+  </span>
+</div>
+
+</div>
+
+
+        {/* Fillout Modal */}
+        <Modal
+          show={filloutModal}
+          onHide={() => setFilloutModal(false)}
+          centered
+          size="lg"
+          dialogClassName="fillout-modal"
+        >
+          <Modal.Header closeButton className="border-0 pb-0">
+            <Modal.Title className="w-100 text-center"></Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="p-0">
+            <iframe
+              src="https://forms.fillout.com/t/7t1gL5cHusus?pdf=xxxxx" // ← Replace this with your real Fillout form URL
+              title="Fillout Join Us Form"
+              width="100%"
+              height="600"
+              style={{
+                border: "none",
+                borderRadius: "0 0 12px 12px",
+              }}
+            ></iframe>
+          </Modal.Body>
         </Modal>
       </div>
     </div>

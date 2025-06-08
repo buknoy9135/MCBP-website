@@ -120,3 +120,100 @@
   padding: 0.25rem 1rem;
   font-size: 0.875rem;
 }
+
+/* Container for the line with centered text */
+.apply-line-text-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: #6c757d; /* muted text color */
+}
+
+.apply-line-text-wrapper::before,
+.apply-line-text-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #adb5bd; /* light grey line */
+}
+
+.apply-line-text-wrapper::before {
+  left: 0;
+}
+
+.apply-line-text-wrapper::after {
+  right: 0;
+}
+
+.line-text {
+  display: inline-block;
+  padding: 0 10px;
+  background: white; /* match the page background */
+  position: relative;
+  z-index: 1;
+}
+
+/* For the bouncing animation and underline bar */
+.apply-here-animated {
+  position: relative;
+  display: inline-block;
+  animation: bounceFormal 2.5s ease-in-out infinite;
+  color: #084298;
+}
+
+.underline-bar {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #0d6efd;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+/* A formal subtle bounce animation */
+@keyframes bounceFormal {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+.join-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+  flex-wrap: nowrap;
+}
+
+.divider-text {
+  padding: 0 1rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.join-divider::before,
+.join-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+  opacity: 0.5;
+}
+
+@media (max-width: 576px) {
+  .join-divider {
+    font-size: 0.8rem;
+    padding: 0 0.5rem;
+  }
+
+  .divider-text {
+    padding: 0 0.5rem;
+  }
+}
