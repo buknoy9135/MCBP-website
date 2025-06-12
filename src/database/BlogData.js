@@ -21,7 +21,7 @@ const blogPosts = [
         location: "SOS Children's Village, Talamban, Cebu City, Philippines",
         category: "ACCERT",
         image: Array.from({ length: 88 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749138942/sos${String(i + 1).padStart(3, '0')}.jpg`),
-        video: [""],
+        video: "",
         date: "December 1, 2024",
         author: {
             name: "Jalil Abulais",
@@ -55,7 +55,7 @@ const blogPosts = [
         location: "Brgy. Ibo Covered Court, Lapu-Lapu City, Cebu, Philippines",
         category: "TFOE-PE",
         image: Array.from({ length: 275 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/ibo${String(i + 1).padStart(3, '0')}.jpg`),
-        video: [""],
+        video: "",
         date: "February 23, 2025",
         author: {
             name: "Jalil Abulais",
