@@ -3,7 +3,7 @@ import blogPosts from "../database/BlogData";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
 import { Camera, Video } from "lucide-react";
-import { Helmet } from "react-helmet";  // <-- Added import
+import { Helmet } from "react-helmet"; // <-- Added import
 import "../css/BlogDetail.css";
 
 function ImageWrapper({ src, alt, index, onOpen }) {
@@ -58,8 +58,10 @@ function BlogDetail() {
   };
 
   // Use first image or fallback image URL for OG image meta
-  const ogImage = post.image && post.image.length > 0 ? post.image[post.image.length - 1] : "https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/mcbp-default.jpg";
-
+  const ogImage =
+    post.image && post.image.length > 0
+      ? post.image[post.image.length - 1]
+      : "https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/mcbp-default.jpg";
 
   // Construct canonical URL for this post (adjust your domain accordingly)
   const canonicalUrl = `https://www.mcbp-org.com/blog/${post.slug}`;
@@ -71,7 +73,9 @@ function BlogDetail() {
     >
       {/* React Helmet SEO tags */}
       <Helmet>
-        <title>{post.title} | Metro Cebu Businessmen and Professionals (MCBP)</title>
+        <title>
+          {post.title} | Metro Cebu Businessmen and Professionals (MCBP)
+        </title>
         <meta name="description" content={post.description} />
         <meta name="robots" content="index, follow" />
 
@@ -213,43 +217,84 @@ function BlogDetail() {
                 </span>
               </div>
             )}
-
           <hr className="my-4" />
+          {/* Video Section */}
+{Array.isArray(post.video) && post.video.length > 0 && (
+  <>
+    <div className="video-section mt-4">
+      <h5 className="mb-3">📽️ Highlights</h5>
+      <div className="row g-4">
+        {post.video.map((videoUrl, index) => (
+          <div className="col-12 col-md-6" key={index}>
+            {videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be") ? (
+              <div className="ratio ratio-16x9">
+                <iframe
+                  src={videoUrl}
+                  title={`video-${index}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ) : (
+              <video
+                src={videoUrl}
+                controls
+                className="w-100 rounded"
+                style={{ maxHeight: "350px", objectFit: "cover" }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Only show this divider if videos exist */}
+    <hr className="my-4" />
+  </>
+)}
+
+
+      
         </div>
 
         {post.image && post.image.length > 0 && (
-          <>
-            <div className="row g-3">
-              {visibleImages.map((imgPath, i) => (
-                <div className="col-6 col-md-4" key={i}>
-                  <ImageWrapper
-                    src={imgPath}
-                    alt={`Blog image ${i + 1}`}
-                    index={i}
-                    onOpen={openImage}
-                  />
-                </div>
-              ))}
-            </div>
+  <>
+    <h5 className="mb-3">
+      <i className="bi bi-camera-fill text-primary me-2"></i> Moments Captured
+    </h5>
 
-            {visibleImageCount < post.image.length && (
-              <div className="d-flex justify-content-center mt-4">
-                <button
-                  className="btn btn-outline-primary px-4 py-2 d-none d-md-inline-block"
-                  onClick={handleLoadMore}
-                >
-                  Load More
-                </button>
-                <button
-                  className="btn btn-outline-primary btn-sm px-3 py-1 d-inline-block d-md-none"
-                  onClick={handleLoadMore}
-                >
-                  Load More
-                </button>
-              </div>
-            )}
-          </>
-        )}
+    <div className="row g-3">
+      {visibleImages.map((imgPath, i) => (
+        <div className="col-6 col-md-4" key={i}>
+          <ImageWrapper
+            src={imgPath}
+            alt={`Blog image ${i + 1}`}
+            index={i}
+            onOpen={openImage}
+          />
+        </div>
+      ))}
+    </div>
+
+    {visibleImageCount < post.image.length && (
+      <div className="d-flex justify-content-center mt-4">
+        <button
+          className="btn btn-outline-primary px-4 py-2 d-none d-md-inline-block"
+          onClick={handleLoadMore}
+        >
+          Load More
+        </button>
+        <button
+          className="btn btn-outline-primary btn-sm px-3 py-1 d-inline-block d-md-none"
+          onClick={handleLoadMore}
+        >
+          Load More
+        </button>
+      </div>
+    )}
+  </>
+)}
+
 
         <div className="d-flex justify-content-between align-items-center mt-5 pt-3 pb-4 border-top">
           {previousPost ? (

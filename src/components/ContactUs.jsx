@@ -53,7 +53,7 @@ function ContactUs() {
             contact@mcbp-org.com
           </a>
         </div>
-        <div>
+        <div className="d-flex gap-3 mt-2">
           <a
             href="https://www.facebook.com/people/Metro-Cebu-Businessmen-and-Professionals-MCBP-Accert-Chartered-Chapter/61574580928967/"
             target="_blank"
@@ -62,11 +62,32 @@ function ContactUs() {
           >
             <i className="bi bi-facebook"></i>
           </a>
-          <a target="_blank" rel="noreferrer" aria-label="Twitter">
+          <a
+            href="https://twitter.com/your-mcbp-handle" // Replace with actual link or remove
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Twitter"
+          >
             <i className="bi bi-twitter"></i>
           </a>
-          <a target="_blank" rel="noreferrer" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com/company/your-mcbp-link" // Replace with actual link or remove
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+          >
             <i className="bi bi-linkedin"></i>
+          </a>
+          <a
+            href="https://www.youtube.com/@MetroCebuBusinessmenandProfess" // Replace with your actual channel link
+            target="_blank"
+            rel="noreferrer"
+            aria-label="YouTube"
+          >
+            <i
+              className="bi bi-youtube text-danger"
+              style={{ fontSize: "1.3rem" }}
+            ></i>
           </a>
         </div>
       </div>

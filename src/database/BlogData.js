@@ -21,6 +21,7 @@ const blogPosts = [
         location: "SOS Children's Village, Talamban, Cebu City, Philippines",
         category: "ACCERT",
         image: Array.from({ length: 88 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749138942/sos${String(i + 1).padStart(3, '0')}.jpg`),
+        video: [""],
         date: "December 1, 2024",
         author: {
             name: "Jalil Abulais",
@@ -54,6 +55,7 @@ const blogPosts = [
         location: "Brgy. Ibo Covered Court, Lapu-Lapu City, Cebu, Philippines",
         category: "TFOE-PE",
         image: Array.from({ length: 275 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/ibo${String(i + 1).padStart(3, '0')}.jpg`),
+        video: [""],
         date: "February 23, 2025",
         author: {
             name: "Jalil Abulais",
@@ -87,6 +89,7 @@ const blogPosts = [
         location: "Agus, Lapu-Lapu City",
         category: "TFOE-PE",
         image: Array.from({ length: 86 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749094788/agus${String(i + 1).padStart(3, '0')}.jpg`),
+        video: "",
         date: "May 10, 2025",
         author: {
             name: "Jalil Abulais",
@@ -119,6 +122,7 @@ const blogPosts = [
         location: "RORO Port, Cordova, Cebu",
         category: "TFOE-PE",
         image: Array.from({ length: 75 }, (_, i) => `https://res.cloudinary.com/doeovg6x9/image/upload/v1749017225/catarman${String(i + 1).padStart(3, '0')}.jpg`),
+        video: ["https://www.youtube.com/embed/3PXkGKmDiXo?si=4M4oaMLMIDofweUO",],
         date: "May 25, 2025",
         author: {
             name: "Jalil Abulais",
@@ -127,8 +131,8 @@ const blogPosts = [
         contributors: [
             {name: "Glenn Camay",
             link: "https://www.facebook.com/glenn.camay.35",},
-            {name: "",
-            link: "",}
+            {name: "Slade Rhyder Canezo",
+            link: "https://www.facebook.com/kenshin.slade.himura",},
         ]
     },
 //     {
@@ -148,6 +152,7 @@ const blogPosts = [
 // ),
 //         location: "",
 //         category: "",
+// video: "",
 //         image: [
 //                 "",
 //                 "",
@@ -187,7 +192,8 @@ const blogPosts = [
 //                 "",
 //                 ""
 //                 ],
-//         date: "",
+// video: "",        
+// date: "",
         //         author: {
         //             name: "",
         //             link: "",
