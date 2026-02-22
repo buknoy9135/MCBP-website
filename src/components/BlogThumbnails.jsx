@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import { cloudinaryUrl } from "../lib/cloudinary";
 
 function BlogThumbnails() {
   const [posts, setPosts] = useState([]);
@@ -75,8 +76,8 @@ function BlogThumbnails() {
                   <Card.Img
                     variant="top"
                     src={
-                      post.featured_image
-                        ? `https://res.cloudinary.com/doeovg6x9/image/upload/${post.featured_image}`
+                        post.featured_image
+                        ? cloudinaryUrl(post.featured_image)
                         : "/mcbp-logo.png"
                     }
                     style={{

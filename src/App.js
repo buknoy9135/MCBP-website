@@ -51,6 +51,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* ***** THIS IS THE MISSING ROUTE ***** */}
+        <Route
+          path="/admin/edit-post/:id"
+          element={
+            <ProtectedRoute>
+              <NewPost />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
 
       {!isAdminRoute && !isAuthRoute && <ContactUs />}
