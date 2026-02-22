@@ -1,0 +1,90 @@
+
+
+/* Default desktop view */
+.brand-responsive {
+  font-size: 1.25rem;
+  color: #0a58ca !important;
+  font-weight: 600;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+  .brand-responsive {
+    font-size: 0.85rem !important;
+  }
+
+  .navbar-logo {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.custom-toggle {
+  padding: 0px !important;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #0a58ca !important;  /* thin colored border */
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-toggle .navbar-toggler-icon {
+  background-size: 20px 18px;
+  margin: 0 auto;       /* center the icon */
+}
+
+.navbar {
+  z-index: 1030 !important; /* Or less than 2000 */
+}
+
+
+
+/* Nav.Link base style */
+.navbar-nav .nav-link {
+  color: #0a58ca !important; /* your blue */
+  transition: color 0.25s ease;
+}
+
+/* Nav.Link hover */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: #064a9e !important; /* slightly darker blue on hover */
+  text-decoration: underline;
+}
+
+/* NavDropdown title */
+.navbar-nav .dropdown-toggle {
+  color: #0a58ca !important;
+}
+
+/* NavDropdown item hover */
+.navbar-nav .dropdown-menu a.dropdown-item:hover,
+.navbar-nav .dropdown-menu a.dropdown-item:focus {
+  background-color: #c9defb; /* light blue highlight */
+  color: #064a9e !important;
+}
+
+/* Navbar Toggle Button */
+.custom-toggle {
+  border-color: #0a58ca !important;
+  background-color: transparent !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Toggle Button on Hover */
+.custom-toggle:hover {
+  background-color: #d6e4ff !important; /* very light blue hover */
+  border-color: #064a9e !important;
+}
+
+
+
+

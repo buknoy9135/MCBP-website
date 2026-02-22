@@ -1,0 +1,113 @@
+footer {
+  background-color: white;
+  color: #0a58ca;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem; /* base font size */
+}
+
+footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* or space-between if needed */
+  align-items: center;
+  column-gap: 5rem; /* ← controls horizontal gap */
+  row-gap: 0.8rem;     /* ← controls vertical gap (mobile) */
+}
+
+footer .container > div {
+  display: flex;
+  align-items: center;
+  gap: 0.rem; /* ← controls space between icon and text */
+  flex-shrink: 0;
+}
+
+footer a {
+  color: #0a58ca;
+  margin-right: 0.75rem;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+}
+
+footer i {
+  font-size: 1.15rem;
+}
+
+/* Larger screens - make font and icons bigger */
+@media (min-width: 992px) {
+  footer {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  footer a {
+    font-size: 1.4rem;
+    margin-right: 1rem;
+  }
+  
+  footer i {
+    font-size: 1.1rem;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 576px) {
+  footer {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.65rem;
+  }
+
+  footer .container {
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  footer .container > div {
+    gap: 0.15rem;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+
+  footer a {
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  footer i {
+    font-size: 0.85rem;
+  }
+}
+
+.footer-bottom {
+  font-size: 0.85rem;
+  padding-top: 0.75rem;
+  text-align: center;
+  color: #0a58ca;
+  white-space: normal;
+}
+
+.footer-bottom a.privacy-link {
+  text-decoration: underline;
+  color: inherit;
+  font-size: inherit;
+  display: inline;
+}
+
+/* Mobile-specific wrapping */
+@media (max-width: 576px) {
+  .footer-bottom {
+    font-size: 0.65rem;
+  }
+
+  .mobile-break::after {
+    content: "\A"; /* newline */
+    white-space: pre;
+  }
+}
+
+.footer-text {
+  display: inline-block;
+  text-align: center;
+  white-space: normal;
+}
+

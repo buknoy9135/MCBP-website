@@ -1,0 +1,76 @@
+.text-justify {
+  text-align: justify !important;
+}
+
+/* Default styles (for larger screens) */
+.BlogDetail-container {
+  font-size: 1rem !important;
+}
+
+/* Smaller font on mobile screens */
+@media (max-width: 767.98px) {
+  .BlogDetail-container {
+    font-size: 0.9rem !important; /* or 0.85rem or smaller if needed */
+  }
+}
+
+/* Default for large screens */
+.post-story {
+  font-size: 1rem;
+}
+
+/* Smaller font on mobile screens */
+@media (max-width: 767.98px) {
+  .post-story {
+    font-size: 0.8rem;
+  }
+}
+
+.image-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill the box by default */
+  display: block;
+  cursor: pointer;
+  transition: object-fit 0.2s;
+}
+
+/* If the image is portrait, override to fit fully with black sides */
+.image-box.portrait {
+  background-color: #000;
+}
+
+.image-box.portrait img {
+  object-fit: contain;
+}
+
+@media (max-width: 767.98px) {
+  .BlogDetail-container p.post-meta {
+    margin-bottom: 0.25rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  .BlogDetail-container div.media-credit {
+    margin-top: 0.25rem !important;
+  }
+}
+
+.video-section h5 {
+  font-weight: 600;
+  color: #333;
+}
+
+.video-section iframe {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+

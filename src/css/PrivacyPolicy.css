@@ -1,0 +1,27 @@
+
+
+@media (max-width: 576px) {
+    /* .privacy-policy-container {
+        margin-top: 200px;
+    } */
+
+  .page-background h1 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-background h5 {
+    font-size: 1.1rem;
+    margin-top: 1.2rem;
+  }
+
+  .page-background p,
+  .page-background li {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .page-background ul {
+    padding-left: 1rem;
+  }
+}
