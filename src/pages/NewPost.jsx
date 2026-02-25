@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { uploadToCloudinary } from "../lib/cloudinaryUpload";
 import { cloudinaryUrl } from "../lib/cloudinary";
 
@@ -37,7 +37,6 @@ export default function NewPost() {
       .replace(/\s+/g, "-");
   }
 
-  // ========================= LOAD POST (EDIT MODE)
   useEffect(() => {
     if (!isEditMode) return;
 
@@ -60,8 +59,6 @@ export default function NewPost() {
       setStartDate(data.activity_start_date || "");
       setEndDate(data.activity_end_date || "");
       setPublisherName(data.author_name || "");
-
-      // CRITICAL FIX (handles null jsonb)
       setExistingImages(Array.isArray(data.images) ? data.images : []);
       setVideoLinks(data.videos?.length ? data.videos : [""]);
     }
@@ -78,7 +75,6 @@ export default function NewPost() {
     setExistingImages(prev => prev.filter((_, i) => i !== index));
   }
 
-  // ========================= SUBMIT
   async function handleSubmit(e) {
     e.preventDefault();
     setSaving(true);
@@ -95,7 +91,6 @@ export default function NewPost() {
     let uploadedImages = [];
     let featuredPublicId = existingImages[0] || null;
 
-    // ---------- CLOUDINARY UPLOAD ----------
     if (selectedFiles.length > 0) {
       setUploading(true);
 
@@ -111,7 +106,6 @@ export default function NewPost() {
         try {
           const uploaded = await uploadToCloudinary(selectedFiles[i], publicId);
           uploadedImages.push(uploaded);
-
           if (!featuredPublicId) featuredPublicId = uploaded;
         } catch (err) {
           console.error("UPLOAD ERROR:", err);
@@ -127,7 +121,6 @@ export default function NewPost() {
 
     const finalImages = [...existingImages, ...uploadedImages];
 
-    // ---------- IMPORTANT: JSONB SAFE PAYLOAD ----------
     const payload = {
       title,
       slug,
@@ -136,10 +129,8 @@ export default function NewPost() {
       location,
       author_name: publisherName?.trim() || null,
       featured_image: featuredPublicId,
-
       images: JSON.parse(JSON.stringify(finalImages)),
       videos: JSON.parse(JSON.stringify(videoLinks.filter(v => v.trim() !== ""))),
-
       activity_start_date: startDate || null,
       activity_end_date: endDate || null,
       updated_at: new Date().toISOString()
@@ -172,7 +163,7 @@ export default function NewPost() {
   }
 
   return (
-    <div style={{ maxWidth: 900, margin: "40px auto", padding: 20 }}>
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 16px 60px" }}>
 
       {/* UPLOAD OVERLAY */}
       {uploading && (
@@ -193,24 +184,129 @@ export default function NewPost() {
         </div>
       )}
 
-      <h2>{isEditMode ? "Edit Post" : "Create New Blog Post"}</h2>
+      {/* ── HEADER ROW ── */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        marginBottom: 24,
+        flexWrap: "wrap",
+      }}>
+        <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
+          <button style={{
+            background: "transparent",
+            border: "1px solid #dee2e6",
+            borderRadius: 6,
+            padding: "7px 14px",
+            fontSize: 13,
+            cursor: "pointer",
+            color: "#6c757d",
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+          }}>
+            ← Dashboard
+          </button>
+        </Link>
+        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>
+          {isEditMode ? "Edit Post" : "Create New Blog Post"}
+        </h2>
+      </div>
 
       <form onSubmit={handleSubmit}>
 
         <label>Title</label>
-        <input value={title} onChange={e => setTitle(e.target.value)} required style={{ width: "100%", marginBottom: 15 }} />
+        <input
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          required
+          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
+        />
 
         <label>Description</label>
-        <textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} style={{ width: "100%", marginBottom: 15 }} />
+        <textarea
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          rows={3}
+          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
+        />
 
         <label>Publisher Name (optional)</label>
-        <input value={publisherName} onChange={e => setPublisherName(e.target.value)} style={{ width: "100%", marginBottom: 15 }} />
+        <input
+          value={publisherName}
+          onChange={e => setPublisherName(e.target.value)}
+          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
+        />
 
         <label>Location</label>
-        <input value={location} onChange={e => setLocation(e.target.value)} style={{ width: "100%", marginBottom: 15 }} />
+        <input
+          value={location}
+          onChange={e => setLocation(e.target.value)}
+          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
+        />
+
+        <div style={{ display: "flex", gap: 12, marginBottom: 15, flexWrap: "wrap" }}>
+          <div style={{ flex: 1, minWidth: 140 }}>
+            <label>Start Date</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={e => setStartDate(e.target.value)}
+              style={{ width: "100%", padding: "8px 10px", boxSizing: "border-box" }}
+            />
+          </div>
+          <div style={{ flex: 1, minWidth: 140 }}>
+            <label>End Date (optional)</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={e => setEndDate(e.target.value)}
+              style={{ width: "100%", padding: "8px 10px", boxSizing: "border-box" }}
+            />
+          </div>
+        </div>
 
         <label>Story</label>
-        <textarea value={story} onChange={e => setStory(e.target.value)} rows={10} style={{ width: "100%", marginBottom: 20 }} />
+        <textarea
+          value={story}
+          onChange={e => setStory(e.target.value)}
+          rows={10}
+          style={{ width: "100%", marginBottom: 20, padding: "8px 10px", boxSizing: "border-box" }}
+        />
+
+        {/* VIDEO LINKS */}
+        <label>YouTube Video Links</label>
+        {videoLinks.map((link, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+            <input
+              type="url"
+              value={link}
+              placeholder="https://youtube.com/watch?v=..."
+              onChange={e => {
+                const updated = [...videoLinks];
+                updated[i] = e.target.value;
+                setVideoLinks(updated);
+              }}
+              style={{ flex: 1, padding: "8px 10px", boxSizing: "border-box" }}
+            />
+            {videoLinks.length > 1 && (
+              <button
+                type="button"
+                onClick={() => setVideoLinks(prev => prev.filter((_, idx) => idx !== i))}
+                style={{ padding: "8px 12px", cursor: "pointer" }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => setVideoLinks(prev => [...prev, ""])}
+          style={{ marginBottom: 20, fontSize: 13, cursor: "pointer", padding: "6px 12px" }}
+        >
+          + Add another video
+        </button>
 
         {/* EXISTING IMAGES */}
         {existingImages.length > 0 && (
@@ -218,8 +314,8 @@ export default function NewPost() {
             <h4>Current Photos</h4>
             <div style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-              gap: 12,
+              gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+              gap: 10,
               marginBottom: 20
             }}>
               {existingImages.map((img, i) => (
@@ -228,23 +324,34 @@ export default function NewPost() {
                     src={cloudinaryUrl(img)}
                     alt=""
                     onClick={() => setPreviewImage(cloudinaryUrl(img))}
-                    style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8, cursor: "zoom-in" }}
+                    style={{
+                      width: "100%",
+                      height: 100,
+                      objectFit: "cover",
+                      borderRadius: 8,
+                      cursor: "zoom-in",
+                      display: "block"
+                    }}
                   />
-
                   <button
                     type="button"
                     onClick={() => removeExistingImage(i)}
                     style={{
                       position: "absolute",
-                      top: 6,
-                      right: 6,
+                      top: 5,
+                      right: 5,
                       background: "rgba(0,0,0,0.7)",
                       color: "white",
                       border: "none",
                       borderRadius: "50%",
                       width: 26,
                       height: 26,
-                      fontWeight: "bold"
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      fontSize: 14,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     ×
@@ -256,26 +363,74 @@ export default function NewPost() {
         )}
 
         <label>Add More Photos</label>
-        <input type="file" multiple accept="image/*" onChange={handleFileSelect} style={{ marginBottom: 20 }} />
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleFileSelect}
+          style={{ display: "block", marginBottom: 24 }}
+        />
 
-        <button type="submit" disabled={saving}>
-          {saving ? "Saving..." : "Publish"}
-        </button>
+        {/* SUBMIT */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <button
+            type="submit"
+            disabled={saving}
+            style={{
+              background: "#0d6efd",
+              color: "white",
+              border: "none",
+              borderRadius: 6,
+              padding: "10px 24px",
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: saving ? "not-allowed" : "pointer",
+              opacity: saving ? 0.7 : 1,
+            }}
+          >
+            {saving ? "Saving..." : isEditMode ? "Save Changes" : "Publish"}
+          </button>
+
+          <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
+            <button
+              type="button"
+              style={{
+                background: "transparent",
+                border: "1px solid #dee2e6",
+                borderRadius: 6,
+                padding: "10px 20px",
+                fontSize: 15,
+                cursor: "pointer",
+                color: "#6c757d",
+              }}
+            >
+              Cancel
+            </button>
+          </Link>
+        </div>
 
       </form>
 
-      {/* IMAGE PREVIEW */}
+      {/* IMAGE PREVIEW MODAL */}
       {previewImage && (
-        <div onClick={() => setPreviewImage(null)} style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.9)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 9999
-        }}>
-          <img src={previewImage} alt="" style={{ maxWidth: "95%", maxHeight: "95%" }} />
+        <div
+          onClick={() => setPreviewImage(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.9)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+            padding: 16,
+          }}
+        >
+          <img
+            src={previewImage}
+            alt=""
+            style={{ maxWidth: "100%", maxHeight: "90vh", borderRadius: 8 }}
+          />
         </div>
       )}
     </div>

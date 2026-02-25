@@ -1,5 +1,7 @@
 import './App.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { supabase } from './lib/supabase';
 import AuthCallback from './pages/AuthCallback';
 import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
@@ -14,13 +16,30 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Track auth state globally so navbar hides for logged-in admins
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setIsLoggedIn(!!data.session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isAuthRoute = location.pathname === '/auth/callback';
 
+  // Hide navbar for admin routes OR when a logged-in admin is browsing the site
+  const hideNav = isAdminRoute || isAuthRoute || isLoggedIn;
+
   return (
     <>
-      {!isAdminRoute && !isAuthRoute && <NavBar />}
+      {!hideNav && <NavBar />}
 
       <Routes>
         {/* Public */}
@@ -52,7 +71,6 @@ function App() {
           }
         />
 
-        {/* ***** THIS IS THE MISSING ROUTE ***** */}
         <Route
           path="/admin/edit-post/:id"
           element={
@@ -61,10 +79,9 @@ function App() {
             </ProtectedRoute>
           }
         />
-
       </Routes>
 
-      {!isAdminRoute && !isAuthRoute && <ContactUs />}
+      {!hideNav && <ContactUs />}
     </>
   );
 }

@@ -55,19 +55,6 @@
         }
       })();
     </script>
-    <script>
-      // Fix Supabase OAuth / invite links with HashRouter on GitHub Pages
-      (function () {
-        const hash = window.location.hash;
-        const path = window.location.pathname;
-
-        // Supabase sends: /auth/callback#access_token=...
-        if (path === "/auth/callback" && hash.includes("access_token")) {
-          const newUrl = "/#"+path + hash;
-          window.location.replace(newUrl);
-        }
-      })();
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
