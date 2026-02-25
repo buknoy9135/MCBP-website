@@ -1,123 +1,112 @@
+/* ── CAROUSEL WRAPPER ── */
 .custom-carousel {
-  padding-top: 3rem; /* mobile padding top */
-  margin-top: 2rem;  /* mobile margin top */
+  padding-top: 56px; /* offset for fixed navbar */
+  background-color: #1a2332;
 }
 
-@media (min-width: 768px) {
-  .custom-carousel {
-    padding-top: 5rem; /* desktop padding top */
-    margin-top: 2rem;  /* desktop margin top */
+/* ── IMAGE CONTAINER ── */
+.carousel-image-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ── IMAGES ── */
+.carousel-image {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Mobile image height */
+@media (max-width: 991px) {
+  .carousel-image {
+    height: 280px;
   }
 }
 
+/* Desktop image height */
+@media (min-width: 992px) {
+  .carousel-image {
+    height: 560px;
+  }
+}
 
-.fade-edge-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  /* center content with flex */
+/* ── DARK OVERLAY ── */
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    transparent 100%
+  );
   display: flex;
+  align-items: flex-end;
   justify-content: center;
-  align-items: center;
+  padding-bottom: 40px;
 }
 
-/* Create left fading cloudy edge */
-.fade-edge-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100px;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
-  background: 
-    radial-gradient(circle at left center, rgba(255,255,255,0.85) 0%, transparent 70%);
-  mix-blend-mode: screen;
+/* ── CAPTION ── */
+.carousel-caption {
+  position: static !important;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 800px;
 }
 
-/* Create right fading cloudy edge */
-.fade-edge-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
-  background:
-    radial-gradient(circle at right center, rgba(255,255,255,0.85) 0%, transparent 70%);
-  mix-blend-mode: screen;
+.carousel-caption h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
-/* Optional: smooth border radius for images */
-.carousel-image {
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+.carousel-caption p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
+@media (min-width: 576px) {
+  .carousel-caption h3 { font-size: 2rem; }
+  .carousel-caption p  { font-size: 1.05rem; }
+}
 
+@media (min-width: 992px) {
+  .carousel-caption h3 { font-size: 2.6rem; }
+  .carousel-caption p  { font-size: 1.2rem; }
+}
 
+/* ── CONTROLS ── */
 .carousel-control-prev,
 .carousel-control-next {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 50px;  /* a good clickable size */
-  height: 50px;
-  opacity: 0.7; /* visible but subtle */
-  background-color: rgba(128, 128, 128, 0.3); /* subtle background */
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  z-index: 1050; /* higher than images */
-  position: absolute; /* ensure positioned relative to carousel */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0.8;
 }
 
-.carousel-control-prev {
-  left: 10px !important; /* closer to image */
-}
+.carousel-control-prev { left: 16px; }
+.carousel-control-next { right: 16px; }
 
-.carousel-control-next {
-  right: 10px !important; /* closer to image */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  opacity: 1;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  filter: invert(60%) sepia(10%) saturate(0%) hue-rotate(180deg) brightness(70%) contrast(80%);
-  background-color: transparent !important;
-  width: 30px;
-  height: 30px;
-}
-
-.carousel-caption h3 {
-  font-size: 1.2rem; /* smaller for small screens */
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.carousel-caption p {
-  font-size: 0.7rem; /* smaller for small screens */
-  margin: 0;
-}
-
-@media (min-width: 576px) {
-  /* Slightly bigger on tablets */
-  .carousel-caption h3 {
-    font-size: 1.8rem;
-  }
-  .carousel-caption p {
-    font-size: 1rem;
-  }
-}
-
-@media (min-width: 992px) {
-  /* Larger on desktop */
-  .carousel-caption h3 {
-    font-size: 2.5rem;
-  }
-  .carousel-caption p {
-    font-size: 1.2rem;
-  }
+  width: 22px;
+  height: 22px;
 }

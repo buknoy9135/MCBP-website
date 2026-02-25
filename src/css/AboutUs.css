@@ -1,48 +1,191 @@
-.aboutus-container {
-  /* Default padding and scroll offset for desktop */
-  padding-top: 70px; /* height of navbar */
-  margin-bottom: 60px;
-  scroll-margin-top: 70px; /* offset for anchor scrolling */
+/* ── SECTION ── */
+.aboutus-section {
+  background-color: #ffffff;
+  padding: 72px 0 60px;
+  scroll-margin-top: 70px;
 }
 
-@media (min-width: 992px) {
-  .aboutus-container {
-          /* extra spacing on desktop */
-    margin-bottom: 40px;
-    scroll-margin-top: 80px; /* slightly larger offset for desktop */
+/* ── HEADER ── */
+.aboutus-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.aboutus-main-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a56a0;
+  margin-bottom: 12px;
+}
+
+.aboutus-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #1a56a0, #79b4f7);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* ── INTRO ── */
+.aboutus-intro {
+  max-width: 820px;
+  margin: 0 auto 48px;
+  color: #374151;
+  line-height: 1.8;
+  font-size: 0.97rem;
+}
+
+.aboutus-intro p {
+  margin-bottom: 14px;
+  text-align: justify;
+}
+
+/* ── MISSION / VISION CARDS ── */
+.aboutus-cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 767px) {
+  .aboutus-cards-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aboutus-card {
+  background: #f0f4f9;
+  border-radius: 14px;
+  padding: 32px 28px;
+  border-top: 4px solid #1a56a0;
+  transition: box-shadow 0.2s;
+}
+
+.aboutus-card:hover {
+  box-shadow: 0 6px 24px rgba(26, 86, 160, 0.1);
+}
+
+.aboutus-card--vision {
+  border-top-color: #79b4f7;
+}
+
+.aboutus-card-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.aboutus-card h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a56a0;
+  margin-bottom: 12px;
+}
+
+.aboutus-card p {
+  color: #374151;
+  line-height: 1.75;
+  font-size: 0.93rem;
+  margin: 0;
+  text-align: justify;
+}
+
+/* ── WHAT WE DO ── */
+.aboutus-whatwedo {
+  margin-bottom: 48px;
+}
+
+.aboutus-whatwedo-heading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a56a0;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.aboutus-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 991px) {
+  .aboutus-pillars {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .aboutus-pillars {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aboutus-pillar {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.aboutus-pillar:hover {
+  box-shadow: 0 4px 16px rgba(26, 86, 160, 0.1);
+  transform: translateY(-2px);
+}
+
+.aboutus-pillar-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.aboutus-pillar h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a56a0;
+  margin-bottom: 8px;
+}
+
+.aboutus-pillar p {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── CLOSING ── */
+.aboutus-closing {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  font-style: italic;
+  padding: 24px 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 767px) {
+  .aboutus-section {
+    padding: 48px 0 40px;
   }
 
-  .aboutus-text {
-    font-size: 1rem;
-  }
-
-  .aboutus-heading {
-    font-size: 1.75rem;
-  }
-
-  .aboutus-heading-h4 {
+  .aboutus-main-heading {
     font-size: 1.5rem;
   }
-}
 
-@media (max-width: 991.98px) {
-  .aboutus-container {
-    /* Reduce padding and scroll offset on tablets and mobile */
-    padding-top: 60px;      /* typical mobile navbar height */
-    scroll-margin-top: 56px;
-         /* less top margin on smaller screens */
-    margin-bottom: 20px;
+  .aboutus-intro {
+    font-size: 0.88rem;
   }
 
-  .aboutus-text {
-    font-size: 0.8rem;
+  .aboutus-card {
+    padding: 24px 20px;
   }
 
-  .aboutus-heading {
+  .aboutus-whatwedo-heading {
     font-size: 1.15rem;
-  }
-
-  .aboutus-heading-h4 {
-    font-size: 1rem;
   }
 }

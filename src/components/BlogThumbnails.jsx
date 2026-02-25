@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase";
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 import { cloudinaryUrl } from "../lib/cloudinary";
+import "../css/BlogThumbnails.css";
 
 function BlogThumbnails() {
   const [posts, setPosts] = useState([]);
@@ -13,11 +10,9 @@ function BlogThumbnails() {
   const [imagesPerLoad, setImagesPerLoad] = useState(9);
   const [loading, setLoading] = useState(true);
 
-  // LOAD POSTS FROM SUPABASE
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-
       const { data, error } = await supabase
         .from("posts")
         .select("id, slug, title, description, featured_image, activity_start_date")
@@ -30,14 +25,11 @@ function BlogThumbnails() {
       } else {
         setPosts(data || []);
       }
-
       setLoading(false);
     };
-
     fetchPosts();
   }, []);
 
-  // responsive loading
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
     const perLoad = isMobile ? 3 : 9;
@@ -47,10 +39,8 @@ function BlogThumbnails() {
 
   useEffect(() => {
     const handleResize = () => {
-      const isMobile = window.innerWidth < 768;
-      setImagesPerLoad(isMobile ? 3 : 9);
+      setImagesPerLoad(window.innerWidth < 768 ? 3 : 9);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -61,120 +51,76 @@ function BlogThumbnails() {
 
   const visiblePosts = posts.slice(0, visibleCount);
 
-  if (loading) {
-    return <div className="text-center mt-5">Loading posts...</div>;
-  }
+  const formatDate = (dateStr) => {
+    if (!dateStr) return null;
+    return new Date(dateStr).toLocaleDateString(undefined, {
+      year: "numeric", month: "short", day: "numeric"
+    });
+  };
 
   return (
-    <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 8px" }}>
-      <Row xs={1} md={2} lg={3} className="gx-3 gy-3">
-        {visiblePosts.map((post) => (
-          <Col key={post.id}>
-            <Card style={{ width: "100%" }}>
-              <Link to={`/blog/${post.slug}`}>
-                <div style={{ position: "relative" }}>
-                  <Card.Img
-                    variant="top"
-                    src={
-                        post.featured_image
-                        ? cloudinaryUrl(post.featured_image)
-                        : "/mcbp-logo.png"
-                    }
-                    style={{
-                      objectFit: "cover",
-                      height: "250px",
-                      width: "100%",
-                    }}
-                    loading="lazy"
-                  />
+    <section className="blog-section">
+      <div className="container">
 
-                  {/* Date label */}
-                  {post.activity_start_date && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "8px",
-                        left: "8px",
-                        backgroundColor: "rgba(0,0,0,0.6)",
-                        color: "#fff",
-                        padding: "2px 6px",
-                        borderRadius: "4px",
-                        fontSize: "0.75rem",
-                        fontWeight: "600",
-                        userSelect: "none",
-                        pointerEvents: "none",
-                      }}
-                    >
-                      {post.activity_start_date}
-                    </div>
-                  )}
-
-                  {/* overlay */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "10px",
-                      right: "10px",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      padding: "4px 10px",
-                      backgroundColor: "rgba(0, 0, 0, 0.6)",
-                      borderRadius: "12px",
-                      color: "white",
-                      fontSize: "0.8rem",
-                      fontWeight: "600",
-                      cursor: "pointer",
-                      userSelect: "none",
-                      filter: "drop-shadow(0 0 2px white)",
-                    }}
-                  >
-                    Click to read More
-                  </div>
-                </div>
-              </Link>
-
-              <Card.Body
-                className="py-2"
-                style={{
-                  backgroundColor: "#e7f1ff",
-                  color: "#1a3d7c",
-                }}
-              >
-                <Card.Title className="fs-6" style={{ color: "#204a8c" }}>
-                  <Link
-                    to={`/blog/${post.slug}`}
-                    className="text-decoration-none"
-                    style={{ color: "inherit" }}
-                  >
-                    {post.title}
-                  </Link>
-                </Card.Title>
-
-                <Card.Text
-                  className="small text-muted truncate-text"
-                  style={{
-                    color: "#3a5a9a",
-                    fontWeight: "400",
-                    lineHeight: "1.4",
-                  }}
-                >
-                  {post.description}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-
-      {visibleCount < posts.length && (
-        <div className="text-center mt-4">
-          <Button onClick={loadMore} className="px-4">
-            Load More
-          </Button>
+        {/* Section header */}
+        <div className="blog-section-header">
+          <h2 className="blog-section-title">Latest Activities</h2>
+          <div className="blog-section-divider" />
+          <p className="blog-section-subtitle">
+            Stay updated with our community events, outreach programs, and initiatives.
+          </p>
         </div>
-      )}
-    </div>
+
+        {loading ? (
+          <div className="blog-loading">Loading posts...</div>
+        ) : posts.length === 0 ? (
+          <div className="blog-loading">No posts yet.</div>
+        ) : (
+          <>
+            <div className="blog-grid">
+              {visiblePosts.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/blog/${post.slug}`}
+                  className="blog-card-link"
+                >
+                  <article className="blog-card">
+                    <div className="blog-card-image-wrap">
+                      <img
+                        src={post.featured_image
+                          ? cloudinaryUrl(post.featured_image)
+                          : "/mcbp-logo.png"}
+                        alt={post.title}
+                        loading="lazy"
+                        className="blog-card-image"
+                      />
+                      {post.activity_start_date && (
+                        <span className="blog-card-date">
+                          {formatDate(post.activity_start_date)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="blog-card-body">
+                      <h3 className="blog-card-title">{post.title}</h3>
+                      <p className="blog-card-desc">{post.description}</p>
+                      <span className="blog-card-readmore">Read more →</span>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
+
+            {visibleCount < posts.length && (
+              <div className="blog-load-more-wrap">
+                <button className="blog-load-more-btn" onClick={loadMore}>
+                  Load More
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
