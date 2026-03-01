@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { uploadToCloudinary } from "../lib/cloudinaryUpload";
 import { cloudinaryUrl } from "../lib/cloudinary";
+import "../css/NewPost.css";
 
 export default function NewPost() {
   const { id } = useParams();
@@ -22,12 +23,17 @@ export default function NewPost() {
 
   const [existingImages, setExistingImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [filePreviews, setFilePreviews] = useState([]);
+  const [featuredFileIndex, setFeaturedFileIndex] = useState(0);
+  const [featuredImage, setFeaturedImage] = useState(null);
 
   const [previewImage, setPreviewImage] = useState(null);
+  const [currentPhotoPage, setCurrentPhotoPage] = useState(1);
 
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const photosPerPage = 60;
 
   function createSlug(text) {
     return text
@@ -60,26 +66,51 @@ export default function NewPost() {
       setEndDate(data.activity_end_date || "");
       setPublisherName(data.author_name || "");
       setExistingImages(Array.isArray(data.images) ? data.images : []);
+      setFeaturedImage(data.featured_image || null);
       setVideoLinks(data.videos?.length ? data.videos : [""]);
     }
 
     loadPost();
   }, [id, isEditMode]);
 
+  useEffect(() => {
+    const totalPages = Math.max(1, Math.ceil(existingImages.length / photosPerPage));
+    if (currentPhotoPage > totalPages) {
+      setCurrentPhotoPage(totalPages);
+    }
+  }, [existingImages, currentPhotoPage, photosPerPage]);
+
+  useEffect(() => {
+    if (selectedFiles.length === 0) {
+      setFilePreviews([]);
+      return;
+    }
+    const urls = selectedFiles.map((f) => URL.createObjectURL(f));
+    setFilePreviews(urls);
+    return () => urls.forEach((url) => URL.revokeObjectURL(url));
+  }, [selectedFiles]);
+
   function handleFileSelect(e) {
     setSelectedFiles(Array.from(e.target.files));
+    setFeaturedFileIndex(0);
   }
 
   function removeExistingImage(index) {
     if (!window.confirm("Remove this photo from the post?")) return;
-    setExistingImages(prev => prev.filter((_, i) => i !== index));
+    setExistingImages((prev) => {
+      const removed = prev[index];
+      if (removed === featuredImage) setFeaturedImage(null);
+      return prev.filter((_, i) => i !== index);
+    });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setSaving(true);
 
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session) {
       alert("You are not logged in.");
       setSaving(false);
@@ -89,7 +120,7 @@ export default function NewPost() {
     const slug = createSlug(title);
 
     let uploadedImages = [];
-    let featuredPublicId = existingImages[0] || null;
+    let featuredPublicId = featuredImage ?? (existingImages[0] || null);
 
     if (selectedFiles.length > 0) {
       setUploading(true);
@@ -106,7 +137,6 @@ export default function NewPost() {
         try {
           const uploaded = await uploadToCloudinary(selectedFiles[i], publicId);
           uploadedImages.push(uploaded);
-          if (!featuredPublicId) featuredPublicId = uploaded;
         } catch (err) {
           console.error("UPLOAD ERROR:", err);
           alert("An image failed to upload.");
@@ -117,6 +147,10 @@ export default function NewPost() {
       }
 
       setUploading(false);
+
+      if (!featuredPublicId && uploadedImages.length > 0) {
+        featuredPublicId = uploadedImages[featuredFileIndex] ?? uploadedImages[0];
+      }
     }
 
     const finalImages = [...existingImages, ...uploadedImages];
@@ -130,20 +164,16 @@ export default function NewPost() {
       author_name: publisherName?.trim() || null,
       featured_image: featuredPublicId,
       images: JSON.parse(JSON.stringify(finalImages)),
-      videos: JSON.parse(JSON.stringify(videoLinks.filter(v => v.trim() !== ""))),
+      videos: JSON.parse(JSON.stringify(videoLinks.filter((v) => v.trim() !== ""))),
       activity_start_date: startDate || null,
       activity_end_date: endDate || null,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
 
     let response;
 
     if (isEditMode) {
-      response = await supabase
-        .from("posts")
-        .update(payload)
-        .eq("id", id)
-        .select();
+      response = await supabase.from("posts").update(payload).eq("id", id).select();
     } else {
       response = await supabase
         .from("posts")
@@ -162,275 +192,272 @@ export default function NewPost() {
     navigate("/admin/dashboard");
   }
 
-  return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 16px 60px" }}>
+  const totalPhotoPages = Math.max(1, Math.ceil(existingImages.length / photosPerPage));
+  const paginatedImages = existingImages.slice(
+    (currentPhotoPage - 1) * photosPerPage,
+    currentPhotoPage * photosPerPage
+  );
 
-      {/* UPLOAD OVERLAY */}
+  return (
+    <div className="newpost-page">
       {uploading && (
-        <div style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.75)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "white",
-          zIndex: 9999
-        }}>
-          <div className="spinner-border text-light" style={{ width: "4rem", height: "4rem" }} />
-          <h4 style={{ marginTop: 20 }}>Uploading Photos</h4>
+        <div className="newpost-upload-overlay">
+          <div className="spinner-border text-light newpost-spinner" />
+          <h4 className="newpost-upload-title">Uploading Photos</h4>
           <p>{uploadProgress}%</p>
         </div>
       )}
 
-      {/* ── HEADER ROW ── */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        marginBottom: 24,
-        flexWrap: "wrap",
-      }}>
-        <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
-          <button style={{
-            background: "transparent",
-            border: "1px solid #dee2e6",
-            borderRadius: 6,
-            padding: "7px 14px",
-            fontSize: 13,
-            cursor: "pointer",
-            color: "#6c757d",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-          }}>
-            ← Dashboard
-          </button>
-        </Link>
-        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>
-          {isEditMode ? "Edit Post" : "Create New Blog Post"}
-        </h2>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-
-        <label>Title</label>
-        <input
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
-        />
-
-        <label>Description</label>
-        <textarea
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          rows={3}
-          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
-        />
-
-        <label>Publisher Name (optional)</label>
-        <input
-          value={publisherName}
-          onChange={e => setPublisherName(e.target.value)}
-          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
-        />
-
-        <label>Location</label>
-        <input
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-          style={{ width: "100%", marginBottom: 15, padding: "8px 10px", boxSizing: "border-box" }}
-        />
-
-        <div style={{ display: "flex", gap: 12, marginBottom: 15, flexWrap: "wrap" }}>
-          <div style={{ flex: 1, minWidth: 140 }}>
-            <label>Start Date</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={e => setStartDate(e.target.value)}
-              style={{ width: "100%", padding: "8px 10px", boxSizing: "border-box" }}
-            />
-          </div>
-          <div style={{ flex: 1, minWidth: 140 }}>
-            <label>End Date (optional)</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={e => setEndDate(e.target.value)}
-              style={{ width: "100%", padding: "8px 10px", boxSizing: "border-box" }}
-            />
-          </div>
-        </div>
-
-        <label>Story</label>
-        <textarea
-          value={story}
-          onChange={e => setStory(e.target.value)}
-          rows={10}
-          style={{ width: "100%", marginBottom: 20, padding: "8px 10px", boxSizing: "border-box" }}
-        />
-
-        {/* VIDEO LINKS */}
-        <label>YouTube Video Links</label>
-        {videoLinks.map((link, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
-            <input
-              type="url"
-              value={link}
-              placeholder="https://youtube.com/watch?v=..."
-              onChange={e => {
-                const updated = [...videoLinks];
-                updated[i] = e.target.value;
-                setVideoLinks(updated);
-              }}
-              style={{ flex: 1, padding: "8px 10px", boxSizing: "border-box" }}
-            />
-            {videoLinks.length > 1 && (
-              <button
-                type="button"
-                onClick={() => setVideoLinks(prev => prev.filter((_, idx) => idx !== i))}
-                style={{ padding: "8px 12px", cursor: "pointer" }}
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => setVideoLinks(prev => [...prev, ""])}
-          style={{ marginBottom: 20, fontSize: 13, cursor: "pointer", padding: "6px 12px" }}
-        >
-          + Add another video
-        </button>
-
-        {/* EXISTING IMAGES */}
-        {existingImages.length > 0 && (
-          <>
-            <h4>Current Photos</h4>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
-              gap: 10,
-              marginBottom: 20
-            }}>
-              {existingImages.map((img, i) => (
-                <div key={i} style={{ position: "relative" }}>
-                  <img
-                    src={cloudinaryUrl(img)}
-                    alt=""
-                    onClick={() => setPreviewImage(cloudinaryUrl(img))}
-                    style={{
-                      width: "100%",
-                      height: 100,
-                      objectFit: "cover",
-                      borderRadius: 8,
-                      cursor: "zoom-in",
-                      display: "block"
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeExistingImage(i)}
-                    style={{
-                      position: "absolute",
-                      top: 5,
-                      right: 5,
-                      background: "rgba(0,0,0,0.7)",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "50%",
-                      width: 26,
-                      height: 26,
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                      fontSize: 14,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        <label>Add More Photos</label>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleFileSelect}
-          style={{ display: "block", marginBottom: 24 }}
-        />
-
-        {/* SUBMIT */}
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button
-            type="submit"
-            disabled={saving}
-            style={{
-              background: "#0d6efd",
-              color: "white",
-              border: "none",
-              borderRadius: 6,
-              padding: "10px 24px",
-              fontSize: 15,
-              fontWeight: 600,
-              cursor: saving ? "not-allowed" : "pointer",
-              opacity: saving ? 0.7 : 1,
-            }}
-          >
-            {saving ? "Saving..." : isEditMode ? "Save Changes" : "Publish"}
-          </button>
-
-          <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
-            <button
-              type="button"
-              style={{
-                background: "transparent",
-                border: "1px solid #dee2e6",
-                borderRadius: 6,
-                padding: "10px 20px",
-                fontSize: 15,
-                cursor: "pointer",
-                color: "#6c757d",
-              }}
-            >
-              Cancel
+      <div className="newpost-shell">
+        <div className="newpost-header">
+          <Link to="/admin/dashboard" className="newpost-back-link">
+            <button className="newpost-back-btn" type="button">
+              <i className="bi bi-arrow-left-short" aria-hidden="true"></i>
+              Dashboard
             </button>
           </Link>
+          <h2 className="newpost-title">
+            {isEditMode ? "Edit Post" : "Create New Blog Post"}
+          </h2>
         </div>
 
-      </form>
+        <form onSubmit={handleSubmit} className="newpost-form-card">
+          <div className="newpost-field">
+            <label>Title</label>
+            <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+          </div>
 
-      {/* IMAGE PREVIEW MODAL */}
+          <div className="newpost-field">
+            <label>Description</label>
+            <textarea
+              className="newpost-description-textarea"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={1}
+            />
+          </div>
+
+          <div className="newpost-grid-two">
+            <div className="newpost-field">
+              <label>Publisher Name (optional)</label>
+              <input
+                value={publisherName}
+                onChange={(e) => setPublisherName(e.target.value)}
+              />
+            </div>
+            <div className="newpost-field">
+              <label>Location</label>
+              <input value={location} onChange={(e) => setLocation(e.target.value)} />
+            </div>
+          </div>
+
+          <div className="newpost-grid-two">
+            <div className="newpost-field">
+              <label>Start Date</label>
+              <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+            </div>
+            <div className="newpost-field">
+              <label>End Date (optional)</label>
+              <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+            </div>
+          </div>
+
+          <div className="newpost-field">
+            <label>Story</label>
+            <textarea
+              className="newpost-story-textarea"
+              value={story}
+              onChange={(e) => setStory(e.target.value)}
+              rows={18}
+            />
+          </div>
+
+          <div className="newpost-section">
+            <label className="newpost-section-label">YouTube Video Links</label>
+            {videoLinks.map((link, i) => (
+              <div key={i} className="newpost-video-row">
+                <input
+                  type="url"
+                  value={link}
+                  placeholder="https://youtube.com/watch?v=..."
+                  onChange={(e) => {
+                    const updated = [...videoLinks];
+                    updated[i] = e.target.value;
+                    setVideoLinks(updated);
+                  }}
+                />
+                {videoLinks.length > 1 && (
+                  <button
+                    type="button"
+                    className="newpost-remove-btn"
+                    onClick={() => setVideoLinks((prev) => prev.filter((_, idx) => idx !== i))}
+                    aria-label="Remove video link"
+                  >
+                    <i className="bi bi-x-lg" aria-hidden="true"></i>
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              className="newpost-add-video-btn"
+              onClick={() => setVideoLinks((prev) => [...prev, ""])}
+            >
+              <i className="bi bi-plus-circle" aria-hidden="true"></i>
+              Add another video
+            </button>
+          </div>
+
+          {existingImages.length > 0 && (
+            <div className="newpost-section">
+              <h4>
+                Current Photos
+                <span className="newpost-photo-count">
+                  {existingImages.length} total
+                </span>
+              </h4>
+              <p className="newpost-thumbnail-hint">
+                <i className="bi bi-star-fill" aria-hidden="true"></i> Click the star on any photo to set it as the thumbnail shown in Community Updates.
+              </p>
+              <div className="newpost-photo-scroll">
+                <div className="newpost-photo-grid">
+                  {paginatedImages.map((img, i) => {
+                    const absoluteIndex = (currentPhotoPage - 1) * photosPerPage + i;
+                    const isFeatured = img === featuredImage;
+                    return (
+                      <div
+                        key={absoluteIndex}
+                        className={`newpost-photo-item${isFeatured ? " newpost-photo-featured" : ""}`}
+                      >
+                        <img
+                          src={cloudinaryUrl(img)}
+                          alt=""
+                          onClick={() => setPreviewImage(cloudinaryUrl(img))}
+                        />
+                        <button
+                          type="button"
+                          className="newpost-photo-star"
+                          onClick={() => setFeaturedImage(isFeatured ? null : img)}
+                          aria-label={isFeatured ? "Remove as thumbnail" : "Set as thumbnail"}
+                          title={isFeatured ? "Remove as thumbnail" : "Set as thumbnail"}
+                        >
+                          <i className={`bi ${isFeatured ? "bi-star-fill" : "bi-star"}`} aria-hidden="true"></i>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeExistingImage(absoluteIndex)}
+                          className="newpost-photo-remove"
+                          aria-label="Remove image"
+                        >
+                          <i className="bi bi-x-lg" aria-hidden="true"></i>
+                        </button>
+                        {isFeatured && (
+                          <span className="newpost-featured-badge">Thumbnail</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {totalPhotoPages > 1 && (
+                <div className="newpost-photo-pagination">
+                  <button
+                    type="button"
+                    className="newpost-page-btn"
+                    onClick={() => setCurrentPhotoPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPhotoPage === 1}
+                  >
+                    <i className="bi bi-chevron-left" aria-hidden="true"></i>
+                    Prev
+                  </button>
+                  <span className="newpost-page-indicator">
+                    Page {currentPhotoPage} of {totalPhotoPages}
+                  </span>
+                  <button
+                    type="button"
+                    className="newpost-page-btn"
+                    onClick={() => setCurrentPhotoPage((p) => Math.min(totalPhotoPages, p + 1))}
+                    disabled={currentPhotoPage === totalPhotoPages}
+                  >
+                    Next
+                    <i className="bi bi-chevron-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="newpost-section">
+            <label className="newpost-section-label">
+              {isEditMode ? "Add More Photos" : "Photos"}
+            </label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={handleFileSelect}
+              className="newpost-file-input"
+            />
+            {filePreviews.length > 0 && (
+              <div className="newpost-new-previews">
+                <p className="newpost-thumbnail-hint">
+                  <i className="bi bi-star-fill" aria-hidden="true"></i>{" "}
+                  Click the star to choose which photo appears as the thumbnail in Community Updates.
+                  {featuredImage && " (An existing photo is already set as thumbnail — this selection is ignored.)"}
+                </p>
+                <div className="newpost-photo-scroll">
+                <div className="newpost-photo-grid">
+                  {filePreviews.map((url, i) => {
+                    const isNewFeatured = i === featuredFileIndex && !featuredImage;
+                    return (
+                      <div
+                        key={i}
+                        className={`newpost-photo-item${isNewFeatured ? " newpost-photo-featured" : ""}`}
+                      >
+                        <img
+                          src={url}
+                          alt=""
+                          onClick={() => setPreviewImage(url)}
+                        />
+                        <button
+                          type="button"
+                          className="newpost-photo-star"
+                          onClick={() => setFeaturedFileIndex(i)}
+                          aria-label="Set as thumbnail"
+                          title="Set as thumbnail"
+                        >
+                          <i className={`bi ${isNewFeatured ? "bi-star-fill" : "bi-star"}`} aria-hidden="true"></i>
+                        </button>
+                        {isNewFeatured && (
+                          <span className="newpost-featured-badge">Thumbnail</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="newpost-actions">
+            <button type="submit" disabled={saving} className="newpost-submit-btn">
+              {saving ? "Saving..." : isEditMode ? "Save Changes" : "Publish"}
+            </button>
+
+            <Link to="/admin/dashboard" className="newpost-cancel-link">
+              <button type="button" className="newpost-cancel-btn">
+                Cancel
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
+
       {previewImage && (
-        <div
-          onClick={() => setPreviewImage(null)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.9)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 9999,
-            padding: 16,
-          }}
-        >
-          <img
-            src={previewImage}
-            alt=""
-            style={{ maxWidth: "100%", maxHeight: "90vh", borderRadius: 8 }}
-          />
+        <div onClick={() => setPreviewImage(null)} className="newpost-preview-overlay">
+          <img src={previewImage} alt="" className="newpost-preview-image" />
         </div>
       )}
     </div>
