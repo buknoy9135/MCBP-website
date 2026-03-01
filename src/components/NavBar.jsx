@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/mcbp-logo.png";
+import logo from "../assets/mcbp-login_logo.png";
 import "../css/NavBar.css";
 
 function NavBar() {
@@ -14,14 +14,9 @@ function NavBar() {
     <Navbar
       expand="lg"
       fixed="top"
-      className="custom-navbar bg-body-tertiary"
+      className="custom-navbar"
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
-      style={{
-        backgroundColor: "#fff",
-        borderBottom: "3px solid #79b4f7", // lighter blue
-        transition: "border-color 0.3s ease",
-      }}
     >
       <Container>
         {/* Logo aligned left */}
@@ -36,7 +31,10 @@ function NavBar() {
             alt="MCBP Logo"
             className="navbar-logo d-inline-block align-top me-2"
           />
-          Metro Cebu Businessmen and Professionals
+          <span className="brand-text-stack">
+            <span className="brand-primary">Metro Cebu Businessmen and Professionals</span>
+            <span className="brand-subtitle">Ecozones Eagles Club</span>
+          </span>
         </Navbar.Brand>
 
         {/* Navbar toggle for collapse on mobile */}
@@ -51,7 +49,7 @@ function NavBar() {
             <Nav.Link
               as={Link}
               to="/"
-              style={{ color: "#0a58ca" }}
+              className="nav-link-custom"
               onClick={() => setExpanded(false)}
             >
               Home
@@ -59,7 +57,7 @@ function NavBar() {
             <Nav.Link
               as={Link}
               to="/#about"
-              style={{ color: "#0a58ca" }}
+              className="nav-link-custom"
               onClick={() => setExpanded(false)}
             >
               About Us
@@ -67,7 +65,7 @@ function NavBar() {
             <Nav.Link
               as={Link}
               to="/#join"
-              style={{ color: "#0a58ca" }}
+              className="nav-link-custom"
               onClick={() => setExpanded(false)}
             >
               Join Us
@@ -81,7 +79,7 @@ function NavBar() {
               Contact Us
             </Nav.Link> */}
             <NavDropdown
-              title={<span style={{ color: "#0a58ca" }}>Affiliation</span>}
+              title={<span className="nav-link-custom">Affiliation</span>}
               id="basic-nav-dropdown"
             >
               <NavDropdown.Item
