@@ -1,8 +1,31 @@
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "../css/AboutUs.css";
 
 function AboutUs() {
+  const location = useLocation();
+  const isStandalonePage = location.pathname === "/about";
+
   return (
     <section className="aboutus-section" id="about">
+      {isStandalonePage && (
+        <Helmet>
+          <title>About Us | MCBP-EEC - Metro Cebu Businessmen and Professionals</title>
+          <meta name="description" content="Learn about MCBP-EEC — Metro Cebu Businessmen and Professionals - Ecozones Eagles Club. Our mission, vision, and commitment to community service, emergency response, and civic leadership in Cebu." />
+          <meta name="robots" content="index, follow" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="About Us | MCBP-EEC" />
+          <meta property="og:description" content="Learn about MCBP-EEC — our mission, vision, and commitment to community service, emergency response, and civic leadership in Metro Cebu." />
+          <meta property="og:url" content="https://www.mcbp-org.com/about" />
+          <meta property="og:image" content="https://www.mcbp-org.com/mcbp-login_logo.png" />
+          <meta property="og:site_name" content="MCBP-EEC" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="About Us | MCBP-EEC" />
+          <meta name="twitter:description" content="Learn about MCBP-EEC — our mission, vision, and commitment to community service, emergency response, and civic leadership in Metro Cebu." />
+          <meta name="twitter:image" content="https://www.mcbp-org.com/mcbp-login_logo.png" />
+          <link rel="canonical" href="https://www.mcbp-org.com/about" />
+        </Helmet>
+      )}
       <div className="container">
 
         {/* Section header */}
@@ -26,7 +49,7 @@ function AboutUs() {
           <p>
             Chartered under <strong>TFOE-PE</strong>{" "}
             (The Fraternal Order of Eagles - Philippine Eagles) and <strong>ACCERT</strong> (Anti Crime and Community
-            Emergency Response Team), MCBP blends
+            Emergency Response Team), MCBP-EEC blends
             business acumen with a deep commitment to civic duty. Our members share
             a passion for service, leadership, and nation-building, actively
             engaging in initiatives that enhance public safety, social welfare, and
@@ -116,7 +139,7 @@ function AboutUs() {
                   </svg>
                 ),
                 title: "Professional Growth",
-                text: "We create avenues for continuous learning, leadership development, and business networking among our members. Through regular forums, seminars, and mentorship programs, MCBP empowers its members to grow not only as professionals but as community leaders who can drive meaningful change in their respective fields.",
+                text: "We create avenues for continuous learning, leadership development, and business networking among our members. Through regular forums, seminars, and mentorship programs, MCBP-EEC empowers its members to grow not only as professionals but as community leaders who can drive meaningful change in their respective fields.",
               },
               {
                 icon: (
@@ -146,7 +169,7 @@ function AboutUs() {
         {/* Closing */}
         <div className="aboutus-closing">
           <p>
-            MCBP is more than a team — it's a movement of civic-minded leaders
+            MCBP-EEC is more than a team — it's a movement of civic-minded leaders
             dedicated to uplifting one another and empowering communities through
             unity, vigilance, and service. Together, we stand in unity — driving
             outreach programs that uplift lives, strengthen communities, and inspire

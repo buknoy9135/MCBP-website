@@ -1,6 +1,7 @@
 // src/pages/PrivacyPolicy.jsx
 
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import "../css/PrivacyPolicy.css";
 
 function PrivacyPolicy() {
@@ -11,6 +12,12 @@ function PrivacyPolicy() {
 
   return (
     <div className="container py-5 privacy-policy-container page-background px-3 px-md-5">
+      <Helmet>
+        <title>Privacy Policy | MCBP-EEC</title>
+        <meta name="description" content="Read the MCBP-EEC Privacy Policy. We are committed to protecting your personal data in accordance with the Data Privacy Act of 2012 (RA 10173)." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.mcbp-org.com/privacy-policy" />
+      </Helmet>
       <div style={{ height: "40px" }}></div>
 
       <h1 className="mb-4 text-primary">Privacy Policy</h1>

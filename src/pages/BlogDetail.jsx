@@ -1,9 +1,12 @@
 import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { supabase } from "../lib/supabase";
 import ImageModal from "../components/ImageModal";
 import { cloudinaryUrl } from "../lib/cloudinary";
 import "../css/BlogDetail.css";
+
+const FALLBACK_OG_IMAGE = "https://www.mcbp-org.com/mcbp-login_logo.png";
 
 function getYouTubeEmbedUrl(url) {
   if (!url) return null;
@@ -166,8 +169,29 @@ export default function BlogDetail() {
       })
     : null;
 
+  const ogImage = post.images?.[0] ? cloudinaryUrl(post.images[0]) : FALLBACK_OG_IMAGE;
+  const postUrl = `https://www.mcbp-org.com/blog/${post.slug}`;
+  const postTitle = `${post.title} | MCBP-EEC`;
+
   return (
     <div className="BlogDetail-container page-background">
+      <Helmet>
+        <title>{postTitle}</title>
+        <meta name="description" content={post.description} />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={postTitle} />
+        <meta property="og:description" content={post.description} />
+        <meta property="og:url" content={postUrl} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="MCBP-EEC" />
+        <meta property="article:published_time" content={post.created_at} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={postTitle} />
+        <meta name="twitter:description" content={post.description} />
+        <meta name="twitter:image" content={ogImage} />
+        <link rel="canonical" href={postUrl} />
+      </Helmet>
       <style>{`
         .admin-toolbar {
           position: sticky;

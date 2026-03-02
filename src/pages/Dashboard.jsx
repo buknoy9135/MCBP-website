@@ -36,21 +36,22 @@ function Dashboard() {
   return (
     <div id="dashboard-container" className="page-background">
       <Helmet>
-        <title>Metro Cebu Businessmen and Professionals (MCBP) - Home</title>
+        <title>Metro Cebu Businessmen and Professionals - Ecozones Eagles Club (MCBP-EEC)</title>
         <meta
           name="description"
-          content="Welcome to Metro Cebu Businessmen and Professionals (MCBP). Discover our events, community news, and join us to connect with local professionals."
+          content="Welcome to MCBP-EEC — Metro Cebu Businessmen and Professionals - Ecozones Eagles Club. Discover our events, community news, and join us to connect with local professionals in Metro Cebu."
         />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Metro Cebu Businessmen and Professionals (MCBP) - Home" />
-        <meta property="og:description" content="Welcome to Metro Cebu Businessmen and Professionals (MCBP). Discover our events, community news, and join us to connect with local professionals." />
+        <meta property="og:title" content="Metro Cebu Businessmen and Professionals - Ecozones Eagles Club (MCBP-EEC)" />
+        <meta property="og:description" content="Welcome to MCBP-EEC — Metro Cebu Businessmen and Professionals - Ecozones Eagles Club. Discover our events, community news, and join us to connect with local professionals in Metro Cebu." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.mcbp-org.com/" />
-        <meta property="og:image" content="https://res.cloudinary.com/doeovg6x9/image/upload/v1749197428/mcbp-logo.jpg" />
+        <meta property="og:image" content="https://www.mcbp-org.com/mcbp-login_logo.png" />
+        <meta property="og:site_name" content="MCBP-EEC" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Metro Cebu Businessmen and Professionals (MCBP) - Home" />
-        <meta name="twitter:description" content="Welcome to Metro Cebu Businessmen and Professionals (MCBP). Discover our events, community news, and join us to connect with local professionals." />
-        <meta name="twitter:image" content="https://res.cloudinary.com/doeovg6x9/image/upload/v1749197428/mcbp-logo.jpg" />
+        <meta name="twitter:title" content="Metro Cebu Businessmen and Professionals - Ecozones Eagles Club (MCBP-EEC)" />
+        <meta name="twitter:description" content="Welcome to MCBP-EEC — Metro Cebu Businessmen and Professionals - Ecozones Eagles Club. Discover our events, community news, and join us to connect with local professionals in Metro Cebu." />
+        <meta name="twitter:image" content="https://www.mcbp-org.com/mcbp-login_logo.png" />
         <link rel="canonical" href="https://www.mcbp-org.com/" />
       </Helmet>
 
