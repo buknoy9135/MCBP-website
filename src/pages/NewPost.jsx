@@ -132,6 +132,27 @@ export default function NewPost() {
     if (!window.confirm("Remove this photo from the post?")) return;
     setExistingImages((prev) => {
       const removed = prev[index];
+      if (removed) {
+        const graceDays = parseInt(
+          localStorage.getItem("mcbp_image_cleaner_grace_days") ?? "14",
+          10
+        );
+        const scheduledAt = new Date(
+          Date.now() + graceDays * 24 * 60 * 60 * 1000
+        ).toISOString();
+        supabase
+          .from("pending_image_deletions")
+          .insert([{
+            public_id: removed,
+            scheduled_delete_at: scheduledAt,
+            source: "image_removed",
+            post_id: isEditMode ? id : null,
+            post_title: title || null,
+          }])
+          .then(({ error }) => {
+            if (error) console.warn("Failed to queue image for deletion:", error);
+          });
+      }
       if (removed === featuredImage) setFeaturedImage(null);
       return prev.filter((_, i) => i !== index);
     });

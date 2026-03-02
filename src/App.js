@@ -11,6 +11,7 @@ import AdminLogin from './pages/AdminLogin.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import NewPost from './pages/NewPost.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import ImageCleaner from './pages/ImageCleaner.jsx';
 
 function App() {
   const location = useLocation();
@@ -71,6 +72,15 @@ function App() {
           element={
             <ProtectedRoute>
               <BlogDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/image-cleaner"
+          element={
+            <ProtectedRoute>
+              <ImageCleaner />
             </ProtectedRoute>
           }
         />

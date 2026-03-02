@@ -1,4 +1,4 @@
-﻿import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import ImageModal from "../components/ImageModal";
@@ -227,15 +227,15 @@ export default function BlogDetail() {
         }
       `}</style>
 
-      {/* â”€â”€ ADMIN STICKY TOOLBAR â”€â”€ */}
+      {/* -- ADMIN STICKY TOOLBAR -- */}
       {isAdmin && (
         <div className="admin-toolbar">
           <div className="container" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <Link to="/admin/dashboard" className="btn-admin-dashboard">
-              â† Dashboard
+              {'←'} Dashboard
             </Link>
             <Link to={`/admin/edit-post/${post.id}`} className="btn-admin-edit">
-              âœï¸ Edit Post
+              {'✏️'} Edit Post
             </Link>
             {post.is_archived && (
               <span style={{
@@ -248,26 +248,26 @@ export default function BlogDetail() {
                 fontWeight: 700,
                 letterSpacing: "0.05em",
               }}>
-                âš  ARCHIVED
+                {'⚠'} ARCHIVED
               </span>
             )}
           </div>
         </div>
       )}
 
-      {/* â”€â”€ ARCHIVED BANNER â”€â”€ */}
+      {/* -- ARCHIVED BANNER -- */}
       {isAdmin && post.is_archived && (
         <div className="archived-banner">
           <div className="container">
-            âš ï¸ This post is currently <strong style={{ margin: "0 4px" }}>archived</strong>
-            â€” it is not visible to the public.
+            {'⚠️'} This post is currently <strong style={{ margin: "0 4px" }}>archived</strong>
+            {'—'} it is not visible to the public.
           </div>
         </div>
       )}
 
       <div className="blog-detail-content" style={{ paddingTop: isAdmin || isAdminPreviewRoute ? 24 : 80, paddingBottom: 80 }}>
 
-        {/* â”€â”€ BACK BUTTON (public only) â”€â”€ */}
+        {/* -- BACK BUTTON (public only) -- */}
         {!isAdmin && (
           <button className="blog-back-btn" onClick={() => navigate("/")}>
             <i className="bi bi-arrow-left" aria-hidden="true"></i>
@@ -275,7 +275,7 @@ export default function BlogDetail() {
           </button>
         )}
 
-        {/* â”€â”€ POST HEADER â”€â”€ */}
+        {/* -- POST HEADER -- */}
         <div className="blog-post-header">
           <div className="blog-header-accent"></div>
           <h1 className="blog-detail-title">{post.title}</h1>
@@ -292,19 +292,19 @@ export default function BlogDetail() {
               {activityDate && (
                 <span className="blog-meta-chip chip-date">
                   <i className="bi bi-calendar-event-fill" aria-hidden="true"></i>
-                  {activityDate}{activityEndDate && ` â€“ ${activityEndDate}`}
+                  {activityDate}{activityEndDate && ` – ${activityEndDate}`}
                 </span>
               )}
             </div>
           )}
         </div>
 
-        {/* â”€â”€ STORY â”€â”€ */}
+        {/* -- STORY -- */}
         <div className="blog-story-section">
           <p className="post-story">{post.story}</p>
         </div>
 
-        {/* â”€â”€ AUTHOR â”€â”€ */}
+        {/* -- AUTHOR -- */}
         <div className="blog-author-row">
           <div className="blog-author-avatar">
             <i className="bi bi-person-fill" aria-hidden="true"></i>
@@ -339,7 +339,7 @@ export default function BlogDetail() {
             </span>
           </div>
         )}
-        {/* â”€â”€ IMAGES â”€â”€ */}
+        {/* -- IMAGES -- */}
         {images.length > 0 && (
           <div className="blog-media-section">
             <div className="blog-section-heading">
@@ -367,7 +367,7 @@ export default function BlogDetail() {
           </div>
         )}
 
-        {/* â”€â”€ VIDEOS â”€â”€ */}
+        {/* -- VIDEOS -- */}
         {videos.length > 0 && (
           <div className="blog-media-section">
             <div className="blog-section-heading">
@@ -394,7 +394,7 @@ export default function BlogDetail() {
           </div>
         )}
 
-        {/* â”€â”€ PREV / NEXT â”€â”€ */}
+        {/* -- PREV / NEXT -- */}
         <div className="blog-pagination-wrap">
           {previousPost ? (
             <Link

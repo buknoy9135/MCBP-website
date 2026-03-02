@@ -25,6 +25,7 @@ export default function AdminDashboard() {
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [activeTab, setActiveTab] = useState("active");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pendingDeletionCount, setPendingDeletionCount] = useState(0);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -41,6 +42,10 @@ export default function AdminDashboard() {
     loadProfile(user.id);
     fetchPosts();
   }, [user]);
+
+  useEffect(() => {
+    if (role === "super_admin") fetchPendingCount();
+  }, [role]);
 
   const loadProfile = async (userId) => {
     const { data, error } = await supabase
@@ -105,6 +110,13 @@ export default function AdminDashboard() {
     setLoadingPosts(false);
   };
 
+  const fetchPendingCount = async () => {
+    const { count } = await supabase
+      .from("pending_image_deletions")
+      .select("id", { count: "exact", head: true });
+    setPendingDeletionCount(count ?? 0);
+  };
+
   const archivePost = async (postId) => {
     if (!window.confirm("Archive this post?")) return;
     const { error } = await supabase
@@ -127,9 +139,40 @@ export default function AdminDashboard() {
 
   const deletePost = async (postId, title) => {
     if (!window.confirm(`Permanently delete "${title}"?\nThis cannot be undone.`)) return;
+
+    const { data: postData, error: fetchError } = await supabase
+      .from("posts")
+      .select("images, featured_image")
+      .eq("id", postId)
+      .single();
+
+    if (fetchError) { alert("Could not fetch post images before deletion."); return; }
+
     const { error } = await supabase.from("posts").delete().eq("id", postId);
     if (error) { alert("Delete failed."); return; }
+
+    const graceDays = parseInt(localStorage.getItem("mcbp_image_cleaner_grace_days") ?? "14", 10);
+    const scheduledAt = new Date(Date.now() + graceDays * 24 * 60 * 60 * 1000).toISOString();
+    const allImages = Array.isArray(postData.images) ? [...postData.images] : [];
+    if (postData.featured_image && !allImages.includes(postData.featured_image)) {
+      allImages.push(postData.featured_image);
+    }
+    if (allImages.length > 0) {
+      const rows = allImages.map((publicId) => ({
+        public_id: publicId,
+        scheduled_delete_at: scheduledAt,
+        source: "post_deleted",
+        post_id: null,
+        post_title: title,
+      }));
+      const { error: queueError } = await supabase
+        .from("pending_image_deletions")
+        .insert(rows);
+      if (queueError) console.warn("Image queue insert failed (non-fatal):", queueError);
+    }
+
     fetchPosts();
+    fetchPendingCount();
   };
 
   const handleLogout = async () => {
@@ -190,6 +233,19 @@ export default function AdminDashboard() {
             {archivedPosts.length}
           </span>
         </button>
+        {role === "super_admin" && (
+          <Link to="/admin/image-cleaner" style={{ textDecoration: "none" }}>
+            <button style={s.navItem} onClick={() => setMenuOpen(false)}>
+              <span style={s.navIcon}>🗑</span>
+              Image Cleaner
+              {pendingDeletionCount > 0 && (
+                <span style={{ ...s.navBadge, background: "rgba(127,29,29,0.45)", color: "#fda4af", marginLeft: "auto" }}>
+                  {pendingDeletionCount}
+                </span>
+              )}
+            </button>
+          </Link>
+        )}
       </nav>
 
       <div style={s.sidebarFooter}>
