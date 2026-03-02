@@ -3,11 +3,16 @@ import Carousel from "react-bootstrap/Carousel";
 import slide1 from "../assets/carousel-images/slide1.jpg";
 import slide2 from "../assets/carousel-images/slide2.jpg";
 import slide3 from "../assets/carousel-images/slide3.jpg";
+import slide4 from "../assets/carousel-images/slide4.jpg";
 import "../css/CarouselArea.css";
 
-const slides = [slide1, slide2, slide3];
+const slides = [slide4, slide1, slide2, slide3];
 
 const slideContent = [
+  {
+    heading: "One Organization, One Vision",
+    text: "Bound by shared values and dressed in pride, our members stand united in service to the nation.",
+  },
   {
     heading: "Empowering Communities, Building Futures",
     text: "MCBP is dedicated to creating lasting impact through education, innovation, and support.",
