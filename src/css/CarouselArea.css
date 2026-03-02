@@ -1,99 +1,172 @@
 /* ── CAROUSEL WRAPPER ── */
+.carousel-wrapper {
+  position: relative;
+  padding-top: 56px;
+  background: linear-gradient(180deg, #132338 0%, #0f1c2e 100%);
+  overflow: hidden;
+}
+
 .custom-carousel {
-  padding-top: 56px; /* offset for fixed navbar */
-  background-color: #1a2332;
+  --slide-fade-duration: 0.9s;
+}
+
+/* Hide Bootstrap's default slide transition so we control it */
+.custom-carousel .carousel-item {
+  transition: opacity var(--slide-fade-duration) ease-in-out !important;
 }
 
 /* ── IMAGE CONTAINER ── */
 .carousel-image-container {
   position: relative;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
 }
 
-/* ── IMAGES ── */
+/* ── IMAGES with Ken Burns ── */
 .carousel-image {
   width: 100%;
   object-fit: cover;
   display: block;
+  transform-origin: center center;
+  filter: saturate(1.06) contrast(1.03) brightness(0.94);
 }
 
-/* Mobile image height */
+/* Mobile height */
 @media (max-width: 991px) {
   .carousel-image {
-    height: 280px;
+    height: clamp(300px, 52vh, 440px);
   }
 }
 
-/* Desktop image height */
+/* Desktop height */
 @media (min-width: 992px) {
   .carousel-image {
-    height: 560px;
+    height: clamp(560px, 68vh, 760px);
   }
 }
 
-/* ── DARK OVERLAY ── */
+/* Ken Burns: zoom in slowly on active slide */
+.carousel-item.active .carousel-image {
+  animation: kenBurns 5.5s ease-out forwards;
+}
+
+@keyframes kenBurns {
+  from {
+    transform: scale(1.0);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+/* ── DARK OVERLAY (gradient from bottom) ── */
 .carousel-overlay {
   position: absolute;
   inset: 0;
+  z-index: 10;
+  pointer-events: none;
   background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.65) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    transparent 100%
+    180deg,
+    rgba(8, 20, 38, 0.18) 0%,
+    rgba(8, 20, 38, 0.38) 38%,
+    rgba(5, 15, 30, 0.72) 100%
   );
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 40px;
+  padding: clamp(14px, 2.6vw, 26px);
 }
 
 /* ── CAPTION ── */
 .carousel-caption {
   position: static !important;
   text-align: center;
-  padding: 0 24px;
-  max-width: 800px;
+  max-width: min(1540px, 99vw);
+  padding: clamp(11px, 1.55vw, 16px) clamp(14px, 1.9vw, 20px);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(8, 26, 52, 0.58), rgba(6, 20, 40, 0.42));
+  border: 1px solid rgba(147, 197, 253, 0.32);
+  box-shadow: 0 10px 24px rgba(3, 10, 22, 0.3);
+  backdrop-filter: blur(2px);
 }
 
-.carousel-caption h3 {
-  font-size: 1.4rem;
+.carousel-title {
+  font-size: clamp(1.22rem, 1.04rem + 0.85vw, 1.9rem);
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  margin: 0 0 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  line-height: 1.3;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.carousel-caption p {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.88);
+.carousel-text {
+  font-size: clamp(1rem, 0.92rem + 0.34vw, 1.25rem);
+  color: rgba(241, 245, 249, 0.95);
   margin: 0;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.38);
+  line-height: 1.4;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media (min-width: 576px) {
-  .carousel-caption h3 { font-size: 2rem; }
-  .carousel-caption p  { font-size: 1.05rem; }
+/* Caption entrance animation — remount via React key restarts this on every slide change */
+.carousel-caption-inner {
+  animation: captionFadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s both;
 }
 
-@media (min-width: 992px) {
-  .carousel-caption h3 { font-size: 2.6rem; }
-  .carousel-caption p  { font-size: 1.2rem; }
+@keyframes captionFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CTA Button */
+.carousel-cta-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 11px 32px;
+  background: linear-gradient(135deg, #1a56a0, #2563eb);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 50px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  box-shadow: 0 6px 24px rgba(26, 86, 160, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.carousel-cta-btn:hover {
+  background: linear-gradient(135deg, #154080, #1d4ed8);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(26, 86, 160, 0.65);
+  text-decoration: none;
 }
 
 /* ── CONTROLS ── */
 .carousel-control-prev,
 .carousel-control-next {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(191, 219, 254, 0.46);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.24);
   border-radius: 50%;
-  opacity: 0.8;
+  opacity: 0.85;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .carousel-control-prev { left: 16px; }
@@ -101,7 +174,8 @@
 
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
-  background-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.05);
   opacity: 1;
 }
 
@@ -109,4 +183,57 @@
 .carousel-control-next-icon {
   width: 22px;
   height: 22px;
+}
+
+/* ── INDICATORS ── */
+.carousel-indicators [data-bs-target] {
+  width: 18px;
+  height: 5px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.45);
+  border: none;
+  margin: 0 4px;
+  transition: background-color 0.3s, width 0.3s;
+}
+
+.carousel-indicators .active {
+  background-color: #ffffff;
+  width: 34px;
+}
+
+@media (max-width: 767px) {
+  .carousel-overlay {
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  .carousel-caption {
+    text-align: center;
+    max-width: 96vw;
+    border-radius: 12px;
+    padding: 12px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .carousel-cta-btn {
+    font-size: 0.76rem;
+    padding: 8px 22px;
+    margin-top: 10px;
+  }
+
+  .carousel-title {
+    max-width: 100%;
+    font-size: clamp(0.98rem, 0.92rem + 0.34vw, 1.14rem);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .carousel-text {
+    max-width: 100%;
+    font-size: clamp(0.74rem, 0.7rem + 0.15vw, 0.82rem);
+    line-height: 1.3;
+  }
 }

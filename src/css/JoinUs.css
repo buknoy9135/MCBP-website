@@ -1,38 +1,129 @@
 /* ── SECTION ── */
-.join-us-wrapper {
-  background-color: #ffffff;
-  padding: 72px 1rem 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.join-us-section {
+  background: linear-gradient(180deg, #0f2744 0%, #132338 100%);
+  padding: 72px 0 80px;
   scroll-margin-top: 80px;
+}
+
+/* ── SPLIT CARD ── */
+.join-us-split {
+  display: flex;
+  align-items: stretch;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(3, 10, 28, 0.45);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── INFO PANEL ── */
+.join-us-info-panel {
+  flex: 0 0 42%;
+  background: linear-gradient(160deg, #1a3d6e 0%, #0f2744 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Eyebrow badge — inverted for dark bg */
+.join-us-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: #93c5fd;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.join-us-info-heading {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.join-us-info-subtext {
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 32px;
+}
+
+/* Benefits list */
+.join-us-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.join-us-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(226, 232, 240, 0.9);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.benefit-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(147, 197, 253, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #93c5fd;
+}
+
+/* ── FORM PANEL ── */
+.join-us-form-panel {
+  flex: 1;
+  background: #ffffff;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ── FORM CARD ── */
 .thematic-form {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 40px 36px;
-  max-width: 750px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  max-width: none;
   width: 100%;
-  box-shadow: 0 4px 24px rgba(26, 86, 160, 0.08);
+  box-shadow: none;
 }
 
 /* ── HEADING ── */
 .form-heading {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #1a56a0;
-  margin-bottom: 8px;
-  text-align: center;
+  color: #0f2744;
+  margin-bottom: 6px;
+  text-align: left;
 }
 
 .form-subtext {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #4b5563;
-  text-align: center;
-  margin-bottom: 28px;
+  text-align: left;
+  margin-bottom: 24px;
   line-height: 1.6;
 }
 
@@ -61,21 +152,21 @@
 
 /* ── SUBMIT BUTTON ── */
 .thematic-form button[type="submit"] {
-  background-color: #1a56a0;
-  border-color: #1a56a0;
+  background: linear-gradient(135deg, #1a56a0, #2563eb);
+  border: none;
   color: #fff;
   border-radius: 8px;
-  padding: 0.6rem 2rem;
+  padding: 0.65rem 2.2rem;
   font-weight: 600;
   font-size: 1rem;
-  transition: background-color 0.2s, transform 0.15s;
+  transition: opacity 0.2s, transform 0.15s;
   display: block;
   margin: 1.25rem auto 0;
+  box-shadow: 0 4px 14px rgba(26, 86, 160, 0.35);
 }
 
 .thematic-form button[type="submit"]:hover {
-  background-color: #154080;
-  border-color: #154080;
+  opacity: 0.88;
   transform: translateY(-1px);
 }
 
@@ -153,30 +244,55 @@
 }
 
 /* ── MOBILE ── */
-@media (max-width: 576px) {
-  .join-us-wrapper {
-    padding: 48px 1rem 60px;
+@media (max-width: 767px) {
+  .join-us-section {
+    padding: 48px 0 60px;
   }
 
-  .thematic-form {
-    padding: 28px 20px;
+  .join-us-split {
+    flex-direction: column;
+    border-radius: 16px;
+    margin: 0 8px;
   }
 
-  .form-heading {
+  .join-us-info-panel {
+    flex: none;
+    padding: 32px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .join-us-info-heading {
     font-size: 1.4rem;
   }
 
+  .join-us-info-subtext {
+    font-size: 0.88rem;
+  }
+
+  .join-us-benefits li {
+    font-size: 0.86rem;
+  }
+
+  .join-us-form-panel {
+    padding: 32px 24px;
+  }
+
+  .form-heading {
+    font-size: 1.22rem;
+  }
+
   .form-subtext {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     margin-bottom: 20px;
   }
 
   .thematic-form .form-control {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .thematic-form .form-label {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .thematic-form button[type="submit"] {
@@ -185,6 +301,6 @@
   }
 
   .join-divider {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 }

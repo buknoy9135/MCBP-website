@@ -1,8 +1,11 @@
+import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import slide1 from "../assets/carousel-images/slide1.jpg";
 import slide2 from "../assets/carousel-images/slide2.jpg";
 import slide3 from "../assets/carousel-images/slide3.jpg";
 import "../css/CarouselArea.css";
+
+const slides = [slide1, slide2, slide3];
 
 const slideContent = [
   {
@@ -20,26 +23,51 @@ const slideContent = [
 ];
 
 function CarouselArea() {
+  const [index, setIndex] = useState(0);
+  const [captionIndex, setCaptionIndex] = useState(0);
+  const [captionKey, setCaptionKey] = useState(0);
+
+  function handleSlid(selectedIndex) {
+    setCaptionIndex(selectedIndex);
+    setCaptionKey((k) => k + 1);
+  }
+
   return (
-    <Carousel className="custom-carousel" fade>
-      {[slide1, slide2, slide3].map((slide, index) => (
-        <Carousel.Item interval={4000} key={index}>
-          <div className="carousel-image-container">
-            <img
-              src={slide}
-              alt={`Slide ${index + 1}`}
-              className="carousel-image"
-            />
-            <div className="carousel-overlay">
-              <div className="carousel-caption">
-                <h3>{slideContent[index].heading}</h3>
-                <p>{slideContent[index].text}</p>
-              </div>
+    <div className="carousel-wrapper">
+      <Carousel
+        activeIndex={index}
+        onSelect={setIndex}
+        onSlid={handleSlid}
+        className="custom-carousel"
+        fade
+        interval={5500}
+        pause="hover"
+      >
+        {slides.map((slide, i) => (
+          <Carousel.Item key={i}>
+            <div className="carousel-image-container">
+              <img
+                src={slide}
+                alt={`Slide ${i + 1}`}
+                className="carousel-image"
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+              />
             </div>
+          </Carousel.Item>
+        ))}
+      </Carousel>
+
+      {/* Single caption overlay — lives outside carousel items so it never crossfades */}
+      <div className="carousel-overlay">
+        <div className="carousel-caption">
+          <div className="carousel-caption-inner" key={captionKey}>
+            <h3 className="carousel-title">{slideContent[captionIndex].heading}</h3>
+            <p className="carousel-text">{slideContent[captionIndex].text}</p>
           </div>
-        </Carousel.Item>
-      ))}
-    </Carousel>
+        </div>
+      </div>
+    </div>
   );
 }
 

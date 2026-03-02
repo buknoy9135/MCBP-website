@@ -20,7 +20,7 @@ function PrivacyPolicy() {
       </p>
 
       <p>
-        At <strong>Metro Cebu Businessmen and Professionals (MCBP)</strong>,
+        At <strong>Metro Cebu Businessmen and Professionals - Ecozones Eagles Club (MCBP - EEC)</strong>,
         your privacy is a priority. We are committed to handling your personal
         data with transparency and in accordance with the Data Privacy Act of
         2012 (RA 10173).

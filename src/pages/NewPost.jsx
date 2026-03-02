@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { uploadToCloudinary } from "../lib/cloudinaryUpload";
@@ -18,6 +18,7 @@ export default function NewPost() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [publisherName, setPublisherName] = useState("");
+  const [contributors, setContributors] = useState([{ name: "", link: "" }]);
 
   const [videoLinks, setVideoLinks] = useState([""]);
 
@@ -34,7 +35,6 @@ export default function NewPost() {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const photosPerPage = 60;
-
   function createSlug(text) {
     return text
       .toLowerCase()
@@ -43,6 +43,38 @@ export default function NewPost() {
       .replace(/\s+/g, "-");
   }
 
+  function normalizeContributorLink(linkRaw) {
+    const value = (linkRaw || "").trim();
+    if (!value) return "";
+
+    if (/^[a-z][a-z\d+\-.]*:\/\//i.test(value)) return value;
+    if (value.startsWith("//")) return `https:${value}`;
+
+    if (/^www\./i.test(value)) return `https://${value}`;
+    return `https://www.${value}`;
+  }
+
+  function normalizeContributors(raw) {
+    let parsed = raw;
+    if (typeof parsed === "string") {
+      try {
+        parsed = JSON.parse(parsed);
+      } catch {
+        parsed = [];
+      }
+    }
+
+    if (!Array.isArray(parsed)) return [{ name: "", link: "" }];
+
+    const clean = parsed
+      .map((item) => ({
+        name: typeof item?.name === "string" ? item.name.trim() : "",
+        link: normalizeContributorLink(typeof item?.link === "string" ? item.link : ""),
+      }))
+      .filter((item) => item.name && item.link);
+
+    return clean.length ? clean : [{ name: "", link: "" }];
+  }
   useEffect(() => {
     if (!isEditMode) return;
 
@@ -65,6 +97,7 @@ export default function NewPost() {
       setStartDate(data.activity_start_date || "");
       setEndDate(data.activity_end_date || "");
       setPublisherName(data.author_name || "");
+      setContributors(normalizeContributors(data.contributors));
       setExistingImages(Array.isArray(data.images) ? data.images : []);
       setFeaturedImage(data.featured_image || null);
       setVideoLinks(data.videos?.length ? data.videos : [""]);
@@ -165,6 +198,16 @@ export default function NewPost() {
       featured_image: featuredPublicId,
       images: JSON.parse(JSON.stringify(finalImages)),
       videos: JSON.parse(JSON.stringify(videoLinks.filter((v) => v.trim() !== ""))),
+      contributors: JSON.parse(
+        JSON.stringify(
+          contributors
+            .map((item) => ({
+              name: item?.name?.trim() || "",
+              link: normalizeContributorLink(item?.link),
+            }))
+            .filter((item) => item.name && item.link)
+        )
+      ),
       activity_start_date: startDate || null,
       activity_end_date: endDate || null,
       updated_at: new Date().toISOString(),
@@ -307,7 +350,64 @@ export default function NewPost() {
               Add another video
             </button>
           </div>
-
+          <div className="newpost-section">
+            <label className="newpost-section-label">Photos / Videos Courtesy Of</label>
+            {contributors.map((person, i) => (
+              <div className="newpost-contrib-row" key={`contrib-${i}`}>
+                <input
+                  type="text"
+                  className="newpost-contrib-name"
+                  placeholder="Contributor name"
+                  value={person.name}
+                  onChange={(e) => {
+                    const updated = [...contributors];
+                    updated[i] = { ...updated[i], name: e.target.value };
+                    setContributors(updated);
+                  }}
+                />
+                <input
+                  type="text"
+                  inputMode="url"
+                  className="newpost-contrib-link"
+                  placeholder="jalilanthony.com or https://facebook.com/..."
+                  value={person.link}
+                  onChange={(e) => {
+                    const updated = [...contributors];
+                    updated[i] = { ...updated[i], link: e.target.value };
+                    setContributors(updated);
+                  }}
+                  onBlur={() => {
+                    const updated = [...contributors];
+                    updated[i] = {
+                      ...updated[i],
+                      link: normalizeContributorLink(updated[i]?.link),
+                    };
+                    setContributors(updated);
+                  }}
+                />
+                {contributors.length > 1 && (
+                  <button
+                    type="button"
+                    className="newpost-remove-btn"
+                    onClick={() =>
+                      setContributors((prev) => prev.filter((_, idx) => idx !== i))
+                    }
+                    aria-label="Remove contributor"
+                  >
+                    <i className="bi bi-x-lg" aria-hidden="true"></i>
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              className="newpost-add-video-btn"
+              onClick={() => setContributors((prev) => [...prev, { name: "", link: "" }])}
+            >
+              <i className="bi bi-plus-circle" aria-hidden="true"></i>
+              Add another person
+            </button>
+          </div>
           {existingImages.length > 0 && (
             <div className="newpost-section">
               <h4>
@@ -404,7 +504,7 @@ export default function NewPost() {
                 <p className="newpost-thumbnail-hint">
                   <i className="bi bi-star-fill" aria-hidden="true"></i>{" "}
                   Click the star to choose which photo appears as the thumbnail in Community Updates.
-                  {featuredImage && " (An existing photo is already set as thumbnail — this selection is ignored.)"}
+                  {featuredImage && " (An existing photo is already set as thumbnail â€” this selection is ignored.)"}
                 </p>
                 <div className="newpost-photo-scroll">
                 <div className="newpost-photo-grid">
@@ -463,3 +563,7 @@ export default function NewPost() {
     </div>
   );
 }
+
+
+
+

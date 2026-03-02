@@ -12,10 +12,22 @@ function Dashboard() {
 
   useEffect(() => {
     if (location.hash) {
-      const section = document.querySelector(location.hash);
-      if (section) {
-        section.scrollIntoView({ behavior: "auto" });
-      }
+      let raf1 = 0;
+      let raf2 = 0;
+      raf1 = window.requestAnimationFrame(() => {
+        raf2 = window.requestAnimationFrame(() => {
+          const section = document.querySelector(location.hash);
+          if (!section) return;
+          const nav = document.querySelector(".custom-navbar");
+          const navOffset = nav ? nav.getBoundingClientRect().height : 56;
+          const top = section.getBoundingClientRect().top + window.scrollY - navOffset - 2;
+          window.scrollTo({ top: Math.max(top, 0), behavior: "auto" });
+        });
+      });
+      return () => {
+        window.cancelAnimationFrame(raf1);
+        window.cancelAnimationFrame(raf2);
+      };
     } else {
       window.scrollTo(0, 0);
     }

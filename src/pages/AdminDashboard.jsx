@@ -21,6 +21,7 @@ export default function AdminDashboard() {
 
   const [activePosts, setActivePosts] = useState([]);
   const [archivedPosts, setArchivedPosts] = useState([]);
+  const [authorNameMap, setAuthorNameMap] = useState({});
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [activeTab, setActiveTab] = useState("active");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,20 +55,53 @@ export default function AdminDashboard() {
 
   const fetchPosts = async () => {
     setLoadingPosts(true);
-    const { data: active } = await supabase
+    const { data: active, error: activeError } = await supabase
       .from("posts")
-      .select("id, title, slug, updated_at, created_at, is_archived, description")
+      .select("id, title, slug, updated_at, created_at, created_by, is_archived, description")
       .eq("is_archived", false)
       .order("created_at", { ascending: false });
 
-    const { data: archived } = await supabase
+    const { data: archived, error: archivedError } = await supabase
       .from("posts")
-      .select("id, title, slug, updated_at, created_at, is_archived, description")
+      .select("id, title, slug, updated_at, created_at, created_by, is_archived, description")
       .eq("is_archived", true)
       .order("updated_at", { ascending: false });
 
+    if (activeError || archivedError) {
+      console.error("Post fetch error:", activeError || archivedError);
+      setActivePosts([]);
+      setArchivedPosts([]);
+      setLoadingPosts(false);
+      return;
+    }
+
     setActivePosts(active || []);
     setArchivedPosts(archived || []);
+
+    const allPosts = [...(active || []), ...(archived || [])];
+    const authorIds = Array.from(
+      new Set(allPosts.map((p) => p.created_by).filter(Boolean))
+    );
+
+    if (authorIds.length > 0) {
+      const { data: profiles, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, full_name")
+        .in("id", authorIds);
+
+      if (profilesError) {
+        console.error("Profile name map error:", profilesError);
+      }
+
+      const mapped = {};
+      (profiles || []).forEach((profile) => {
+        mapped[profile.id] = profile.full_name || null;
+      });
+      setAuthorNameMap(mapped);
+    } else {
+      setAuthorNameMap({});
+    }
+
     setLoadingPosts(false);
   };
 
@@ -133,6 +167,7 @@ export default function AdminDashboard() {
 
   const roleLabel = role === "super_admin" ? "Super Admin" : "Admin";
   const currentPosts = activeTab === "active" ? activePosts : archivedPosts;
+  const totalPosts = activePosts.length + archivedPosts.length;
 
   const SidebarInner = () => (
     <>
@@ -261,7 +296,27 @@ export default function AdminDashboard() {
           </Link>
         </div>
 
-        <div style={s.postList}>
+        <div style={s.statsGrid}>
+          <div style={s.statCard}>
+            <div style={s.statLabel}>Active</div>
+            <div style={s.statValue}>{activePosts.length}</div>
+          </div>
+          <div style={s.statCard}>
+            <div style={s.statLabel}>Archived</div>
+            <div style={s.statValue}>{archivedPosts.length}</div>
+          </div>
+          <div style={s.statCard}>
+            <div style={s.statLabel}>Total Posts</div>
+            <div style={s.statValue}>{totalPosts}</div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            ...s.postList,
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))",
+          }}
+        >
           {loadingPosts ? (
             <div style={s.centerState}>
               <div style={{ ...s.spinner, animation: "mcbp-spin 0.8s linear infinite" }} />
@@ -289,9 +344,6 @@ export default function AdminDashboard() {
                     {activeTab === "active" ? "● Live" : "◌ Archived"}
                   </span>
                   <span style={s.cardDate}>Published {formatDate(post.created_at)}</span>
-                  {post.updated_at && post.updated_at !== post.created_at && (
-                    <span style={s.cardEdited}>· Edited {formatDateTime(post.updated_at)}</span>
-                  )}
                 </div>
 
                 <h3 style={s.cardTitle}>{post.title}</h3>
@@ -303,7 +355,7 @@ export default function AdminDashboard() {
                       <Link to={`/admin/edit-post/${post.id}`} style={{ textDecoration: "none" }}>
                         <button style={s.btnPrimary}>Edit</button>
                       </Link>
-                      <Link to={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
+                      <Link to={`/admin/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                         <button style={s.btnGhost}>View ↗</button>
                       </Link>
                       <button style={s.btnWarn} onClick={() => archivePost(post.id)}>
@@ -313,7 +365,7 @@ export default function AdminDashboard() {
                   ) : (
                     <>
                       <button style={s.btnPrimary} onClick={() => restorePost(post.id)}>Restore</button>
-                      <Link to={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
+                      <Link to={`/admin/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                         <button style={s.btnGhost}>Preview ↗</button>
                       </Link>
                       {role === "super_admin" && (
@@ -323,6 +375,11 @@ export default function AdminDashboard() {
                       )}
                     </>
                   )}
+                </div>
+
+                <div style={s.cardUpdateInfo}>
+                  Last updated on {formatDateTime(post.updated_at || post.created_at)} by{" "}
+                  {authorNameMap[post.created_by] || "Unknown"}
                 </div>
               </div>
             ))
@@ -337,14 +394,14 @@ const s = {
   shell: {
     display: "flex",
     minHeight: "100vh",
-    background: "#0f172a",
+    background: "radial-gradient(circle at top right, #1e293b 0%, #0b1220 55%, #070d18 100%)",
     fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
     position: "relative",
   },
   sidebar: {
     width: 240,
-    background: "#0f172a",
-    borderRight: "1px solid #1e293b",
+    background: "linear-gradient(180deg, #0b1220 0%, #0a1324 100%)",
+    borderRight: "1px solid rgba(148, 163, 184, 0.16)",
     position: "fixed",
     top: 0,
     left: 0,
@@ -358,12 +415,12 @@ const s = {
     alignItems: "center",
     gap: 12,
     padding: "24px 20px 20px",
-    borderBottom: "1px solid #1e293b",
+    borderBottom: "1px solid rgba(148, 163, 184, 0.16)",
   },
   logoMark: {
     width: 34,
     height: 34,
-    background: "linear-gradient(135deg, #3b82f6, #6366f1)",
+    background: "linear-gradient(135deg, #1d4ed8, #0ea5e9)",
     borderRadius: 9,
     display: "flex",
     alignItems: "center",
@@ -372,10 +429,10 @@ const s = {
     fontWeight: 800,
     fontSize: 17,
     flexShrink: 0,
-    boxShadow: "0 4px 10px rgba(99,102,241,0.35)",
+    boxShadow: "0 8px 20px rgba(14, 165, 233, 0.34)",
   },
   logoText: {
-    color: "#f1f5f9",
+    color: "#e2e8f0",
     fontWeight: 700,
     fontSize: 14,
     lineHeight: 1.3,
@@ -391,26 +448,27 @@ const s = {
     display: "flex",
     alignItems: "center",
     gap: 10,
-    padding: "10px 12px",
-    borderRadius: 8,
+    padding: "11px 12px",
+    borderRadius: 10,
     border: "none",
     background: "transparent",
-    color: "#94a3b8",
+    color: "#93a4bb",
     fontSize: 14,
-    fontWeight: 500,
+    fontWeight: 600,
     cursor: "pointer",
     textAlign: "left",
     width: "100%",
   },
   navItemActive: {
-    background: "#1e293b",
-    color: "#f1f5f9",
+    background: "linear-gradient(135deg, rgba(29, 78, 216, 0.25), rgba(14, 165, 233, 0.18))",
+    color: "#f8fafc",
+    boxShadow: "inset 0 0 0 1px rgba(96, 165, 250, 0.35)",
   },
   navIcon: { fontSize: 13, opacity: 0.7 },
   navBadge: {
     marginLeft: "auto",
-    background: "#1e3a5f",
-    color: "#60a5fa",
+    background: "rgba(30, 64, 175, 0.35)",
+    color: "#93c5fd",
     borderRadius: 20,
     padding: "2px 8px",
     fontSize: 11,
@@ -418,7 +476,7 @@ const s = {
   },
   sidebarFooter: {
     padding: "16px",
-    borderTop: "1px solid #1e293b",
+    borderTop: "1px solid rgba(148, 163, 184, 0.16)",
     display: "flex",
     flexDirection: "column",
     gap: 12,
@@ -432,7 +490,7 @@ const s = {
     width: 32,
     height: 32,
     borderRadius: "50%",
-    background: "linear-gradient(135deg, #3b82f6, #6366f1)",
+    background: "linear-gradient(135deg, #1d4ed8, #0ea5e9)",
     color: "white",
     display: "flex",
     alignItems: "center",
@@ -451,11 +509,11 @@ const s = {
   },
   avatarRole: { color: "#475569", fontSize: 11, marginTop: 1 },
   logoutBtn: {
-    background: "transparent",
-    border: "1px solid #1e293b",
-    color: "#64748b",
-    borderRadius: 6,
-    padding: "7px 12px",
+    background: "rgba(15, 23, 42, 0.6)",
+    border: "1px solid rgba(148, 163, 184, 0.22)",
+    color: "#cbd5e1",
+    borderRadius: 8,
+    padding: "8px 12px",
     fontSize: 13,
     cursor: "pointer",
     width: "100%",
@@ -466,8 +524,9 @@ const s = {
     left: 0,
     right: 0,
     height: 56,
-    background: "#0f172a",
-    borderBottom: "1px solid #1e293b",
+    background: "rgba(11, 18, 32, 0.9)",
+    borderBottom: "1px solid rgba(148, 163, 184, 0.15)",
+    backdropFilter: "blur(8px)",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -487,7 +546,7 @@ const s = {
     display: "block",
     width: 22,
     height: 2,
-    background: "#94a3b8",
+    background: "#cbd5e1",
     borderRadius: 2,
   },
   backdrop: {
@@ -502,8 +561,8 @@ const s = {
     left: 0,
     width: 260,
     height: "100vh",
-    background: "#0f172a",
-    borderRight: "1px solid #1e293b",
+    background: "linear-gradient(180deg, #0b1220 0%, #0a1324 100%)",
+    borderRight: "1px solid rgba(148, 163, 184, 0.16)",
     zIndex: 200,
     display: "flex",
     flexDirection: "column",
@@ -511,50 +570,82 @@ const s = {
   },
   main: {
     flex: 1,
-    padding: "32px 24px 60px",
+    padding: "32px 24px 72px",
     minHeight: "100vh",
   },
   pageHeader: {
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    marginBottom: 24,
+    marginBottom: 18,
     gap: 12,
+    flexWrap: "wrap",
   },
   pageTitle: {
-    color: "#f1f5f9",
-    fontSize: 22,
-    fontWeight: 700,
+    color: "#f8fafc",
+    fontSize: 24,
+    fontWeight: 800,
     margin: 0,
+    letterSpacing: 0.2,
   },
   pageSubtitle: {
-    color: "#475569",
-    fontSize: 13,
+    color: "#94a3b8",
+    fontSize: 13.5,
     marginTop: 3,
     marginBottom: 0,
   },
   createBtn: {
-    background: "linear-gradient(135deg, #3b82f6, #6366f1)",
+    background: "linear-gradient(135deg, #2563eb, #0ea5e9)",
     color: "white",
     border: "none",
-    borderRadius: 8,
-    padding: "10px 16px",
+    borderRadius: 10,
+    padding: "10px 18px",
     fontSize: 14,
-    fontWeight: 600,
+    fontWeight: 700,
     cursor: "pointer",
     whiteSpace: "nowrap",
-    boxShadow: "0 4px 12px rgba(99,102,241,0.3)",
+    boxShadow: "0 8px 18px rgba(14, 165, 233, 0.34)",
+  },
+  statsGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+    gap: 12,
+    marginBottom: 18,
+  },
+  statCard: {
+    background: "rgba(15, 23, 42, 0.68)",
+    border: "1px solid rgba(148, 163, 184, 0.18)",
+    borderRadius: 12,
+    padding: "12px 14px",
+    boxShadow: "0 8px 20px rgba(2, 6, 23, 0.25)",
+  },
+  statLabel: {
+    color: "#94a3b8",
+    fontSize: 12,
+    fontWeight: 600,
+    textTransform: "uppercase",
+    letterSpacing: 0.7,
+  },
+  statValue: {
+    color: "#e2e8f0",
+    fontSize: 24,
+    fontWeight: 800,
+    lineHeight: 1.2,
+    marginTop: 4,
   },
   postList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 12,
+    display: "grid",
+    gap: 14,
+    alignItems: "start",
   },
   card: {
-    background: "#131f33",
-    border: "1px solid #1e293b",
-    borderRadius: 12,
+    background: "linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(10, 18, 34, 0.92))",
+    border: "1px solid rgba(148, 163, 184, 0.16)",
+    borderRadius: 14,
     padding: "16px 18px",
+    boxShadow: "0 10px 24px rgba(2, 6, 23, 0.26)",
+    display: "flex",
+    flexDirection: "column",
   },
   cardMeta: {
     display: "flex",
@@ -564,33 +655,33 @@ const s = {
     marginBottom: 8,
   },
   badgeActive: {
-    background: "#052e16",
-    color: "#4ade80",
+    background: "rgba(6, 78, 59, 0.48)",
+    color: "#86efac",
     borderRadius: 20,
-    padding: "3px 10px",
+    padding: "4px 10px",
     fontSize: 11,
     fontWeight: 600,
   },
   badgeArchived: {
-    background: "#1c1917",
-    color: "#78716c",
+    background: "rgba(68, 64, 60, 0.45)",
+    color: "#cbd5e1",
     borderRadius: 20,
-    padding: "3px 10px",
+    padding: "4px 10px",
     fontSize: 11,
     fontWeight: 600,
   },
-  cardDate: { color: "#475569", fontSize: 12 },
-  cardEdited: { color: "#334155", fontSize: 12 },
+  cardDate: { color: "#94a3b8", fontSize: 12.5 },
+  cardEdited: { color: "#64748b", fontSize: 12.5 },
   cardTitle: {
-    color: "#e2e8f0",
-    fontSize: 16,
-    fontWeight: 600,
+    color: "#f1f5f9",
+    fontSize: 17,
+    fontWeight: 700,
     margin: "4px 0 6px",
     lineHeight: 1.4,
   },
   cardDesc: {
-    color: "#475569",
-    fontSize: 13,
+    color: "#9aa9bd",
+    fontSize: 13.5,
     margin: "0 0 14px",
     lineHeight: 1.5,
     display: "-webkit-box",
@@ -602,40 +693,46 @@ const s = {
     display: "flex",
     gap: 8,
   },
+  cardUpdateInfo: {
+    marginTop: 10,
+    color: "#64748b",
+    fontSize: 12.5,
+    lineHeight: 1.4,
+  },
   btnPrimary: {
-    background: "#1e3a5f",
-    color: "#60a5fa",
-    border: "1px solid #1d4ed8",
-    borderRadius: 6,
-    padding: "7px 14px",
+    background: "linear-gradient(135deg, #1d4ed8, #0284c7)",
+    color: "#e0f2fe",
+    border: "1px solid rgba(125, 211, 252, 0.35)",
+    borderRadius: 8,
+    padding: "8px 14px",
     fontSize: 13,
-    fontWeight: 500,
+    fontWeight: 600,
     cursor: "pointer",
   },
   btnGhost: {
-    background: "#0d3d4a",
-    color: "#22d3ee",
-    border: "1px solid #0e7490",
-    borderRadius: 6,
-    padding: "7px 14px",
+    background: "rgba(12, 74, 110, 0.35)",
+    color: "#67e8f9",
+    border: "1px solid rgba(14, 116, 144, 0.7)",
+    borderRadius: 8,
+    padding: "8px 14px",
     fontSize: 13,
     cursor: "pointer",
   },
   btnWarn: {
-    background: "transparent",
-    color: "#f59e0b",
-    border: "1px solid #78350f",
-    borderRadius: 6,
-    padding: "7px 14px",
+    background: "rgba(120, 53, 15, 0.2)",
+    color: "#fbbf24",
+    border: "1px solid rgba(217, 119, 6, 0.6)",
+    borderRadius: 8,
+    padding: "8px 14px",
     fontSize: 13,
     cursor: "pointer",
   },
   btnDestructive: {
-    background: "#450a0a",
-    color: "#f87171",
-    border: "1px solid #7f1d1d",
-    borderRadius: 6,
-    padding: "7px 14px",
+    background: "rgba(127, 29, 29, 0.26)",
+    color: "#fda4af",
+    border: "1px solid rgba(220, 38, 38, 0.65)",
+    borderRadius: 8,
+    padding: "8px 14px",
     fontSize: 13,
     cursor: "pointer",
   },
@@ -648,7 +745,7 @@ const s = {
   },
   loadingScreen: {
     minHeight: "100vh",
-    background: "#0f172a",
+    background: "radial-gradient(circle at top right, #1e293b 0%, #0b1220 55%, #070d18 100%)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -663,3 +760,4 @@ const s = {
     borderRadius: "50%",
   },
 };
+

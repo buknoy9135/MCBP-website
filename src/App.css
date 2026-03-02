@@ -1,5 +1,68 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.public-shell {
+  position: relative;
+}
+
+.public-shell.theme-clean {
+  --mcbp-surface-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 251, 255, 0.88) 100%);
+  --mcbp-surface-border: rgba(121, 180, 247, 0.75);
+  --mcbp-surface-shadow: 0 10px 28px rgba(10, 88, 202, 0.1);
+  --mcbp-accent: #0a58ca;
+  --mcbp-accent-dark: #064a9e;
+  background:
+    radial-gradient(circle at 10% 14%, rgba(125, 211, 252, 0.22) 0, rgba(125, 211, 252, 0) 34%),
+    radial-gradient(circle at 88% 7%, rgba(96, 165, 250, 0.2) 0, rgba(96, 165, 250, 0) 30%),
+    linear-gradient(180deg, #f8fcff 0%, #ecf5ff 52%, #e4f0ff 100%);
+}
+
+.public-shell.theme-vibrant {
+  --mcbp-surface-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 248, 255, 0.86) 100%);
+  --mcbp-surface-border: rgba(79, 158, 255, 0.7);
+  --mcbp-surface-shadow: 0 14px 34px rgba(6, 78, 159, 0.16);
+  --mcbp-accent: #0b4faa;
+  --mcbp-accent-dark: #083d86;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(56, 189, 248, 0.24) 0, rgba(56, 189, 248, 0) 34%),
+    radial-gradient(circle at 84% 10%, rgba(37, 99, 235, 0.22) 0, rgba(37, 99, 235, 0) 32%),
+    radial-gradient(circle at 50% 100%, rgba(191, 219, 254, 0.42) 0, rgba(191, 219, 254, 0) 42%),
+    linear-gradient(180deg, #f5fbff 0%, #e7f3ff 54%, #ddeeff 100%);
+}
+
+.public-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(10, 88, 202, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 88, 202, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  z-index: 0;
+}
+
+.public-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.public-shell .container {
+  width: min(95vw, 1520px);
+  max-width: 1520px;
+}
+
+@media (max-width: 767px) {
+  .public-shell .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
 .page-background {
-  background-color: #f8f9fb;
+  background: transparent;
   min-height: 100vh;
   width: 100%;
 }

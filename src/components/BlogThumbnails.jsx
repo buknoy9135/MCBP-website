@@ -64,7 +64,7 @@ function BlogThumbnails() {
 
         {/* Section header */}
         <div className="blog-section-header">
-          <h2 className="blog-section-title">Latest Activities</h2>
+          <span className="blog-eyebrow-badge">Community Updates</span>
           <div className="blog-section-divider" />
           <p className="blog-section-subtitle">
             Stay updated with our community events, outreach programs, and initiatives.

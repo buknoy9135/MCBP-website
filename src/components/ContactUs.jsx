@@ -4,56 +4,32 @@ import { Link } from "react-router-dom";
 
 function ContactUs() {
   return (
-    <footer
-      style={{
-        backgroundColor: "#fff",
-        borderTop: "3px solid #79b4f7", // ⬅️ top border instead of bottom
-        transition: "border-color 0.3s ease",
-      }}
-    >
+    <footer className="custom-footer">
       <div className="container d-flex flex-wrap align-items-center custom-footer-container">
-        <div>
+        <div className="footer-contact-item">
           <i className="bi bi-geo-alt-fill me-2"></i>
           <a
             href="https://maps.app.goo.gl/TLtxG9zeSyzTW3pK8"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              all: "unset",
-              cursor: "pointer",
-              display: "inline",
-            }}
+            className="footer-inline-link"
           >
             Lapulapu City, Cebu, Philippines
           </a>
         </div>
-        <div>
+        <div className="footer-contact-item">
           <i className="bi bi-telephone-fill me-2"></i>
-          <a
-            href="tel:+639176553110"
-            style={{
-              all: "unset",
-              cursor: "pointer",
-              display: "inline",
-            }}
-          >
+          <a href="tel:+639176553110" className="footer-inline-link">
             +63 917 800 0444
           </a>
         </div>
-        <div>
+        <div className="footer-contact-item">
           <i className="bi bi-envelope-fill me-2"></i>
-          <a
-            href="mailto:contact@mcbp-org.com"
-            style={{
-              all: "unset",
-              cursor: "pointer",
-              display: "inline",
-            }}
-          >
+          <a href="mailto:contact@mcbp-org.com" className="footer-inline-link">
             contact@mcbp-org.com
           </a>
         </div>
-        <div className="d-flex gap-3 mt-2">
+        <div className="d-flex gap-3 mt-2 footer-socials">
           <a
             href="https://www.facebook.com/people/Metro-Cebu-Businessmen-and-Professionals-MCBP-Accert-Chartered-Chapter/61574580928967/"
             target="_blank"
@@ -100,23 +76,16 @@ function ContactUs() {
           <Link
             to="/privacy-policy"
             className="privacy-link"
-            style={{ marginInline: "7px" }}
           >
             Privacy Policy
           </Link>
-          <span>| created by:</span>
-          <span>
+          <span className="footer-credit">
+            <span>| created by:</span>
             <a
               href="https://www.facebook.com/jalil.abulais"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                all: "unset",
-                cursor: "pointer",
-                display: "inline",
-                textDecoration: "underline",
-                paddingLeft: "4px",
-              }}
+              className="creator-link"
             >
               Jalil Abulais
             </a>

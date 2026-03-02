@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+﻿import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import ImageModal from "../components/ImageModal";
@@ -35,6 +35,9 @@ function ImageWrapper({ src, index, onOpen }) {
       onClick={() => onOpen(index)}
     >
       <img src={src} loading="lazy" onLoad={handleLoad} alt="" />
+      <div className="image-overlay">
+        <i className="bi bi-zoom-in" aria-hidden="true"></i>
+      </div>
     </div>
   );
 }
@@ -42,6 +45,8 @@ function ImageWrapper({ src, index, onOpen }) {
 export default function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAdminPreviewRoute = location.pathname.startsWith("/admin/blog/");
 
   const [post, setPost] = useState(null);
   const [previousPost, setPreviousPost] = useState(null);
@@ -51,6 +56,8 @@ export default function BlogDetail() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [visibleImages, setVisibleImages] = useState(6);
+  const [imagesPerLoad, setImagesPerLoad] = useState(6);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -89,23 +96,66 @@ export default function BlogDetail() {
     fetchPost();
   }, [slug]);
 
-  if (loading) return <div className="container mt-5">Loading post...</div>;
-  if (!post) return <div className="container mt-5">Post not found.</div>;
+  useEffect(() => {
+    const perLoad = window.innerWidth < 768 ? 4 : 6;
+    setImagesPerLoad(perLoad);
+    setVisibleImages(perLoad);
+  }, [slug, post?.id]);
 
-  const images = post.images || [];
-  const videos = (post.videos || []).map(getYouTubeEmbedUrl).filter(Boolean);
+  if (loading) return (
+    <div className="blog-loading-screen">
+      <div className="blog-loading-spinner"></div>
+      <p>Loading post...</p>
+    </div>
+  );
+
+  if (!post) return (
+    <div className="blog-not-found">
+      <i className="bi bi-file-earmark-x" aria-hidden="true"></i>
+      <h3>Post not found</h3>
+      <button className="blog-back-btn" onClick={() => navigate("/")}>
+        <i className="bi bi-arrow-left" aria-hidden="true"></i>
+        Back to Home
+      </button>
+    </div>
+  );
+
+  const images = post.images || post.image || [];
+  const videos = (post.videos || post.video || []).map(getYouTubeEmbedUrl).filter(Boolean);
+  const contributorsRaw = post.contributors;
+  const contributorsParsed = typeof contributorsRaw === "string"
+    ? (() => {
+        try {
+          return JSON.parse(contributorsRaw);
+        } catch {
+          return [];
+        }
+      })()
+    : contributorsRaw;
+  const contributors = Array.isArray(contributorsParsed)
+    ? contributorsParsed
+        .map((person) => ({
+          name: typeof person?.name === "string" ? person.name.trim() : "",
+          link: typeof person?.link === "string" ? person.link.trim() : "",
+        }))
+        .filter((person) => person.name && person.link)
+    : [];
 
   const openImage = (index) => {
     setCurrentImageIndex(index);
     setModalOpen(true);
   };
 
+  const loadMoreImages = () => {
+    setVisibleImages((prev) => Math.min(prev + imagesPerLoad, images.length));
+  };
+
   const publishedDate = new Date(post.created_at).toLocaleDateString(undefined, {
     year: "numeric", month: "long", day: "numeric"
   });
 
-  const activityDate = post.activity_start_date
-    ? new Date(post.activity_start_date).toLocaleDateString(undefined, {
+  const activityDate = (post.activity_start_date || post.date)
+    ? new Date(post.activity_start_date || post.date).toLocaleDateString(undefined, {
         year: "numeric", month: "long", day: "numeric"
       })
     : null;
@@ -119,14 +169,6 @@ export default function BlogDetail() {
   return (
     <div className="BlogDetail-container page-background">
       <style>{`
-        .blog-pagination-link strong {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          font-size: 14px;
-          line-height: 1.4;
-        }
         .admin-toolbar {
           position: sticky;
           top: 0;
@@ -139,8 +181,6 @@ export default function BlogDetail() {
           gap: 10px;
           box-shadow: 0 2px 12px rgba(79,70,229,0.25);
         }
-        .admin-toolbar-label { display: none; }
-        .admin-toolbar-divider { display: none; }
         .btn-admin-dashboard {
           background: transparent;
           border: 1px solid #4f46e5;
@@ -156,10 +196,7 @@ export default function BlogDetail() {
           gap: 5px;
           transition: background 0.15s;
         }
-        .btn-admin-dashboard:hover {
-          background: #312e81;
-          color: #c7d2fe;
-        }
+        .btn-admin-dashboard:hover { background: #312e81; color: #c7d2fe; }
         .btn-admin-edit {
           background: #4f46e5;
           border: 1px solid #6366f1;
@@ -176,10 +213,7 @@ export default function BlogDetail() {
           box-shadow: 0 2px 8px rgba(79,70,229,0.4);
           transition: opacity 0.15s;
         }
-        .btn-admin-edit:hover {
-          opacity: 0.88;
-          color: white;
-        }
+        .btn-admin-edit:hover { opacity: 0.88; color: white; }
         .archived-banner {
           background: #451a03;
           border-left: 4px solid #f59e0b;
@@ -193,15 +227,15 @@ export default function BlogDetail() {
         }
       `}</style>
 
-      {/* ── ADMIN STICKY TOOLBAR ── */}
+      {/* â”€â”€ ADMIN STICKY TOOLBAR â”€â”€ */}
       {isAdmin && (
         <div className="admin-toolbar">
           <div className="container" style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <Link to="/admin/dashboard" className="btn-admin-dashboard">
-              ← Dashboard
+              â† Dashboard
             </Link>
             <Link to={`/admin/edit-post/${post.id}`} className="btn-admin-edit">
-              ✏️ Edit Post
+              âœï¸ Edit Post
             </Link>
             {post.is_archived && (
               <span style={{
@@ -214,136 +248,177 @@ export default function BlogDetail() {
                 fontWeight: 700,
                 letterSpacing: "0.05em",
               }}>
-                ⚠ ARCHIVED
+                âš  ARCHIVED
               </span>
             )}
           </div>
         </div>
       )}
 
-      {/* ── ARCHIVED BANNER ── */}
+      {/* â”€â”€ ARCHIVED BANNER â”€â”€ */}
       {isAdmin && post.is_archived && (
         <div className="archived-banner">
           <div className="container">
-            ⚠️ This post is currently <strong style={{ margin: "0 4px" }}>archived</strong>
-            — it is not visible to the public.
+            âš ï¸ This post is currently <strong style={{ margin: "0 4px" }}>archived</strong>
+            â€” it is not visible to the public.
           </div>
         </div>
       )}
 
-      <div className="container" style={{ paddingTop: isAdmin ? 24 : 80, paddingBottom: 60 }}>
+      <div className="blog-detail-content" style={{ paddingTop: isAdmin || isAdminPreviewRoute ? 24 : 80, paddingBottom: 80 }}>
 
-        {/* Public home button — only for non-admins */}
+        {/* â”€â”€ BACK BUTTON (public only) â”€â”€ */}
         {!isAdmin && (
-          <div style={{ marginBottom: 20 }}>
-            <button className="btn btn-secondary btn-sm" onClick={() => navigate("/")}>
-              ← Home
-            </button>
-          </div>
+          <button className="blog-back-btn" onClick={() => navigate("/")}>
+            <i className="bi bi-arrow-left" aria-hidden="true"></i>
+            Back to Home
+          </button>
         )}
 
-        <h2 className="fw-bold mb-2" style={{ lineHeight: 1.3 }}>{post.title}</h2>
-        <p className="text-secondary mb-3">{post.description}</p>
+        {/* â”€â”€ POST HEADER â”€â”€ */}
+        <div className="blog-post-header">
+          <div className="blog-header-accent"></div>
+          <h1 className="blog-detail-title">{post.title}</h1>
+          <p className="blog-detail-subtitle">{post.description}</p>
 
-        {/* Location + date */}
-        <div
-          className="d-flex flex-column flex-sm-row flex-wrap text-muted mb-3 small"
-          style={{ gap: "6px 20px" }}
-        >
-          {post.location && <span>📍 {post.location}</span>}
-          {activityDate && (
-            <span>📅 {activityDate}{activityEndDate && ` – ${activityEndDate}`}</span>
+          {(post.location || activityDate) && (
+            <div className="blog-meta-chips">
+              {post.location && (
+                <span className="blog-meta-chip chip-location">
+                  <i className="bi bi-geo-alt-fill" aria-hidden="true"></i>
+                  {post.location}
+                </span>
+              )}
+              {activityDate && (
+                <span className="blog-meta-chip chip-date">
+                  <i className="bi bi-calendar-event-fill" aria-hidden="true"></i>
+                  {activityDate}{activityEndDate && ` â€“ ${activityEndDate}`}
+                </span>
+              )}
+            </div>
           )}
         </div>
 
-        <p className="text-muted small">
-          Published on <strong>{publishedDate}</strong> by{" "}
-          <strong>{post.author_name || "MCBP Admin"}</strong>
-        </p>
+        {/* â”€â”€ STORY â”€â”€ */}
+        <div className="blog-story-section">
+          <p className="post-story">{post.story}</p>
+        </div>
 
-        <hr />
+        {/* â”€â”€ AUTHOR â”€â”€ */}
+        <div className="blog-author-row">
+          <div className="blog-author-avatar">
+            <i className="bi bi-person-fill" aria-hidden="true"></i>
+          </div>
+          <div className="blog-author-info">
+            <span className="blog-author-name">{post.author_name || "MCBP Admin"}</span>
+            <span className="blog-author-date">
+              <i className="bi bi-clock" aria-hidden="true"></i>
+              Published {publishedDate}
+            </span>
+          </div>
+        </div>
 
-        <p style={{ whiteSpace: "pre-line", lineHeight: 1.8, fontSize: 15 }}>{post.story}</p>
-
-        {/* ── IMAGES ── */}
+        {contributors.length > 0 && (
+          <div className="blog-courtesy-row">
+            <span className="blog-courtesy-label">
+              <i className="bi bi-camera-reels-fill" aria-hidden="true"></i>
+              Photos / Videos courtesy of:
+            </span>{" "}
+            <span className="blog-courtesy-pills">
+              {contributors.map((person, index) => (
+                <a
+                  key={`${person.name}-${index}`}
+                  href={person.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="blog-courtesy-link"
+                >
+                  {person.name}
+                </a>
+              ))}
+            </span>
+          </div>
+        )}
+        {/* â”€â”€ IMAGES â”€â”€ */}
         {images.length > 0 && (
-          <>
-            <h5 className="mt-5 mb-3">Moments Captured</h5>
+          <div className="blog-media-section">
+            <div className="blog-section-heading">
+              <span className="blog-section-icon">
+                <i className="bi bi-camera-fill" aria-hidden="true"></i>
+              </span>
+              <h5 className="blog-section-title">Moments Captured</h5>
+              <span className="blog-section-count">{images.length} photos</span>
+            </div>
             <div className="row g-2 g-md-3">
-              {images.map((img, i) => (
+              {images.slice(0, visibleImages).map((img, i) => (
                 <div className="col-6 col-md-4" key={i}>
                   <ImageWrapper src={cloudinaryUrl(img)} index={i} onOpen={openImage} />
                 </div>
               ))}
             </div>
-          </>
+            {visibleImages < images.length && (
+              <div className="blog-load-more-wrap">
+                <button className="blog-load-more-btn" onClick={loadMoreImages}>
+                  <i className="bi bi-images" aria-hidden="true"></i>
+                  Load {Math.min(imagesPerLoad, images.length - visibleImages)} More Photos
+                </button>
+              </div>
+            )}
+          </div>
         )}
 
-        {/* ── VIDEOS ── */}
+        {/* â”€â”€ VIDEOS â”€â”€ */}
         {videos.length > 0 && (
-          <>
-            <h5 className="mt-5 mb-3">Videos</h5>
-            <div className="row g-3">
+          <div className="blog-media-section">
+            <div className="blog-section-heading">
+              <span className="blog-section-icon video-icon">
+                <i className="bi bi-play-circle-fill" aria-hidden="true"></i>
+              </span>
+              <h5 className="blog-section-title">Videos</h5>
+            </div>
+            <div className="row g-3 video-grid">
               {videos.map((embedUrl, i) => (
                 <div key={i} className={videos.length === 1 ? "col-12" : "col-12 col-md-6"}>
-                  <div style={{
-                    position: "relative",
-                    paddingBottom: "56.25%",
-                    height: 0,
-                    overflow: "hidden",
-                    borderRadius: 10,
-                    background: "#000",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                  }}>
+                  <div className="video-responsive-wrapper">
                     <iframe
-                      src={embedUrl}
+                      src={`${embedUrl}?rel=0&modestbranding=1`}
                       title={`Video ${i + 1}`}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
-                      style={{
-                        position: "absolute",
-                        top: 0, left: 0,
-                        width: "100%", height: "100%",
-                        border: "none",
-                      }}
                     />
                   </div>
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
 
-        {/* ── PREV / NEXT ── */}
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          marginTop: 48,
-          paddingTop: 20,
-          borderTop: "1px solid #dee2e6",
-          gap: 12,
-        }}>
+        {/* â”€â”€ PREV / NEXT â”€â”€ */}
+        <div className="blog-pagination-wrap">
           {previousPost ? (
             <Link
               to={`/blog/${previousPost.slug}`}
-              className="blog-pagination-link text-decoration-none"
-              style={{ maxWidth: "48%" }}
+              className="blog-pagination-card prev-card"
             >
-              <small className="text-muted d-block mb-1">« Previous</small>
-              <strong className="text-dark">{previousPost.title}</strong>
+              <span className="pagination-direction">
+                <i className="bi bi-arrow-left" aria-hidden="true"></i>
+                Previous Post
+              </span>
+              <strong className="pagination-title">{previousPost.title}</strong>
             </Link>
           ) : <div />}
 
           {nextPost ? (
             <Link
               to={`/blog/${nextPost.slug}`}
-              className="blog-pagination-link text-decoration-none text-end ms-auto"
-              style={{ maxWidth: "48%" }}
+              className="blog-pagination-card next-card"
             >
-              <small className="text-muted d-block mb-1 text-end">Next »</small>
-              <strong className="text-dark">{nextPost.title}</strong>
+              <span className="pagination-direction">
+                Next Post
+                <i className="bi bi-arrow-right" aria-hidden="true"></i>
+              </span>
+              <strong className="pagination-title">{nextPost.title}</strong>
             </Link>
           ) : <div />}
         </div>
@@ -360,3 +435,8 @@ export default function BlogDetail() {
     </div>
   );
 }
+
+
+
+
+

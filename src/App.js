@@ -1,7 +1,5 @@
 import './App.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { supabase } from './lib/supabase';
 import AuthCallback from './pages/AuthCallback';
 import NavBar from './components/NavBar';
 import AboutUs from './components/AboutUs';
@@ -16,29 +14,17 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   const location = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Track auth state globally so navbar hides for logged-in admins
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setIsLoggedIn(!!data.session);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsLoggedIn(!!session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isAuthRoute = location.pathname === '/auth/callback';
 
-  // Hide navbar for admin routes OR when a logged-in admin is browsing the site
-  const hideNav = isAdminRoute || isAuthRoute || isLoggedIn;
+  // Only hide navbar once auth is confirmed — prevents both flash and blank screen
+  const hideNav = isAdminRoute || isAuthRoute;
+  const publicTheme = 'theme-clean';
+  const appClassName = hideNav ? 'app-shell' : `app-shell public-shell ${publicTheme}`;
 
   return (
-    <>
+    <div className={appClassName}>
       {!hideNav && <NavBar />}
 
       <Routes>
@@ -79,10 +65,19 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/admin/blog/:slug"
+          element={
+            <ProtectedRoute>
+              <BlogDetail />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {!hideNav && <ContactUs />}
-    </>
+    </div>
   );
 }
 

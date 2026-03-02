@@ -1,25 +1,40 @@
 /* ── SECTION ── */
 .aboutus-section {
-  background-color: #ffffff;
-  padding: 72px 0 60px;
+  background: linear-gradient(180deg, #eef6ff 0%, #e4f0ff 100%);
+  padding: 72px 0 64px;
   scroll-margin-top: 70px;
+}
+
+/* ── EYEBROW BADGE ── */
+.aboutus-eyebrow-badge {
+  display: inline-block;
+  background: rgba(26, 86, 160, 0.1);
+  color: #1a56a0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(26, 86, 160, 0.2);
+  margin-bottom: 12px;
 }
 
 /* ── HEADER ── */
 .aboutus-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .aboutus-main-heading {
   font-size: 2rem;
-  font-weight: 700;
-  color: #1a56a0;
-  margin-bottom: 12px;
+  font-weight: 800;
+  color: #0f2744;
+  margin-bottom: 14px;
 }
 
 .aboutus-divider {
-  width: 60px;
+  width: 56px;
   height: 4px;
   background: linear-gradient(90deg, #1a56a0, #79b4f7);
   border-radius: 2px;
@@ -29,148 +44,212 @@
 /* ── INTRO ── */
 .aboutus-intro {
   max-width: 820px;
-  margin: 0 auto 48px;
-  color: #374151;
-  line-height: 1.8;
-  font-size: 0.97rem;
+  margin: 0 auto 56px;
+  color: #4b5563;
+  line-height: 1.9;
+  font-size: 1rem;
+}
+
+@media (min-width: 992px) {
+  .aboutus-intro { max-width: 1100px; }
 }
 
 .aboutus-intro p {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   text-align: justify;
 }
 
-/* ── MISSION / VISION CARDS ── */
-.aboutus-cards-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+/* ── MISSION / VISION — glassmorphism cards ── */
+.aboutus-mv-row {
+  display: flex;
+  align-items: stretch;
   gap: 24px;
-  margin-bottom: 48px;
+  margin-bottom: 64px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 992px) {
+  .aboutus-mv-row { max-width: 1100px; }
+}
+
+.aboutus-mv-item {
+  flex: 1;
+  padding: 38px 34px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(26, 86, 160, 0.14);
+  border-top: 3px solid #1a56a0;
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 28px rgba(26, 86, 160, 0.09);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.aboutus-mv-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(26, 86, 160, 0.15);
+}
+
+.aboutus-mv-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: rgba(26, 86, 160, 0.08);
+  border: 1px solid rgba(26, 86, 160, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.aboutus-mv-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a56a0;
+  margin-bottom: 14px;
+}
+
+.aboutus-mv-text {
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.9;
+  text-align: justify;
+  margin: 0;
+}
+
+/* vertical divider is no longer rendered, rule kept for safety */
+.aboutus-mv-divider-vertical {
+  display: none;
 }
 
 @media (max-width: 767px) {
-  .aboutus-cards-row {
-    grid-template-columns: 1fr;
+  .aboutus-mv-row {
+    flex-direction: column;
+    gap: 20px;
   }
-}
 
-.aboutus-card {
-  background: #f0f4f9;
-  border-radius: 14px;
-  padding: 32px 28px;
-  border-top: 4px solid #1a56a0;
-  transition: box-shadow 0.2s;
-}
-
-.aboutus-card:hover {
-  box-shadow: 0 6px 24px rgba(26, 86, 160, 0.1);
-}
-
-.aboutus-card--vision {
-  border-top-color: #79b4f7;
-}
-
-.aboutus-card-icon {
-  font-size: 2rem;
-  margin-bottom: 12px;
-}
-
-.aboutus-card h4 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1a56a0;
-  margin-bottom: 12px;
-}
-
-.aboutus-card p {
-  color: #374151;
-  line-height: 1.75;
-  font-size: 0.93rem;
-  margin: 0;
-  text-align: justify;
+  .aboutus-mv-item {
+    padding: 28px 22px;
+  }
 }
 
 /* ── WHAT WE DO ── */
 .aboutus-whatwedo {
-  margin-bottom: 48px;
+  margin-bottom: 56px;
+  text-align: center;
 }
 
 .aboutus-whatwedo-heading {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1a56a0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f2744;
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
+/* 2-column card grid */
 .aboutus-pillars {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: left;
 }
 
-@media (max-width: 991px) {
-  .aboutus-pillars {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 575px) {
+@media (max-width: 767px) {
   .aboutus-pillars {
     grid-template-columns: 1fr;
   }
 }
 
+/* Pillar card */
 .aboutus-pillar {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 24px 20px;
-  text-align: center;
-  transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 24px 22px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-left: 4px solid #1a56a0;
+  border-radius: 0 14px 14px 0;
+  box-shadow: 0 2px 12px rgba(26, 86, 160, 0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .aboutus-pillar:hover {
-  box-shadow: 0 4px 16px rgba(26, 86, 160, 0.1);
-  transform: translateY(-2px);
+  transform: translateX(4px);
+  box-shadow: 0 6px 22px rgba(26, 86, 160, 0.13);
+}
+
+/* Icon box */
+.aboutus-pillar-icon-box {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(26, 86, 160, 0.08);
+  border: 1px solid rgba(26, 86, 160, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .aboutus-pillar-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
-.aboutus-pillar h5 {
-  font-size: 0.95rem;
+.aboutus-pillar-icon svg {
+  display: block;
+}
+
+.aboutus-pillar-title {
+  font-size: 0.94rem;
   font-weight: 700;
-  color: #1a56a0;
-  margin-bottom: 8px;
+  color: #1a2332;
+  margin: 0 0 6px;
 }
 
-.aboutus-pillar p {
-  font-size: 0.85rem;
+.aboutus-pillar-text {
+  font-size: 0.95rem;
   color: #4b5563;
-  line-height: 1.65;
+  line-height: 1.82;
   margin: 0;
+  text-align: justify;
 }
 
 /* ── CLOSING ── */
 .aboutus-closing {
   max-width: 820px;
   margin: 0 auto;
+  padding-top: 32px;
+  border-top: 1px solid rgba(26, 86, 160, 0.15);
   text-align: center;
+}
+
+@media (min-width: 992px) {
+  .aboutus-closing { max-width: 1100px; }
+}
+
+.aboutus-closing p {
   color: #4b5563;
-  font-size: 0.95rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.9;
   font-style: italic;
-  padding: 24px 20px;
-  border-top: 1px solid #e2e8f0;
+  margin: 0;
 }
 
 /* ── MOBILE ── */
 @media (max-width: 767px) {
   .aboutus-section {
-    padding: 48px 0 40px;
+    padding: 48px 0 44px;
   }
 
   .aboutus-main-heading {
@@ -178,14 +257,38 @@
   }
 
   .aboutus-intro {
+    font-size: 0.82rem;
+    margin-bottom: 40px;
+  }
+
+  .aboutus-mv-heading {
+    font-size: 1.1rem;
+  }
+
+  .aboutus-mv-text {
     font-size: 0.88rem;
   }
 
-  .aboutus-card {
-    padding: 24px 20px;
+  .aboutus-whatwedo-heading {
+    font-size: 1.22rem;
   }
 
-  .aboutus-whatwedo-heading {
-    font-size: 1.15rem;
+  .aboutus-pillar-icon-box {
+    margin-top: 19.2px;
+  }
+
+  .aboutus-pillar-text {
+    font-size: 0.82rem;
+  }
+
+  .aboutus-closing p {
+    font-size: 0.82rem;
+  }
+}
+
+/* ── WIDEN CONTAINER ON DESKTOP ONLY ── */
+@media (min-width: 992px) {
+  .aboutus-section .container {
+    max-width: 1300px;
   }
 }
