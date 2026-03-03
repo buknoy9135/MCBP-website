@@ -92,6 +92,23 @@ Instead of deleting immediately, a **grace-period queue** is used:
 
 ---
 
+## Pre-Deploy Cleanup (wipe test data before going live)
+
+Run in **Supabase SQL Editor → New Query**:
+
+```sql
+-- Truncate both at once (pending_image_deletions has FK → posts)
+TRUNCATE TABLE public.pending_image_deletions, public.posts;
+```
+
+Then in **Cloudinary → Media Library**:
+- Navigate to `mcbp/blog/` folder → select all → Delete
+  (or right-click the folder → Delete folder)
+
+Verify: both tables show 0 rows in Supabase Table Editor; Admin Dashboard shows empty; Image Cleaner queue is empty.
+
+---
+
 ## Deployment Flow
 
 ```
